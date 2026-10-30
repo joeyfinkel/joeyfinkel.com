@@ -7,17 +7,22 @@ needed: Claude supplies the structured experience from the master resume.
 ## Cloudflare setup
 
 1. Use the intended Cloudflare account with an active `joeyfinkel.com` zone.
-2. Create the private R2 bucket with `pnpm exec wrangler r2 bucket create joeyfinkel-resumes`.
-3. Create the OAuth KV namespace with `pnpm exec wrangler kv namespace create OAUTH_KV`
-   and add the returned `id` to the `OAUTH_KV` entry in `wrangler.jsonc`.
-   The id is public configuration; do not commit credentials.
-4. Set a unique password of at least 32 characters using
-   `pnpm exec wrangler secret put PUBLISH_PASSWORD`. Use your password manager;
-   do not put the value in source control, a chat, or Claude project instructions.
-   This is the owner password for the connector consent page, not a Cloudflare token.
-5. Configure `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` in the GitHub
-   `production` environment. The token needs the documented deployment permissions
-   for this Worker, its bindings, and the custom domain in the intended account.
+2. The private R2 bucket `joeyfinkel-resumes` and KV namespace
+   `joeyfinkel-com-oauth` have been provisioned. Their account and binding IDs
+   are configured in `wrangler.jsonc`; those IDs are public configuration.
+3. GitHub's `production` environment is restricted to `main` and has the
+   `CLOUDFLARE_ACCOUNT_ID` secret configured.
+4. Configure `CLOUDFLARE_API_TOKEN` and `PUBLISH_PASSWORD` in that environment.
+   The token needs deployment access for the Worker and its custom domain in
+   the intended account. Use a unique publishing password of at least 32 characters
+   and retain it in your password manager. This is the owner password for connector
+   consent, not a Cloudflare token. Never put either credential in source control,
+   chat, or Claude project instructions.
+5. The deployment workflow uploads `PUBLISH_PASSWORD` alongside the verified build,
+   including on the first deployment. It uses a temporary JSON secrets file with
+   owner-only permissions and removes it when the deploy step exits. No preliminary
+   public Worker deployment is needed. For manual deployments, supply a protected
+   JSON file via `pnpm exec wrangler deploy --secrets-file <path>` after building.
 6. Merge the reviewed stack. `deploy.yml` publishes only after `main` CI succeeds.
    Manual deployment remains `pnpm deploy`.
 

@@ -70,7 +70,27 @@ jobs:
         run: pnpm deploy:check
 
       - name: Deploy the verified build
-        run: pnpm exec wrangler deploy
+        run: |
+          secretsFile="$RUNNER_TEMP/joeyfinkel-worker-secrets.json"
+          trap 'rm -f "$secretsFile"' EXIT
+          node --input-type=module <<'NODE'
+          import { writeFileSync } from 'node:fs';
+          import { join } from 'node:path';
+
+          const password = process.env.PUBLISH_PASSWORD;
+
+          if (!password || password.length < 32) {
+            throw new Error('Configure PUBLISH_PASSWORD with at least 32 characters in the production environment.');
+          }
+
+          writeFileSync(
+            join(process.env.RUNNER_TEMP, 'joeyfinkel-worker-secrets.json'),
+            JSON.stringify({ PUBLISH_PASSWORD: password }),
+            { mode: 0o600 },
+          );
+          NODE
+          pnpm exec wrangler deploy --secrets-file "$secretsFile"
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          PUBLISH_PASSWORD: ${{ secrets.PUBLISH_PASSWORD }}
