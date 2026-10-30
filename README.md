@@ -53,7 +53,17 @@ run. The build runs before typechecking so route generation works on fresh clone
 
 Actions are pinned to commit SHAs and updated by Dependabot. The workflow has
 read-only repository permissions and requires no Cloudflare credentials.
-Publishing remains an explicit `pnpm deploy` operation.
+`deploy.yml` publishes the exact `main` commit after its CI push workflow succeeds.
+Pull request and feature-branch workflows cannot trigger a production deployment.
+Manual dispatch is restricted to `main` and repeats validation before deployment.
+
+Create a GitHub `production` environment with `CLOUDFLARE_API_TOKEN` and
+`CLOUDFLARE_ACCOUNT_ID` secrets. The token needs Workers deployment permissions
+for the intended account and permission to manage the configured custom domain.
+GitHub environment protection rules can require approval before publishing.
+Deployments are serialized; credentials are exposed only to the deployment step.
+Local publishing remains available through `pnpm deploy`.
+
 ## Experience and resume
 
 Employment history is maintained in `src/routes/-home/utils/experience.ts`, based on
