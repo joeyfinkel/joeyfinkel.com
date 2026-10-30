@@ -5,6 +5,7 @@ import { StickyHeader } from '@/components/sticky-header';
 import { ThemeSelect } from '@/components/theme-select';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { useHeaderTitle } from '../-utils/use-header-title';
 
 export function ProjectLayout({
 	title,
@@ -24,6 +25,7 @@ export function ProjectLayout({
 	presentation: string;
 }) {
 	const isGitHub = new URL(sourceUrl).hostname === 'github.com';
+	const { headerRef, mainRef, headerTitle } = useHeaderTitle();
 
 	return (
 		<div
@@ -39,20 +41,39 @@ export function ProjectLayout({
 			>
 				Skip to content
 			</Link>
-			<StickyHeader>
+			<StickyHeader ref={headerRef}>
 				<Link
 					to="/"
 					hash="projects"
 					className="inline-flex items-center gap-2 text-sm font-medium"
 				>
 					<ArrowLeft className="size-4" aria-hidden="true" />
-					All projects
+					<span className={cn(headerTitle && 'sr-only sm:not-sr-only')}>
+						All projects
+					</span>
 				</Link>
+				<span
+					aria-hidden="true"
+					data-header-title
+					data-visible={Boolean(headerTitle)}
+					title={headerTitle ?? undefined}
+					className={cn(
+						'min-w-0 flex-1 truncate text-sm font-medium transition-[opacity,translate] duration-300 motion-reduce:transition-none',
+						headerTitle
+							? 'translate-y-0 opacity-100'
+							: 'translate-y-2 opacity-0',
+					)}
+				>
+					{headerTitle}
+				</span>
 				<ThemeSelect />
 			</StickyHeader>
-			<main id="project-main" className="pb-12">
+			<main ref={mainRef} id="project-main" className="pb-12">
 				<div className="border-b py-8 sm:py-10">
-					<h1 className="text-4xl font-medium tracking-[-0.04em] sm:text-5xl">
+					<h1
+						data-project-title
+						className="text-4xl font-medium tracking-[-0.04em] sm:text-5xl"
+					>
 						{title}
 					</h1>
 					<p className="mt-4 max-w-2xl text-sm leading-7 text-muted-foreground">

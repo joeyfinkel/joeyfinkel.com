@@ -1,7 +1,13 @@
-import { type ReactNode, useEffect, useState } from 'react';
+import { type ReactNode, type Ref, useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
 
-export function StickyHeader({ children }: { children: ReactNode }) {
+export function StickyHeader({
+	children,
+	ref,
+}: {
+	children: ReactNode;
+	ref?: Ref<HTMLElement>;
+}) {
 	const [scrolled, setScrolled] = useState(false);
 
 	useEffect(() => {
@@ -16,7 +22,7 @@ export function StickyHeader({ children }: { children: ReactNode }) {
 	}, []);
 
 	return (
-		<header className="sticky top-0 z-50 py-3">
+		<header ref={ref} className="sticky top-0 z-50 py-3">
 			<div
 				data-scrolled={scrolled}
 				className={cn(

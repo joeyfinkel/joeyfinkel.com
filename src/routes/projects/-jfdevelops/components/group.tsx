@@ -11,6 +11,7 @@ export function LibraryGroup({ group }: { group: LibraryGroupData }) {
 			className="scroll-mt-32"
 		>
 			<h2
+				data-project-title
 				id={`${group.id}-heading`}
 				className="text-2xl font-medium tracking-tight"
 			>

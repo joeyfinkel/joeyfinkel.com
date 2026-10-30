@@ -15,6 +15,7 @@ export function LibraryDetail({
 	return (
 		<article aria-labelledby="library-heading">
 			<h2
+				data-project-title
 				id="library-heading"
 				className="break-words text-2xl font-medium tracking-tight"
 			>
