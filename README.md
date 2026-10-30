@@ -42,7 +42,10 @@ the build before typechecking a fresh clone. Commit generated route updates.
 - `public/`: static assets.
 
 Keep features contained, import directly from their defining files, and avoid
-barrel exports. The home page's project list lives in `src/routes/-home/projects.ts`.
+barrel exports. The home page's project list lives in `src/routes/-home/utils/projects.ts`.
+The npm package catalog lives beside it in `libraries.ts`. It includes all 12
+published `@jfdevelops` packages in the supplied npm search as of October 30, 2026;
+update that catalog when publishing a new package.
 
 Add UI components with `pnpm dlx shadcn@latest add <component>`.
 

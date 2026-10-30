@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Experience } from './-home/components/experience';
 import { HireMe } from './-home/components/hire-me';
 import { Project } from './-home/components/project';
-import { projects } from './-home/projects';
+import { projects } from './-home/utils/projects';
 import { loadResume } from './-home/utils/resume';
 
 export const Route = createFileRoute('/')({

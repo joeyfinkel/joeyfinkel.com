@@ -1,3 +1,5 @@
+import { libraries } from './libraries';
+
 export const projects = [
 	{
 		name: 'PaneDeck',
@@ -21,19 +23,10 @@ export const projects = [
 		name: 'jfdevelops',
 		category: 'Open source libraries',
 		description:
-			'Composable React layouts and type-safe multi-step forms. Reusable libraries for building application interfaces with less friction.',
-		href: 'https://github.com/jfdevelops',
+			'Type-safe layouts, multi-step forms, error handling, and developer tools. Explore all of my published packages on npm.',
+		href: 'https://www.npmjs.com/search?q=%40jfdevelops',
 		tags: ['React', 'TypeScript', 'Open source'],
 		number: '03',
-		libraries: [
-			{
-				name: 'React Layout',
-				href: 'https://www.npmjs.com/package/@jfdevelops/react-layout',
-			},
-			{
-				name: 'Multi-Step Form',
-				href: 'https://github.com/jfdevelops/multi-step-form',
-			},
-		],
+		libraries,
 	},
 ];

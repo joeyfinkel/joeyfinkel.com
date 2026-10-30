@@ -1,11 +1,13 @@
+import { Link } from '@tanstack/react-router';
 import { ArrowUpRight } from 'lucide-react';
-import type { projects } from '../projects';
+import type { projects } from '../utils/projects';
 
 export function Project({ project }: { project: (typeof projects)[number] }) {
 	return (
 		<li>
-			<a
-				href={project.href}
+			<Link
+				to={project.href}
+				reloadDocument
 				className="group grid gap-5 border-t py-8 transition-colors hover:bg-secondary/40 sm:grid-cols-[2rem_1fr_auto] sm:gap-6 sm:py-10"
 			>
 				<span
@@ -42,21 +44,32 @@ export function Project({ project }: { project: (typeof projects)[number] }) {
 					className="size-5 text-primary transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 motion-reduce:transform-none"
 					aria-hidden="true"
 				/>
-			</a>
+			</Link>
 			{project.libraries ? (
 				<ul
-					className="mb-8 flex flex-wrap gap-5 text-xs sm:pl-14"
+					className="mb-8 grid gap-3 sm:grid-cols-2 sm:pl-14"
 					aria-label="jfdevelops libraries"
 				>
 					{project.libraries.map((library) => (
-						<li key={library.name}>
-							<a
-								href={library.href}
-								className="inline-flex items-center gap-1 text-primary underline underline-offset-4"
+						<li key={library.name} className="min-w-0 rounded-lg border p-4">
+							<Link
+								to={
+									new URL(`https://www.npmjs.com/package/${library.name}`).href
+								}
+								reloadDocument
+								className="flex items-start gap-2 text-primary underline underline-offset-4"
 							>
-								{library.name}{' '}
-								<ArrowUpRight className="size-3" aria-hidden="true" />
-							</a>
+								<span className="min-w-0 break-all font-mono text-xs leading-5">
+									{library.name}
+								</span>
+								<ArrowUpRight
+									className="mt-1 size-3 shrink-0"
+									aria-hidden="true"
+								/>
+							</Link>
+							<p className="mt-2 text-xs leading-6 text-muted-foreground">
+								{library.description}
+							</p>
 						</li>
 					))}
 				</ul>
