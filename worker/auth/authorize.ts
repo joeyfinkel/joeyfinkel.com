@@ -4,34 +4,32 @@ import {
 } from '@cloudflare/workers-oauth-provider';
 import { secretsMatch } from '../resume/crypto';
 import { ResumeError } from '../resume/error';
-import { consentPage } from './page';
+import { authErrorPage } from './error-page';
+import { renderConsent } from './render-consent';
+import { retryConsent } from './retry-consent';
 
 export async function authorize(request: Request, env: Env) {
 	if (!env.PUBLISH_PASSWORD || env.PUBLISH_PASSWORD.length < 32) {
-		throw new ResumeError('Publishing authentication is not configured', 503);
+		return authErrorPage(
+			'Publishing authentication is not configured yet.',
+			503,
+		);
 	}
 
 	const oauth = env.OAUTH_PROVIDER;
 
 	if (!oauth) {
-		throw new ResumeError('Authorization provider unavailable', 503);
+		return authErrorPage(
+			'The authorization provider is unavailable. Try again later.',
+			503,
+		);
 	}
+
+	let passwordVerified = false;
 
 	try {
 		if (request.method === 'GET') {
-			const authRequest = await oauth.parseAuthRequest(request);
-			const details = await oauth.describeConsent(authRequest);
-			const consent = await oauth.beginConsent(authRequest);
-			consent.headers.set('Content-Type', 'text/html; charset=utf-8');
-			consent.headers.set('Cache-Control', 'no-store');
-			consent.headers.set(
-				'Content-Security-Policy',
-				"default-src 'none'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'",
-			);
-
-			return new Response(consentPage(details, consent.handle), {
-				headers: consent.headers,
-			});
+			return await renderConsent(request, oauth);
 		}
 
 		if (request.method !== 'POST') {
@@ -65,11 +63,15 @@ export async function authorize(request: Request, env: Env) {
 		const password = String(form.get('password') ?? '');
 
 		if (!(await secretsMatch(password, env.PUBLISH_PASSWORD))) {
-			throw new ResumeError(
-				'Authorization failed; restart the connection and try again',
+			return retryConsent(
+				request,
+				oauth,
+				'That publishing password did not match. Please try again.',
 				401,
 			);
 		}
+
+		passwordVerified = true;
 
 		const approved = await oauth.approveConsent(request, handle, {
 			scope: ['resume:publish'],
@@ -85,6 +87,10 @@ export async function authorize(request: Request, env: Env) {
 
 		return new Response(null, { status: 302, headers: approved.headers });
 	} catch (error) {
+		if (error instanceof ResumeError) {
+			return authErrorPage(error.message, error.status);
+		}
+
 		if (error instanceof AuthorizationError && error.redirectTo) {
 			return Response.redirect(error.redirectTo, 302);
 		}
@@ -93,11 +99,41 @@ export async function authorize(request: Request, env: Env) {
 			error instanceof AuthorizationError ||
 			error instanceof CimdFetchError
 		) {
-			throw new ResumeError(
-				'Invalid or expired connector authorization; start again',
+			if (request.method === 'POST' && error instanceof AuthorizationError) {
+				console.warn(
+					JSON.stringify({
+						event: 'connector_consent_rejected',
+						code: error.code,
+						reason: error.description,
+					}),
+				);
+
+				return retryConsent(
+					request,
+					oauth,
+					passwordVerified
+						? 'Your password was accepted, but the connection request could not be completed. A fresh authorization session is ready. Enter your password again. If this repeats, allow cookies for this site and reconnect from Claude.'
+						: 'The browser authorization session expired. A fresh session is ready. You can try again or cancel.',
+					400,
+				);
+			}
+
+			return authErrorPage(
+				'This connection request is invalid or expired.',
+				400,
 			);
 		}
 
-		throw error;
+		console.error(
+			JSON.stringify({
+				event: 'connector_authorization_failed',
+				error: error instanceof Error ? error.name : 'unknown',
+			}),
+		);
+
+		return authErrorPage(
+			'The authorization service is temporarily unavailable. Please try again later.',
+			503,
+		);
 	}
 }

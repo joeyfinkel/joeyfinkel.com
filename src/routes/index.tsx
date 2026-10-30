@@ -1,8 +1,7 @@
-import { createFileRoute, Link } from '@tanstack/react-router';
+import { createFileRoute } from '@tanstack/react-router';
 import { ArrowUpRight } from 'lucide-react';
-import { StickyHeader } from '@/components/sticky-header';
-import { ThemeSelect } from '@/components/theme-select';
 import { Experience } from './-home/components/experience';
+import { HomeHeader } from './-home/components/header';
 import { HireMe } from './-home/components/hire-me';
 import { Project } from './-home/components/project';
 import { loadHome } from './-home/utils/load';
@@ -24,40 +23,7 @@ function Home() {
 			>
 				Skip to content
 			</a>
-			<StickyHeader>
-				<Link to="/" className="text-sm font-semibold tracking-tight">
-					Joey Finkel<span className="text-primary">.</span>
-				</Link>
-				<nav
-					aria-label="Main navigation"
-					className="flex flex-wrap items-center gap-x-4 gap-y-3 text-xs text-muted-foreground"
-				>
-					<Link to="/" hash="projects" className="hover:text-primary">
-						Projects
-					</Link>
-					<Link to="/" hash="experience" className="hover:text-primary">
-						Experience
-					</Link>
-					<Link to="/" hash="hire-me" className="hover:text-primary">
-						Hire me
-					</Link>
-					<Link
-						to="."
-						href={resume.resumeUrl}
-						reloadDocument
-						className="hover:text-primary"
-					>
-						Resume
-					</Link>
-					<a
-						href="https://github.com/joeyfinkel"
-						className="flex items-center gap-1 hover:text-primary"
-					>
-						GitHub <ArrowUpRight className="size-3.5" aria-hidden="true" />
-					</a>
-					<ThemeSelect />
-				</nav>
-			</StickyHeader>
+			<HomeHeader resumeUrl={resume.resumeUrl} />
 			<main id="main">
 				<section className="py-12 sm:py-16" aria-labelledby="intro">
 					<h1
