@@ -109,6 +109,7 @@ async function authorizationPage() {
 	expect(response.headers.get('Content-Security-Policy')).toContain(
 		"frame-ancestors 'none'",
 	);
+	expect(response.headers.get('Referrer-Policy')).toBe('same-origin');
 	const cookie = response.headers
 		.getSetCookie()
 		.map((value) => value.split(';')[0])
