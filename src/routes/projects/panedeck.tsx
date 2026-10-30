@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { CodeExample } from '@/components/code-example';
-import { ProjectLayout } from './-components/layout';
 import { Workspace } from './-panedeck/components/workspace';
+import { PaneDeckPage } from './-panedeck/utils/page';
 
 export const Route = createFileRoute('/projects/panedeck')({
 	component: PaneDeck,
@@ -9,12 +9,7 @@ export const Route = createFileRoute('/projects/panedeck')({
 
 function PaneDeck() {
 	return (
-		<ProjectLayout
-			title="PaneDeck"
-			category="Windows · C# · .NET"
-			description="Bring your existing desktop apps into focused workspaces. Split, tab, move, and resize windows together without changing the way those apps work."
-			sourceUrl="https://github.com/joeyfinkel/panedeck"
-		>
+		<PaneDeckPage category="Windows · C# · .NET">
 			<Workspace />
 			<section className="border-t py-10" aria-labelledby="panedeck-usage">
 				<h2 id="panedeck-usage" className="text-2xl font-medium tracking-tight">
@@ -78,6 +73,6 @@ function PaneDeck() {
 					Read the setup and gesture guide
 				</Link>
 			</section>
-		</ProjectLayout>
+		</PaneDeckPage>
 	);
 }

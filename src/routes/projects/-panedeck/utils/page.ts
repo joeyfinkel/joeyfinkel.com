@@ -1,0 +1,11 @@
+import { createProjectLayout } from '../../-utils/layout';
+
+export const PaneDeckPage = createProjectLayout({
+	resource: 'panedeck',
+	name: 'PaneDeckPage',
+	title: 'PaneDeck',
+	description:
+		'Bring your existing desktop apps into focused workspaces. Split, tab, move, and resize windows together without changing the way those apps work.',
+	sourceUrl: 'https://github.com/joeyfinkel/panedeck',
+	sourceLabel: 'View on GitHub',
+});

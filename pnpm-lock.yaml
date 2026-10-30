@@ -11,6 +11,9 @@ importers:
       '@cloudflare/workers-oauth-provider':
         specifier: ^1.2.4
         version: 1.2.4
+      '@jfdevelops/react-layout':
+        specifier: 2.0.0
+        version: 2.0.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@modelcontextprotocol/server':
         specifier: 2.4.0
         version: 2.4.0
@@ -101,6 +104,12 @@ importers:
         version: 4.156.0(@types/node@24.19.2)
 
 packages:
+
+  '@ark/schema@0.56.7':
+    resolution: {integrity: sha512-jmoOJlYIc4k1uv8oYBDNOFnAsKk2a2D9t/D6npF2JUfW4ecPB0v6ce6lruKg7lkBxIBA8Z7UtxfmvephYbhUGQ==}
+
+  '@ark/util@0.56.7':
+    resolution: {integrity: sha512-z8pVnrPk/x9GC18yOp5wCe8rR2+Z6us4CTSg7dvxdsDLuA2xXYq+QETD1fO6f3fMuXe+PCjpvtCnhTW9RHLgEw==}
 
   '@babel/code-frame@7.29.7':
     resolution: {integrity: sha512-Aup7aUOfpbAUg2ROOJN6Iw5f9DMBlzu0mIkm/malLQFN/YQgO48wCj0Kxa3sEHJvPVFg7siR+qRInwXd2qhQKw==}
@@ -714,6 +723,34 @@ packages:
     cpu: [x64]
     os: [win32]
 
+  '@jfdevelops/create-error@0.2.0':
+    resolution: {integrity: sha512-ZzD36TzBRUsfHb9M112PWzUmFJtHytArtnpdGL7uZnhYJ1DSBdnyqTFQIgkiotT1zqhczxnHm0NwTi5STBahJQ==}
+    engines: {node: '>=20.19.0'}
+
+  '@jfdevelops/react-layout-composables@0.3.1':
+    resolution: {integrity: sha512-c1xzH+FvXTv5mPhbHCcJi/ufJO8PDe25vJ0WWKtgxRBeMCwmoXFwu2DVClnTeqCY0WaosVPOYPVH557itimYqg==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    peerDependencies:
+      react: '>=18'
+      react-dom: '>=18'
+
+  '@jfdevelops/react-layout-devtools-core@0.3.0':
+    resolution: {integrity: sha512-Vmr3oWQ+HrcDiT9KhJ/0hd1a8DQDOm8rn39fpwbJRs3FrjFyf2qxJcNnTWaWW01ly6OEtCyMKq6kpOj101HwVg==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+
+  '@jfdevelops/react-layout-validator@0.3.1':
+    resolution: {integrity: sha512-oUFeulddYrMBfYsvu4uepwNqnqM0O9a7Z6g+wK6L8OOCzXKF0cEkmIepEVkXN0Mi3/qyA9nY9Ta1A5H5nyIFeg==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    peerDependencies:
+      react: '>=18'
+
+  '@jfdevelops/react-layout@2.0.0':
+    resolution: {integrity: sha512-pJgkhBEzQ7pavK47/kTGFRYGWLXBjcAaoXVxB1zGSWAvbcl9c5wuQS42V+ajW7U/LVayxxlK4YUBtao2f3LuYw==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    peerDependencies:
+      react: '>=18'
+      react-dom: '>=18'
+
   '@jridgewell/gen-mapping@0.3.13':
     resolution: {integrity: sha512-2kkt/7niJ6MgEPxF0bYdQ6etZaA+fQvDcLKckhy1yIQOzaoKjBBjSj63/aLVjYE3qhRt5dvM+uUyfCg6UKCBbA==}
 
@@ -910,6 +947,9 @@ packages:
 
   '@speed-highlight/core@1.2.24':
     resolution: {integrity: sha512-qeW2e1l78afw8VhRPfPQ1Gjj+KU5XFQ/OFV5ti6eTa9bruO7mJyZtA4vw0ofqmA3tKCkROE9xLk3VZoeRc98nw==}
+
+  '@standard-schema/spec@1.1.0':
+    resolution: {integrity: sha512-l2aFy5jALhniG5HgqrD6jXLi/rUWrKvqN/qJx6yoJsgKhblVd+iqqU4RCXavm/jPityDo5TCvKMnpjKnOriy0w==}
 
   '@tailwindcss/node@4.3.3':
     resolution: {integrity: sha512-/T8IKEsf9VTU6tLjgC7+sv2mOPtQxzE2jMw7u4Tt40Tx+QSZxpzh95/H6cMKoja9XuW7iMdLJYBB0o9G1CaAgg==}
@@ -1300,6 +1340,12 @@ packages:
   ansis@4.4.0:
     resolution: {integrity: sha512-9k3v7xcHwgdO/DruxGIg4HtjvlAZlcnsX/mzqUb1t3NkYnl9kK2UJ+Gq0io+vQf7iT//BD/HB/NBkUR1LWxoeA==}
     engines: {node: '>=14'}
+
+  arkregex@0.0.13:
+    resolution: {integrity: sha512-c17sqCqiiZauxyoU1KZ2zbzCgeghGmc8dR2CrdQnlEtpq3bLhRLoLrxTL52M/8yQD8e/i1/IBRpRCNAuqJa7xQ==}
+
+  arktype@2.2.8:
+    resolution: {integrity: sha512-tZyLza7kO2vN8BXBKcj4t43IVMe8/ZyqlITH0chZv7FfEw+edLovpY922tqcK4mCjTpf4oNo2xV6np7tquP1ww==}
 
   assertion-error@2.0.1:
     resolution: {integrity: sha512-Izi8RQcffqCeNVgFigKli1ssklIbpHnCYc6AknXGYoB6grJqyeby7jv12JUQgmTAnIDnbck1uxksT4dzN3PWBA==}
@@ -2072,6 +2118,12 @@ packages:
 
 snapshots:
 
+  '@ark/schema@0.56.7':
+    dependencies:
+      '@ark/util': 0.56.7
+
+  '@ark/util@0.56.7': {}
+
   '@babel/code-frame@7.29.7':
     dependencies:
       '@babel/helper-validator-identifier': 7.29.7
@@ -2566,6 +2618,36 @@ snapshots:
   '@img/sharp-win32-x64@0.35.5':
     optional: true
 
+  '@jfdevelops/create-error@0.2.0':
+    dependencies:
+      '@standard-schema/spec': 1.1.0
+
+  '@jfdevelops/react-layout-composables@0.3.1(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
+    dependencies:
+      '@jfdevelops/create-error': 0.2.0
+      '@jfdevelops/react-layout-validator': 0.3.1(react@19.3.1)
+      arktype: 2.2.8
+      react: 19.3.1
+      react-dom: 19.3.1(react@19.3.1)
+
+  '@jfdevelops/react-layout-devtools-core@0.3.0': {}
+
+  '@jfdevelops/react-layout-validator@0.3.1(react@19.3.1)':
+    dependencies:
+      '@jfdevelops/create-error': 0.2.0
+      arktype: 2.2.8
+      react: 19.3.1
+
+  '@jfdevelops/react-layout@2.0.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
+    dependencies:
+      '@jfdevelops/create-error': 0.2.0
+      '@jfdevelops/react-layout-composables': 0.3.1(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+      '@jfdevelops/react-layout-devtools-core': 0.3.0
+      '@jfdevelops/react-layout-validator': 0.3.1(react@19.3.1)
+      arktype: 2.2.8
+      react: 19.3.1
+      react-dom: 19.3.1(react@19.3.1)
+
   '@jridgewell/gen-mapping@0.3.13':
     dependencies:
       '@jridgewell/sourcemap-codec': 1.6.0
@@ -2710,6 +2792,8 @@ snapshots:
   '@sindresorhus/is@7.2.0': {}
 
   '@speed-highlight/core@1.2.24': {}
+
+  '@standard-schema/spec@1.1.0': {}
 
   '@tailwindcss/node@4.3.3':
     dependencies:
@@ -2985,6 +3069,16 @@ snapshots:
       - rolldown
 
   ansis@4.4.0: {}
+
+  arkregex@0.0.13:
+    dependencies:
+      '@ark/util': 0.56.7
+
+  arktype@2.2.8:
+    dependencies:
+      '@ark/schema': 0.56.7
+      '@ark/util': 0.56.7
+      arkregex: 0.0.13
 
   assertion-error@2.0.1: {}
 

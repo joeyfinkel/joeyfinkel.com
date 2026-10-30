@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { CodeExample } from '@/components/code-example';
-import { ProjectLayout } from './-components/layout';
 import { examples } from './-material-ui-helper/utils/examples';
+import { MaterialUiHelperPage } from './-material-ui-helper/utils/page';
 
 export const Route = createFileRoute('/projects/material-ui-helper')({
 	component: MaterialUiHelper,
@@ -9,12 +9,7 @@ export const Route = createFileRoute('/projects/material-ui-helper')({
 
 function MaterialUiHelper() {
 	return (
-		<ProjectLayout
-			title="Material UI Helper"
-			category="C# · .NET · LINQ"
-			description="Take the filter model from MUI X Data Grid and apply it to your .NET data. One extension method works with in-memory collections and IQueryable sources."
-			sourceUrl="https://github.com/joeyfinkel/material-ui-helper"
-		>
+		<MaterialUiHelperPage category="C# · .NET · LINQ">
 			<section className="py-10" aria-labelledby="filter-example">
 				<h2 id="filter-example" className="text-2xl font-medium tracking-tight">
 					From a grid filter to a query
@@ -70,6 +65,6 @@ function MaterialUiHelper() {
 					Review supported operators and current limitations
 				</Link>
 			</section>
-		</ProjectLayout>
+		</MaterialUiHelperPage>
 	);
 }
