@@ -1,6 +1,7 @@
 import { Link } from '@tanstack/react-router';
 import { ArrowLeft, ArrowUpRight } from 'lucide-react';
 import type { ReactNode } from 'react';
+import { StickyHeader } from '@/components/sticky-header';
 import { ThemeSelect } from '@/components/theme-select';
 import { Button } from '@/components/ui/button';
 
@@ -28,7 +29,7 @@ export function ProjectLayout({
 			>
 				Skip to content
 			</Link>
-			<header className="flex flex-wrap items-center justify-between gap-4 border-b py-6">
+			<StickyHeader>
 				<Link
 					to="/"
 					hash="projects"
@@ -38,7 +39,7 @@ export function ProjectLayout({
 					All projects
 				</Link>
 				<ThemeSelect />
-			</header>
+			</StickyHeader>
 			<main id="project-main" className="pb-12">
 				<div className="border-b py-14 sm:py-20">
 					<p className="mb-4 font-mono text-[11px] uppercase tracking-[0.16em] text-primary">

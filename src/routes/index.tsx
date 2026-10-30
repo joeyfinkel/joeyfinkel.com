@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { ArrowUpRight } from 'lucide-react';
+import { StickyHeader } from '@/components/sticky-header';
 import { ThemeSelect } from '@/components/theme-select';
 import { Experience } from './-home/components/experience';
 import { HireMe } from './-home/components/hire-me';
@@ -23,7 +24,7 @@ function Home() {
 			>
 				Skip to content
 			</a>
-			<header className="flex flex-wrap items-center justify-between gap-5 border-b py-7">
+			<StickyHeader>
 				<Link to="/" className="text-sm font-semibold tracking-tight">
 					Joey Finkel<span className="text-primary">.</span>
 				</Link>
@@ -56,7 +57,7 @@ function Home() {
 					</a>
 					<ThemeSelect />
 				</nav>
-			</header>
+			</StickyHeader>
 			<main id="main">
 				<section className="py-12 sm:py-16" aria-labelledby="intro">
 					<h1
