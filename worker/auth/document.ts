@@ -10,7 +10,7 @@ export function authDocument(title: string, content: string, nonce: string) {
 <meta name="color-scheme" content="light dark">
 <title>${escapeHtml(title)} · Joey Finkel</title>
 <style nonce="${nonce}">${authStyles}</style>
-<script nonce="${nonce}">try{const theme=localStorage.getItem('theme');document.documentElement.dataset.theme=theme==='dark'||(theme!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light'}catch{document.documentElement.dataset.theme=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}</script>
+<script nonce="${nonce}">try{const theme=localStorage.getItem('joeyfinkel-theme');document.documentElement.dataset.theme=theme==='dark'||(theme!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light'}catch{document.documentElement.dataset.theme=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}</script>
 </head>
 <body>
 <main>
