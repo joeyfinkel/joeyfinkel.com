@@ -5,6 +5,7 @@ import { StickyHeader } from '@/components/sticky-header';
 import { ThemeSelect } from '@/components/theme-select';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { useBreadcrumbs } from '../-utils/use-breadcrumbs';
 import { useHeaderTitle } from '../-utils/use-header-title';
 import { ProjectBreadcrumbs } from './breadcrumbs';
 
@@ -16,6 +17,7 @@ export function ProjectLayout({
 	sourceLabel = 'View on GitHub',
 	children,
 	presentation,
+	projectPath,
 }: {
 	title: string;
 	category: string;
@@ -24,9 +26,11 @@ export function ProjectLayout({
 	sourceLabel?: string;
 	children: ReactNode;
 	presentation: string;
+	projectPath: string;
 }) {
 	const isGitHub = new URL(sourceUrl).hostname === 'github.com';
 	const { headerRef, mainRef, heading } = useHeaderTitle();
+	const breadcrumbs = useBreadcrumbs(title, projectPath);
 
 	return (
 		<div
@@ -57,7 +61,7 @@ export function ProjectLayout({
 						<ArrowLeft className="size-4" aria-hidden="true" />
 						All projects
 					</Link>
-					<ProjectBreadcrumbs projectTitle={title} heading={heading} />
+					<ProjectBreadcrumbs items={breadcrumbs} visible={Boolean(heading)} />
 				</div>
 				<ThemeSelect />
 			</StickyHeader>

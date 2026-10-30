@@ -2,6 +2,7 @@ import { createProjectLayout } from '../../-utils/layout';
 
 export const MaterialUiHelperPage = createProjectLayout({
 	resource: 'material-ui-helper',
+	projectPath: '/projects/material-ui-helper',
 	name: 'MaterialUiHelperPage',
 	presentation: 'article',
 	title: 'Material UI Helper',

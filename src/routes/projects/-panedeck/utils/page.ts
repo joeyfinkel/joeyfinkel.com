@@ -2,6 +2,7 @@ import { createProjectLayout } from '../../-utils/layout';
 
 export const PaneDeckPage = createProjectLayout({
 	resource: 'panedeck',
+	projectPath: '/projects/panedeck',
 	name: 'PaneDeckPage',
 	presentation: 'article',
 	title: 'PaneDeck',

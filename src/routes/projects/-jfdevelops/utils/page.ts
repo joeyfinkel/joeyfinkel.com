@@ -2,6 +2,7 @@ import { createProjectLayout } from '../../-utils/layout';
 
 export const JfdevelopsPage = createProjectLayout({
 	resource: 'jfdevelops',
+	projectPath: '/projects/jfdevelops',
 	name: 'JfdevelopsPage',
 	presentation: 'docs',
 	title: 'jfdevelops',

@@ -1,85 +1,63 @@
 import { Link } from '@tanstack/react-router';
+import { useEffect, useRef } from 'react';
 import { cn } from '@/lib/utils';
 
 export function ProjectBreadcrumbs({
-	projectTitle,
-	heading,
+	items,
+	visible,
 }: {
-	projectTitle: string;
-	heading: {
-		title: string;
-		categoryId?: string;
-		categoryTitle?: string;
-	} | null;
+	items: { label: string; to: string; hash?: string }[];
+	visible: boolean;
 }) {
-	const isNested = heading && heading.title !== projectTitle;
+	const navRef = useRef<HTMLElement>(null);
+	const currentPath = items.at(-1)?.to;
+
+	useEffect(() => {
+		if (visible && currentPath && navRef.current) {
+			navRef.current.scrollLeft = navRef.current.scrollWidth;
+		}
+	}, [visible, currentPath]);
 
 	return (
 		<nav
+			ref={navRef}
 			aria-label="Breadcrumb"
-			aria-hidden={!heading}
-			inert={!heading}
+			aria-hidden={!visible}
+			inert={!visible}
 			data-header-breadcrumbs
-			data-visible={Boolean(heading)}
+			data-visible={visible}
+			tabIndex={visible ? 0 : -1}
 			className={cn(
-				'col-start-1 row-start-1 min-w-0 transition-[opacity,translate] duration-300 motion-reduce:transition-none',
-				heading
+				'col-start-1 row-start-1 min-w-0 overflow-x-auto py-1 [scrollbar-width:thin] transition-[opacity,translate] duration-300 motion-reduce:transition-none',
+				visible
 					? 'translate-y-0 opacity-100'
 					: 'pointer-events-none translate-y-2 opacity-0',
 			)}
 		>
-			<ol className="flex min-w-0 items-center gap-2 text-sm">
-				<li className="shrink-0">
-					<Link
-						to="/"
-						activeOptions={{ exact: true }}
-						hash="projects"
-						className="text-muted-foreground hover:text-primary"
-					>
-						Projects
-					</Link>
-				</li>
-				{isNested && (
-					<li className="hidden shrink-0 items-center gap-2 sm:flex">
-						<span aria-hidden="true" className="text-muted-foreground">
-							/
-						</span>
-						<Link
-							to="/projects/jfdevelops"
-							activeOptions={{ exact: true }}
-							className="text-muted-foreground hover:text-primary"
-						>
-							{projectTitle}
-						</Link>
+			<ol className="flex w-max min-w-full items-center gap-2 whitespace-nowrap text-sm">
+				{items.map((item, index) => (
+					<li key={item.to} className="flex shrink-0 items-center gap-2">
+						{index > 0 && (
+							<span aria-hidden="true" className="text-muted-foreground">
+								/
+							</span>
+						)}
+						{index === items.length - 1 ? (
+							<span aria-current="page" className="font-medium">
+								{item.label}
+							</span>
+						) : (
+							<Link
+								to={item.to}
+								hash={item.hash}
+								activeOptions={{ exact: true }}
+								className="text-muted-foreground hover:text-primary"
+							>
+								{item.label}
+							</Link>
+						)}
 					</li>
-				)}
-				{heading?.categoryTitle && heading.categoryId && (
-					<li className="hidden shrink-0 items-center gap-2 lg:flex">
-						<span aria-hidden="true" className="text-muted-foreground">
-							/
-						</span>
-						<Link
-							to="/projects/jfdevelops/categories/$category"
-							activeOptions={{ exact: true }}
-							params={{ category: heading.categoryId }}
-							className="text-muted-foreground hover:text-primary"
-						>
-							{heading.categoryTitle}
-						</Link>
-					</li>
-				)}
-				<li className="flex min-w-0 items-center gap-2">
-					<span aria-hidden="true" className="text-muted-foreground">
-						/
-					</span>
-					<span
-						aria-current="page"
-						className="truncate font-medium"
-						title={heading?.title}
-					>
-						{heading?.title}
-					</span>
-				</li>
+				))}
 			</ol>
 		</nav>
 	);
