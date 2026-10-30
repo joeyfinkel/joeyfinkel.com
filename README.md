@@ -50,8 +50,9 @@ update that catalog when publishing a new package.
 Project cards open focused routes under `/projects/`. PaneDeck includes a gesture
 guide and run instructions; Material UI Helper includes filter and query examples.
 The JF Develops overview has category cards and a docs sidebar. Category and
-library selections are shareable search parameters (`?category=layouts` and
-`?category=layouts&library=@jfdevelops/react-layout`). The Worker resolves and
+library selections have nested routes (`/projects/jfdevelops/categories/layouts`
+and `/projects/jfdevelops/react-layout`). The main route owns the shared layout
+and sidebar; its index route shows the category cards. The Worker resolves and
 validates the selection; the page shows only that category or library. The
 shadcn sidebar is adapted into small modules under `src/components/ui/sidebar/`,
 with a sticky desktop rail and a Radix-backed mobile sheet.

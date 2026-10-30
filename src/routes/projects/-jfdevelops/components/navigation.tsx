@@ -1,7 +1,6 @@
 import { Link } from '@tanstack/react-router';
 import { Sidebar } from '@/components/ui/sidebar/sidebar';
 import { useSidebar } from '@/components/ui/sidebar/use-sidebar';
-import { cn } from '@/lib/utils';
 import type { CatalogView } from '@/projects/schema';
 
 export function CatalogNavigation({ catalog }: { catalog: CatalogView }) {
@@ -13,9 +12,7 @@ export function CatalogNavigation({ catalog }: { catalog: CatalogView }) {
 				<Link
 					to="/projects/jfdevelops"
 					activeOptions={{ exact: true }}
-					search={{}}
 					onClick={() => setOpenMobile(false)}
-					aria-current={!catalog.selectedGroup ? 'page' : undefined}
 					className="block text-sm font-medium text-primary"
 				>
 					All libraries
@@ -23,20 +20,12 @@ export function CatalogNavigation({ catalog }: { catalog: CatalogView }) {
 				{catalog.groups.map((group) => (
 					<div key={group.id}>
 						<Link
-							to="/projects/jfdevelops"
+							to="/projects/jfdevelops/categories/$category"
+							params={{ category: group.id }}
 							activeOptions={{ exact: true }}
-							search={{ category: group.id }}
+							activeProps={{ className: 'text-primary' }}
 							onClick={() => setOpenMobile(false)}
-							aria-current={
-								catalog.selectedGroup?.id === group.id &&
-								!catalog.selectedLibrary
-									? 'page'
-									: undefined
-							}
-							className={cn(
-								'block text-xs font-semibold hover:text-primary',
-								catalog.selectedGroup?.id === group.id && 'text-primary',
-							)}
+							className="block text-xs font-semibold hover:text-primary"
 						>
 							{group.title}
 						</Link>
@@ -44,20 +33,14 @@ export function CatalogNavigation({ catalog }: { catalog: CatalogView }) {
 							{group.libraries.map((library) => (
 								<li key={library.name}>
 									<Link
-										to="/projects/jfdevelops"
+										to="/projects/jfdevelops/$library"
+										params={{
+											library: library.name.replace('@jfdevelops/', ''),
+										}}
 										activeOptions={{ exact: true }}
-										search={{ category: group.id, library: library.name }}
+										activeProps={{ className: 'bg-secondary text-primary' }}
 										onClick={() => setOpenMobile(false)}
-										aria-current={
-											catalog.selectedLibrary?.name === library.name
-												? 'page'
-												: undefined
-										}
-										className={cn(
-											'block break-words rounded-md px-2 py-1.5 text-xs leading-5 text-muted-foreground hover:bg-secondary hover:text-foreground',
-											catalog.selectedLibrary?.name === library.name &&
-												'bg-secondary text-primary',
-										)}
+										className="block break-words rounded-md px-2 py-1.5 text-xs leading-5 text-muted-foreground hover:bg-secondary hover:text-foreground"
 									>
 										{library.name.replace('@jfdevelops/', '')}
 									</Link>

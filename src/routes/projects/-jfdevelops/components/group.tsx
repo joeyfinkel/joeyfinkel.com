@@ -26,8 +26,8 @@ export function LibraryGroup({ group }: { group: LibraryGroupData }) {
 				{group.libraries.map((library) => (
 					<li key={library.name} className="min-w-0 rounded-xl border p-5">
 						<Link
-							to="/projects/jfdevelops"
-							search={{ category: group.id, library: library.name }}
+							to="/projects/jfdevelops/$library"
+							params={{ library: library.name.replace('@jfdevelops/', '') }}
 							className="flex items-start gap-2 font-mono text-xs leading-6 text-primary underline underline-offset-4"
 						>
 							<span className="min-w-0 break-all">{library.name}</span>

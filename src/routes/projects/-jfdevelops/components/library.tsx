@@ -15,8 +15,8 @@ export function LibraryDetail({
 	return (
 		<article aria-labelledby="library-heading">
 			<Link
-				to="/projects/jfdevelops"
-				search={{ category: group.id }}
+				to="/projects/jfdevelops/categories/$category"
+				params={{ category: group.id }}
 				className="text-xs text-primary underline underline-offset-4"
 			>
 				{group.title}
@@ -48,8 +48,8 @@ export function LibraryDetail({
 					{group.description}
 				</p>
 				<Link
-					to="/projects/jfdevelops"
-					search={{ category: group.id }}
+					to="/projects/jfdevelops/categories/$category"
+					params={{ category: group.id }}
 					className="mt-4 inline-block text-sm text-primary underline underline-offset-4"
 				>
 					See the {group.title} example and companion libraries
