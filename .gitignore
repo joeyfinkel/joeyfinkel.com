@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.tanstack/
+.wrangler/
+.env
+.env.*
+!.env.example
+.dev.vars*
+*.tsbuildinfo

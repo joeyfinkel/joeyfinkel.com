@@ -1,0 +1,48 @@
+# joeyfinkel.com
+
+A small personal project showcase built with React, TypeScript, Vite, TanStack
+Router, Tailwind CSS, and shadcn/ui. Cloudflare Workers Static Assets serves the
+compiled site. There is no application server, database, or runtime API.
+
+## Development
+
+Use Node 24 (see `.node-version`) and the pnpm version in `package.json`.
+
+```sh
+pnpm install
+pnpm dev
+```
+
+```sh
+pnpm check
+pnpm build
+pnpm typecheck
+pnpm deploy:check
+```
+
+The router generates `src/routeTree.gen.ts` during development and builds. Run
+the build before typechecking a fresh clone. Commit generated route updates.
+
+## Structure
+
+- `src/routes/`: file-based routes; a route's private components and data live
+  beside it in a `-` prefixed folder, which the router ignores.
+- `src/components/ui/`: shared shadcn components.
+- `src/lib/`: shared utilities.
+- `public/`: static assets.
+
+Keep features contained, import directly from their defining files, and avoid
+barrel exports. The home page's project list lives in `src/routes/-home/projects.ts`.
+
+Add UI components with `pnpm dlx shadcn@latest add <component>`.
+
+## Hosting
+
+`wrangler.jsonc` configures static assets, SPA routing, and the custom domain
+`joeyfinkel.com`. The domain must be an active Cloudflare zone in the deployment
+account. Authenticate with `pnpm exec wrangler login`, then run `pnpm deploy`.
+Wrangler attaches the custom domain during deployment. No credentials belong in
+the repository. `pnpm deploy:check` validates packaging without publishing.
+
+See [Cloudflare Static Assets](https://developers.cloudflare.com/workers/static-assets/)
+and [custom domains](https://developers.cloudflare.com/workers/configuration/routing/custom-domains/).
