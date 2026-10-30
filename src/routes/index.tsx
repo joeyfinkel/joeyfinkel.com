@@ -30,9 +30,14 @@ function Home() {
 					<Link to="/" hash="experience" className="hover:text-primary">
 						Experience
 					</Link>
-					<a href="/resume.pdf" className="hover:text-primary">
+					<Link
+						to="."
+						href="/resume.pdf"
+						reloadDocument
+						className="hover:text-primary"
+					>
 						Resume
-					</a>
+					</Link>
 					<a
 						href="https://github.com/joeyfinkel"
 						className="flex items-center gap-1 hover:text-primary"

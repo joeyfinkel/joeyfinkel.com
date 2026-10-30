@@ -56,7 +56,7 @@ read-only repository permissions and requires no Cloudflare credentials.
 Publishing remains an explicit `pnpm deploy` operation.
 ## Experience and resume
 
-Employment history is maintained in `src/routes/-home/experience.ts`, based on
+Employment history is maintained in `src/routes/-home/utils/experience.ts`, based on
 the supplied master resume. The current consulting role appears first, followed
 by previous roles. Dates and overlapping engagements are preserved.
 
