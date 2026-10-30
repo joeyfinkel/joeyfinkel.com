@@ -114,7 +114,13 @@ async function authorizationPage() {
 		.map((value) => value.split(';')[0])
 		.join('; ');
 
-	return { client, verifier, handle: handle ?? '', cookie };
+	return {
+		client,
+		verifier,
+		handle: handle ?? '',
+		cookie,
+		path: `/authorize?${query}`,
+	};
 }
 
 it('authenticates the owner through browser-bound consent and PKCE, then serves MCP tools', async () => {
@@ -264,4 +270,117 @@ it('requires the browser consent cookie even with a correct owner password', asy
 		}),
 	});
 	expect(response.status).toBe(400);
+});
+
+it.each(['missing cookie', 'expired transaction'])(
+	'renews a rejected %s without bypassing browser consent',
+	async (failure) => {
+		const auth = await authorizationPage();
+
+		if (failure === 'expired transaction') {
+			await env.OAUTH_KV.delete(
+				`transaction:${await digest(new TextEncoder().encode(auth.handle))}`,
+			);
+		}
+
+		const rejected = await request(auth.path, {
+			method: 'POST',
+			headers: {
+				Origin: origin,
+				Cookie: failure === 'missing cookie' ? '' : auth.cookie,
+				'CF-Connecting-IP': crypto.randomUUID(),
+			},
+			body: new URLSearchParams({
+				handle: auth.handle,
+				decision: 'approve',
+				password: env.PUBLISH_PASSWORD,
+			}),
+		});
+		const html = await rejected.text();
+		const renewedHandle =
+			html.match(/name="handle" value="([^"]+)"/)?.[1] ?? '';
+		const renewedCookie = rejected.headers
+			.getSetCookie()
+			.map((value) => value.split(';')[0])
+			.join('; ');
+
+		expect(rejected.status).toBe(400);
+		expect(rejected.headers.get('Content-Type')).toContain('text/html');
+		expect(rejected.headers.get('Location')).toBeNull();
+		expect(html).toContain('Your password was accepted');
+		expect(html).not.toContain(env.PUBLISH_PASSWORD);
+		expect(renewedHandle).toBeTruthy();
+		expect(renewedHandle).not.toBe(auth.handle);
+		expect(renewedCookie).toContain('__Host-oauth-consent-');
+
+		const approved = await request(auth.path, {
+			method: 'POST',
+			headers: {
+				Origin: origin,
+				Cookie: renewedCookie,
+				'CF-Connecting-IP': crypto.randomUUID(),
+			},
+			body: new URLSearchParams({
+				handle: renewedHandle,
+				decision: 'approve',
+				password: env.PUBLISH_PASSWORD,
+			}),
+		});
+
+		expect(approved.status).toBe(302);
+		expect(approved.headers.get('Location')).toMatch(/^https:\/\/claude\.ai\//);
+
+		const replay = await request(auth.path, {
+			method: 'POST',
+			headers: {
+				Origin: origin,
+				Cookie: renewedCookie,
+				'CF-Connecting-IP': crypto.randomUUID(),
+			},
+			body: new URLSearchParams({
+				handle: renewedHandle,
+				decision: 'approve',
+				password: env.PUBLISH_PASSWORD,
+			}),
+		});
+
+		expect(replay.status).toBe(400);
+		expect(replay.headers.get('Location')).toBeNull();
+	},
+);
+
+it('keeps wrong-password retries on the themed consent page and validates requests before creating a session', async () => {
+	const auth = await authorizationPage();
+	const wrongPassword = await request(auth.path, {
+		method: 'POST',
+		headers: {
+			Origin: origin,
+			Cookie: auth.cookie,
+			'CF-Connecting-IP': crypto.randomUUID(),
+		},
+		body: new URLSearchParams({
+			handle: auth.handle,
+			decision: 'approve',
+			password: 'incorrect-password-with-at-least-32-characters',
+		}),
+	});
+	const html = await wrongPassword.text();
+
+	expect(wrongPassword.status).toBe(401);
+	expect(html).toContain('That publishing password did not match');
+	expect(html).toContain('<form');
+	expect(html).toContain('name="password"');
+	expect(wrongPassword.headers.get('Content-Security-Policy')).toContain(
+		"style-src 'nonce-",
+	);
+	expect(wrongPassword.headers.get('Content-Security-Policy')).not.toContain(
+		'unsafe-inline',
+	);
+
+	const invalid = await request('/authorize?client_id=unregistered');
+
+	expect(invalid.status).toBe(400);
+	expect(invalid.headers.get('Content-Type')).toContain('text/html');
+	expect(invalid.headers.getSetCookie()).toHaveLength(0);
+	expect(await invalid.text()).toContain('This connection request');
 });
