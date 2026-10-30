@@ -20,7 +20,7 @@ export function HireMe() {
 				project in mind? Let’s talk about what you need.
 			</p>
 			<Button asChild className="mt-6 max-w-full rounded-full px-5">
-				<Link to="." href="https://jfdevelops.com" reloadDocument>
+				<Link to={new URL('https://jfdevelops.com').href} reloadDocument>
 					Work with me at JF Develops
 					<ArrowUpRight aria-hidden="true" />
 				</Link>
