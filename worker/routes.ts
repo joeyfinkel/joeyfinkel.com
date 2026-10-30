@@ -1,4 +1,5 @@
 import { authorize } from './auth/authorize';
+import { readProjects } from './projects/read';
 import { ResumeError } from './resume/error';
 import { readResume } from './resume/read';
 import { uploadResume } from './resume/upload';
@@ -6,6 +7,13 @@ import { uploadResume } from './resume/upload';
 export const routes = {
 	async fetch(request, env) {
 		const { pathname } = new URL(request.url);
+
+		if (
+			pathname === '/api/projects' ||
+			pathname === '/api/projects/jfdevelops'
+		) {
+			return readProjects(request);
+		}
 
 		if (pathname === '/authorize') {
 			return authorize(request, env);

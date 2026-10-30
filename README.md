@@ -43,9 +43,21 @@ the build before typechecking a fresh clone. Commit generated route updates.
 
 Keep features contained, import directly from their defining files, and avoid
 barrel exports. The home page's project list lives in `src/routes/-home/utils/projects.ts`.
-The npm package catalog lives beside it in `libraries.ts`. It includes all 12
+The npm package catalog lives in `worker/projects/libraries.ts`. It includes all 12
 published `@jfdevelops` packages in the supplied npm search as of October 30, 2026;
 update that catalog when publishing a new package.
+
+Project cards open focused routes under `/projects/`. PaneDeck includes a gesture
+guide and run instructions; Material UI Helper includes filter and query examples.
+The JF Develops page groups every package with installation and usage examples.
+`worker/projects/groups.ts` owns the group descriptions and examples. The Worker
+computes the published-library count and grouping from the full catalog; the home
+card reads that count from `/api/projects`, and the library page reads the groups
+from `/api/projects/jfdevelops`. No client-side grouping or hardcoded count is used.
+Examples were checked against the published React Layout 2.0.0, multi-step form
+beta.16, create-error 0.2.0, and layout devtools Vite 0.1.1 packages. The form
+example explicitly installs the beta tag because npm's default tag still points
+to the older alpha API.
 
 Add UI components with `pnpm dlx shadcn@latest add <component>`.
 

@@ -10,33 +10,77 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ProjectsJfdevelopsRouteImport } from './routes/projects/jfdevelops'
+import { Route as ProjectsMaterialUiHelperRouteImport } from './routes/projects/material-ui-helper'
+import { Route as ProjectsPanedeckRouteImport } from './routes/projects/panedeck'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProjectsJfdevelopsRoute = ProjectsJfdevelopsRouteImport.update({
+  id: '/projects/jfdevelops',
+  path: '/projects/jfdevelops',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProjectsMaterialUiHelperRoute =
+  ProjectsMaterialUiHelperRouteImport.update({
+    id: '/projects/material-ui-helper',
+    path: '/projects/material-ui-helper',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ProjectsPanedeckRoute = ProjectsPanedeckRouteImport.update({
+  id: '/projects/panedeck',
+  path: '/projects/panedeck',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/projects/jfdevelops': typeof ProjectsJfdevelopsRoute
+  '/projects/material-ui-helper': typeof ProjectsMaterialUiHelperRoute
+  '/projects/panedeck': typeof ProjectsPanedeckRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/projects/jfdevelops': typeof ProjectsJfdevelopsRoute
+  '/projects/material-ui-helper': typeof ProjectsMaterialUiHelperRoute
+  '/projects/panedeck': typeof ProjectsPanedeckRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/projects/jfdevelops': typeof ProjectsJfdevelopsRoute
+  '/projects/material-ui-helper': typeof ProjectsMaterialUiHelperRoute
+  '/projects/panedeck': typeof ProjectsPanedeckRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/projects/jfdevelops'
+    | '/projects/material-ui-helper'
+    | '/projects/panedeck'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/projects/jfdevelops'
+    | '/projects/material-ui-helper'
+    | '/projects/panedeck'
+  id:
+    | '__root__'
+    | '/'
+    | '/projects/jfdevelops'
+    | '/projects/material-ui-helper'
+    | '/projects/panedeck'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ProjectsJfdevelopsRoute: typeof ProjectsJfdevelopsRoute
+  ProjectsMaterialUiHelperRoute: typeof ProjectsMaterialUiHelperRoute
+  ProjectsPanedeckRoute: typeof ProjectsPanedeckRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +92,35 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/projects/jfdevelops': {
+      id: '/projects/jfdevelops'
+      path: '/projects/jfdevelops'
+      fullPath: '/projects/jfdevelops'
+      preLoaderRoute: typeof ProjectsJfdevelopsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/projects/material-ui-helper': {
+      id: '/projects/material-ui-helper'
+      path: '/projects/material-ui-helper'
+      fullPath: '/projects/material-ui-helper'
+      preLoaderRoute: typeof ProjectsMaterialUiHelperRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/projects/panedeck': {
+      id: '/projects/panedeck'
+      path: '/projects/panedeck'
+      fullPath: '/projects/panedeck'
+      preLoaderRoute: typeof ProjectsPanedeckRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ProjectsJfdevelopsRoute: ProjectsJfdevelopsRoute,
+  ProjectsMaterialUiHelperRoute: ProjectsMaterialUiHelperRoute,
+  ProjectsPanedeckRoute: ProjectsPanedeckRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

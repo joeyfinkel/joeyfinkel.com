@@ -1,16 +1,15 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { ArrowDown, ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { ThemeSelect } from '@/components/theme-select';
-import { Button } from '@/components/ui/button';
 import { Experience } from './-home/components/experience';
 import { HireMe } from './-home/components/hire-me';
 import { Project } from './-home/components/project';
+import { loadHome } from './-home/utils/load';
 import { projects } from './-home/utils/projects';
-import { loadResume } from './-home/utils/resume';
 
 export const Route = createFileRoute('/')({
 	component: Home,
-	loader: loadResume,
+	loader: loadHome,
 });
 
 function Home() {
@@ -59,39 +58,18 @@ function Home() {
 				</nav>
 			</header>
 			<main id="main">
-				<section
-					className="pb-20 pt-20 sm:pb-24 sm:pt-28"
-					aria-labelledby="intro"
-				>
-					<p className="mb-6 flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.16em] text-primary">
-						<span
-							className="size-1.5 rounded-full bg-primary"
-							aria-hidden="true"
-						/>
-						A little corner of the internet
-					</p>
+				<section className="py-12 sm:py-16" aria-labelledby="intro">
 					<h1
 						id="intro"
-						className="max-w-xl text-5xl leading-[1.1] font-medium tracking-[-0.045em] sm:text-6xl"
+						className="text-3xl font-medium tracking-tight sm:text-4xl"
 					>
-						Building things.
-						<br />
-						<span className="text-muted-foreground">Making them useful.</span>
+						Hi, I'm Joey.
 					</h1>
-					<p className="mt-7 max-w-md text-base leading-8 text-muted-foreground">
-						I’m Joey, a software developer. This is home to the projects I’m
-						working on, the libraries I’ve created, and the ideas I’m turning
-						into something real.
+					<p className="mt-4 max-w-xl text-base leading-8 text-muted-foreground">
+						I'm a software developer. I work on web applications, open-source
+						libraries, and developer tools. Here are some of my projects and the
+						places I've worked.
 					</p>
-					<Button
-						asChild
-						variant="outline"
-						className="mt-8 rounded-full bg-transparent px-5 shadow-none"
-					>
-						<Link to="/" hash="projects">
-							Explore my work <ArrowDown aria-hidden="true" />
-						</Link>
-					</Button>
 				</section>
 				<section
 					id="projects"
@@ -100,15 +78,16 @@ function Home() {
 				>
 					<div className="mb-6 flex items-baseline justify-between">
 						<h2 id="projects-heading" className="text-sm font-medium">
-							Selected projects
+							Projects
 						</h2>
-						<span className="font-mono text-[11px] text-muted-foreground">
-							Always a work in progress
-						</span>
 					</div>
-					<ul>
+					<ul className="grid gap-4 sm:grid-cols-2">
 						{projects.map((project) => (
-							<Project key={project.name} project={project} />
+							<Project
+								key={project.name}
+								project={project}
+								publishedLibraryCount={resume.publishedLibraryCount}
+							/>
 						))}
 					</ul>
 				</section>
@@ -120,13 +99,7 @@ function Home() {
 				<HireMe />
 			</main>
 			<footer className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t py-8 text-xs text-muted-foreground">
-				<p>
-					Joey Finkel{' '}
-					<span className="mx-2" aria-hidden="true">
-						/
-					</span>{' '}
-					Built with intention.
-				</p>
+				<p>Joey Finkel</p>
 				<a
 					href="https://github.com/joeyfinkel"
 					className="flex items-center gap-1 hover:text-primary"
