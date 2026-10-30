@@ -13,6 +13,7 @@ export function LibraryGroup({ group }: { group: LibraryGroupData }) {
 		>
 			<h2
 				data-project-title
+				data-category-id={group.id}
 				id={`${group.id}-heading`}
 				className="text-2xl font-medium tracking-tight"
 			>

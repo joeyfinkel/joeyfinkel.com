@@ -17,6 +17,8 @@ export function LibraryDetail({
 		<article aria-labelledby="library-heading">
 			<h2
 				data-project-title
+				data-category-id={group.id}
+				data-category-title={group.title}
 				id="library-heading"
 				className="break-words text-2xl font-medium tracking-tight"
 			>

@@ -3,7 +3,11 @@ import { useEffect, useRef, useState } from 'react';
 export function useHeaderTitle() {
 	const headerRef = useRef<HTMLElement>(null);
 	const mainRef = useRef<HTMLElement>(null);
-	const [headerTitle, setHeaderTitle] = useState<string | null>(null);
+	const [heading, setHeading] = useState<{
+		title: string;
+		categoryId?: string;
+		categoryTitle?: string;
+	} | null>(null);
 
 	useEffect(() => {
 		const header = headerRef.current;
@@ -19,15 +23,23 @@ export function useHeaderTitle() {
 			const boundary = header?.getBoundingClientRect().bottom ?? 0;
 			const headings =
 				main?.querySelectorAll<HTMLElement>('[data-project-title]') ?? [];
-			let nextTitle: string | null = null;
+			let nextHeading: HTMLElement | null = null;
 
 			for (const heading of headings) {
 				if (heading.getBoundingClientRect().bottom <= boundary) {
-					nextTitle = heading.textContent;
+					nextHeading = heading;
 				}
 			}
 
-			setHeaderTitle(nextTitle);
+			setHeading(
+				nextHeading
+					? {
+							title: nextHeading.textContent ?? '',
+							categoryId: nextHeading.dataset.categoryId,
+							categoryTitle: nextHeading.dataset.categoryTitle,
+						}
+					: null,
+			);
 		}
 
 		function observeTitles() {
@@ -64,5 +76,5 @@ export function useHeaderTitle() {
 		};
 	}, []);
 
-	return { headerRef, mainRef, headerTitle };
+	return { headerRef, mainRef, heading };
 }
