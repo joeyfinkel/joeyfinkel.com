@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { ArrowDown, ArrowUpRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Experience } from './-home/components/experience';
 import { Project } from './-home/components/project';
 import { projects } from './-home/projects';
 
@@ -15,7 +16,7 @@ function Home() {
 			>
 				Skip to content
 			</a>
-			<header className="flex items-center justify-between border-b py-7">
+			<header className="flex flex-wrap items-center justify-between gap-5 border-b py-7">
 				<Link to="/" className="text-sm font-semibold tracking-tight">
 					Joey Finkel<span className="text-primary">.</span>
 				</Link>
@@ -26,6 +27,12 @@ function Home() {
 					<Link to="/" hash="projects" className="hover:text-primary">
 						Projects
 					</Link>
+					<Link to="/" hash="experience" className="hover:text-primary">
+						Experience
+					</Link>
+					<a href="/resume.pdf" className="hover:text-primary">
+						Resume
+					</a>
 					<a
 						href="https://github.com/joeyfinkel"
 						className="flex items-center gap-1 hover:text-primary"
@@ -88,6 +95,7 @@ function Home() {
 						))}
 					</ul>
 				</section>
+				<Experience />
 			</main>
 			<footer className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t py-8 text-xs text-muted-foreground">
 				<p>

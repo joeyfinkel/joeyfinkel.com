@@ -54,6 +54,22 @@ run. The build runs before typechecking so route generation works on fresh clone
 Actions are pinned to commit SHAs and updated by Dependabot. The workflow has
 read-only repository permissions and requires no Cloudflare credentials.
 Publishing remains an explicit `pnpm deploy` operation.
+## Experience and resume
+
+Employment history is maintained in `src/routes/-home/experience.ts`, based on
+the supplied master resume. The current consulting role appears first, followed
+by previous roles. Dates and overlapping engagements are preserved.
+
+The experience section uses the [ReUI timeline](https://reui.io/docs/components/radix/timeline),
+adapted into individual components in `src/components/reui/timeline/` with the
+upstream MIT license. It uses the existing Radix Slot and `cn` utility.
+
+Company logos are served locally from `public/companies/`; a generic icon is
+used when a logo is missing or fails to load. Asset sources are recorded there.
+
+`public/resume.pdf` is an unchanged copy of the supplied master resume, served
+at `https://joeyfinkel.com/resume.pdf` after deployment. Replace that file to
+publish an updated resume. Header and experience links open the PDF directly.
 
 ## Hosting
 
