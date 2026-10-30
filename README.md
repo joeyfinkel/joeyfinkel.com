@@ -13,6 +13,13 @@ pnpm install
 pnpm dev
 ```
 
+Local development uses Portless at `https://joeyfinkel.localhost` (or the URL
+reported by Portless when using an existing proxy configuration). `pnpm preview`
+also runs through Portless. Do not start Vite directly.
+
+`AGENTS.md` is copied from `jfdevelops/glammed-by-arielie`. Its backend and admin
+rules apply when those features exist; this site remains a static application.
+
 ```sh
 pnpm check
 pnpm build
