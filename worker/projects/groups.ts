@@ -76,7 +76,7 @@ export default defineConfig({
 		id: 'errors',
 		title: 'Typed errors',
 		description:
-			'Create error families with validated definitions, typed context, and configurable messages. Bring a synchronous Standard Schema validator such as Zod.',
+			'Create error families with validated definitions, typed context, and configurable messages.',
 		install: 'pnpm add @jfdevelops/create-error zod',
 		example: {
 			title: 'Give a family of errors a shared shape.',

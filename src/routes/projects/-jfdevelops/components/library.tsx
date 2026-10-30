@@ -2,6 +2,7 @@ import { Link } from '@tanstack/react-router';
 import { ArrowUpRight } from 'lucide-react';
 import { CodeExample } from '@/components/code-example';
 import type { LibraryGroupData } from '@/projects/schema';
+import { GroupDescription } from './description';
 
 export function LibraryDetail({
 	library,
@@ -78,7 +79,7 @@ export function LibraryDetail({
 			<div className="mt-8 border-t pt-6">
 				<h3 className="text-base font-medium">How it fits together</h3>
 				<p className="mt-3 text-sm leading-7 text-muted-foreground">
-					{group.description}
+					<GroupDescription group={group} />
 				</p>
 				<Link
 					to="/projects/jfdevelops/categories/$category"

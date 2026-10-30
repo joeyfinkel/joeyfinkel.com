@@ -1,6 +1,7 @@
 import { Link } from '@tanstack/react-router';
 import { ArrowUpRight } from 'lucide-react';
 import type { LibraryGroupData } from '@/projects/schema';
+import { GroupDescription } from './description';
 
 export function CategoryCard({ group }: { group: LibraryGroupData }) {
 	return (
@@ -16,7 +17,7 @@ export function CategoryCard({ group }: { group: LibraryGroupData }) {
 				</Link>
 			</h3>
 			<p className="mt-3 text-xs leading-6 text-muted-foreground">
-				{group.description}
+				<GroupDescription group={group} />
 			</p>
 			<ul className="mt-5 space-y-3 border-t pt-4">
 				{group.libraries.map((library) => (

@@ -2,6 +2,7 @@ import { Link } from '@tanstack/react-router';
 import { ArrowUpRight } from 'lucide-react';
 import { CodeExample } from '@/components/code-example';
 import type { LibraryGroupData } from '@/projects/schema';
+import { GroupDescription } from './description';
 
 export function LibraryGroup({ group }: { group: LibraryGroupData }) {
 	return (
@@ -18,7 +19,7 @@ export function LibraryGroup({ group }: { group: LibraryGroupData }) {
 				{group.title}
 			</h2>
 			<p className="mt-4 max-w-2xl text-sm leading-7 text-muted-foreground">
-				{group.description}
+				<GroupDescription group={group} />
 			</p>
 			<ul
 				aria-label={`${group.title} packages`}
