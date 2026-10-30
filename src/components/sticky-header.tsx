@@ -26,7 +26,7 @@ export function StickyHeader({
 			<div
 				data-scrolled={scrolled}
 				className={cn(
-					'flex flex-wrap items-center justify-between gap-4 border border-transparent border-b-border bg-background/95 px-5 py-3 backdrop-blur-md transition-[border-radius,box-shadow,border-color] duration-300 motion-reduce:transition-none',
+					'flex flex-nowrap items-center justify-between gap-4 border border-transparent border-b-border bg-background/95 px-5 py-3 backdrop-blur-md transition-[border-radius,box-shadow,border-color] duration-300 motion-reduce:transition-none',
 					scrolled && 'rounded-3xl border-border shadow-sm sm:rounded-full',
 				)}
 			>
