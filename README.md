@@ -36,6 +36,18 @@ barrel exports. The home page's project list lives in `src/routes/-home/projects
 
 Add UI components with `pnpm dlx shadcn@latest add <component>`.
 
+## Continuous integration
+
+GitHub Actions runs on pull requests to `main`, all branch pushes, and manual
+dispatch. It installs with a frozen lockfile, checks
+formatting and lint, builds production assets, checks TypeScript, verifies the
+generated route tree is committed, and validates Cloudflare packaging with a dry
+run. The build runs before typechecking so route generation works on fresh clones.
+
+Actions are pinned to commit SHAs and updated by Dependabot. The workflow has
+read-only repository permissions and requires no Cloudflare credentials.
+Publishing remains an explicit `pnpm deploy` operation.
+
 ## Hosting
 
 `wrangler.jsonc` configures static assets, SPA routing, and the custom domain
