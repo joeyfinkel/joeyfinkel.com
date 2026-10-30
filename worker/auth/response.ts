@@ -6,7 +6,7 @@ export function authResponse(
 ) {
 	headers.set('Content-Type', 'text/html; charset=utf-8');
 	headers.set('Cache-Control', 'no-store');
-	headers.set('Referrer-Policy', 'no-referrer');
+	headers.set('Referrer-Policy', 'same-origin');
 	headers.set('X-Content-Type-Options', 'nosniff');
 	headers.set(
 		'Content-Security-Policy',
