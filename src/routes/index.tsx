@@ -3,6 +3,7 @@ import { ArrowDown, ArrowUpRight } from 'lucide-react';
 import { ThemeSelect } from '@/components/theme-select';
 import { Button } from '@/components/ui/button';
 import { Experience } from './-home/components/experience';
+import { HireMe } from './-home/components/hire-me';
 import { Project } from './-home/components/project';
 import { projects } from './-home/projects';
 import { loadResume } from './-home/utils/resume';
@@ -36,6 +37,9 @@ function Home() {
 					</Link>
 					<Link to="/" hash="experience" className="hover:text-primary">
 						Experience
+					</Link>
+					<Link to="/" hash="hire-me" className="hover:text-primary">
+						Hire me
 					</Link>
 					<Link
 						to="."
@@ -113,6 +117,7 @@ function Home() {
 					resumeUrl={resume.resumeUrl}
 					unavailable={resume.unavailable}
 				/>
+				<HireMe />
 			</main>
 			<footer className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t py-8 text-xs text-muted-foreground">
 				<p>
