@@ -1,20 +1,12 @@
 import * as Dialog from '@radix-ui/react-dialog';
 import { Menu, X } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { ThemeSelect } from '@/components/theme-select';
 import { Button } from '@/components/ui/button';
-import { useIsMobile } from '@/hooks/use-mobile';
 import { HomeNavigation } from './navigation';
 
 export function MobileMenu({ resumeUrl }: { resumeUrl: string }) {
 	const [open, setOpen] = useState(false);
-	const isMobile = useIsMobile();
-
-	useEffect(() => {
-		if (!isMobile) {
-			setOpen(false);
-		}
-	}, [isMobile]);
 
 	return (
 		<Dialog.Root open={open} onOpenChange={setOpen}>

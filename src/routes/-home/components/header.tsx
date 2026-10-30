@@ -1,10 +1,13 @@
 import { Link } from '@tanstack/react-router';
 import { StickyHeader } from '@/components/sticky-header';
 import { ThemeSelect } from '@/components/theme-select';
+import { useIsMobile } from '@/hooks/use-mobile';
 import { MobileMenu } from './mobile-menu';
 import { HomeNavigation } from './navigation';
 
 export function HomeHeader({ resumeUrl }: { resumeUrl: string }) {
+	const isMobile = useIsMobile();
+
 	return (
 		<StickyHeader>
 			<Link
@@ -20,7 +23,7 @@ export function HomeHeader({ resumeUrl }: { resumeUrl: string }) {
 				/>
 				<ThemeSelect />
 			</div>
-			<MobileMenu resumeUrl={resumeUrl} />
+			{isMobile && <MobileMenu resumeUrl={resumeUrl} />}
 		</StickyHeader>
 	);
 }
