@@ -7,7 +7,7 @@ import { TimelineItem } from '@/components/reui/timeline/item';
 import { Timeline } from '@/components/reui/timeline/root';
 import { TimelineSeparator } from '@/components/reui/timeline/separator';
 import { TimelineTitle } from '@/components/reui/timeline/title';
-import { experience } from '../experience';
+import { experience } from '../utils/experience';
 import { CompanyLogo } from './company-logo';
 
 export function Experience() {
@@ -26,12 +26,14 @@ export function Experience() {
 						From production SaaS to independent consulting.
 					</p>
 				</div>
-				<a
+				<Link
+					to="."
 					href="/resume.pdf"
+					reloadDocument
 					className="inline-flex items-center gap-1 text-xs text-primary underline underline-offset-4"
 				>
 					View resume <ArrowUpRight className="size-3.5" aria-hidden="true" />
-				</a>
+				</Link>
 			</div>
 			<Timeline
 				defaultValue={0}
@@ -92,3 +94,5 @@ export function Experience() {
 		</section>
 	);
 }
+
+import { Link } from '@tanstack/react-router';
