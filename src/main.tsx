@@ -1,4 +1,5 @@
 import { RouterProvider } from '@tanstack/react-router';
+import { ThemeProvider } from 'next-themes';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { router } from './router';
@@ -12,6 +13,14 @@ if (!root) {
 
 createRoot(root).render(
 	<StrictMode>
-		<RouterProvider router={router} />
+		<ThemeProvider
+			attribute="class"
+			defaultTheme="system"
+			enableSystem
+			storageKey="joeyfinkel-theme"
+			disableTransitionOnChange
+		>
+			<RouterProvider router={router} />
+		</ThemeProvider>
 	</StrictMode>,
 );

@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { ArrowDown, ArrowUpRight } from 'lucide-react';
+import { ThemeSelect } from '@/components/theme-select';
 import { Button } from '@/components/ui/button';
 import { Experience } from './-home/components/experience';
 import { Project } from './-home/components/project';
@@ -22,7 +23,7 @@ function Home() {
 				</Link>
 				<nav
 					aria-label="Main navigation"
-					className="flex items-center gap-6 text-xs text-muted-foreground"
+					className="flex flex-wrap items-center gap-x-4 gap-y-3 text-xs text-muted-foreground"
 				>
 					<Link to="/" hash="projects" className="hover:text-primary">
 						Projects
@@ -39,6 +40,7 @@ function Home() {
 					>
 						GitHub <ArrowUpRight className="size-3.5" aria-hidden="true" />
 					</a>
+					<ThemeSelect />
 				</nav>
 			</header>
 			<main id="main">

@@ -43,6 +43,13 @@ barrel exports. The home page's project list lives in `src/routes/-home/projects
 
 Add UI components with `pnpm dlx shadcn@latest add <component>`.
 
+## Color theme
+
+The site follows the device color scheme by default and responds to changes
+while open. The header theme selector can override it with light or dark mode.
+The preference is stored locally; choosing System theme follows the device again.
+`next-themes` applies the theme before rendering to avoid a flash of the wrong theme.
+
 ## Continuous integration
 
 GitHub Actions runs on pull requests to `main`, all branch pushes, and manual
