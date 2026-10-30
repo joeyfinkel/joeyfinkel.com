@@ -17,7 +17,11 @@ export const catalogSchema = summarySchema.extend({
 				sourceUrl: z.url(),
 			}),
 			libraries: z.array(
-				z.object({ name: z.string(), description: z.string() }),
+				z.object({
+					name: z.string(),
+					description: z.string(),
+					githubUrl: z.url(),
+				}),
 			),
 		}),
 	),
@@ -28,7 +32,7 @@ export type LibraryGroupData = z.infer<typeof catalogSchema>['groups'][number];
 export const catalogViewSchema = catalogSchema.extend({
 	selectedGroup: catalogSchema.shape.groups.element.nullable(),
 	selectedLibrary: z
-		.object({ name: z.string(), description: z.string() })
+		.object({ name: z.string(), description: z.string(), githubUrl: z.url() })
 		.nullable(),
 });
 

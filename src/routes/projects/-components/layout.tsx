@@ -23,6 +23,8 @@ export function ProjectLayout({
 	children: ReactNode;
 	presentation: string;
 }) {
+	const isGitHub = new URL(sourceUrl).hostname === 'github.com';
+
 	return (
 		<div
 			className={cn(
@@ -65,6 +67,13 @@ export function ProjectLayout({
 						className="mt-6 rounded-full bg-transparent shadow-none"
 					>
 						<Link to={sourceUrl} reloadDocument>
+							<img
+								src={isGitHub ? '/brands/github.svg' : '/brands/npm.svg'}
+								alt=""
+								width={20}
+								height={20}
+								className="size-5 dark:invert"
+							/>
 							{sourceLabel}
 							<ArrowUpRight aria-hidden="true" />
 						</Link>
