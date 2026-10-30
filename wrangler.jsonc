@@ -1,10 +1,36 @@
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"name": "joeyfinkel-com",
+	"account_id": "261639eb984d1bc779437ad1f51be1b6",
+	"main": "worker/index.ts",
 	"compatibility_date": "2026-10-30",
+	"compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+	"vars": { "SITE_ORIGIN": "https://joeyfinkel.com" },
+	"secrets": { "required": ["PUBLISH_PASSWORD"] },
+	"r2_buckets": [{ "binding": "RESUMES", "bucket_name": "joeyfinkel-resumes" }],
+	"kv_namespaces": [
+		{ "binding": "OAUTH_KV", "id": "a5bcff7baf8c48efa4cca05bb0087750" }
+	],
+	"ratelimits": [
+		{
+			"name": "AUTH_LIMITER",
+			"namespace_id": "1001",
+			"simple": { "limit": 5, "period": 60 }
+		}
+	],
+	"observability": { "enabled": true, "traces": { "enabled": true } },
 	"assets": {
-		"directory": "./dist",
-		"not_found_handling": "single-page-application"
+		"binding": "ASSETS",
+		"not_found_handling": "single-page-application",
+		"run_worker_first": [
+			"/api/*",
+			"/mcp",
+			"/mcp/*",
+			"/authorize",
+			"/oauth/*",
+			"/.well-known/*",
+			"/resume.pdf"
+		]
 	},
 	"routes": [{ "pattern": "joeyfinkel.com", "custom_domain": true }]
 }

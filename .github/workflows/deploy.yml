@@ -1,0 +1,96 @@
+name: Deploy
+
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: production-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy to Cloudflare
+    if: >-
+      (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') ||
+      (github.event_name == 'workflow_run' &&
+       github.event.workflow_run.conclusion == 'success' &&
+       github.event.workflow_run.event == 'push' &&
+       github.event.workflow_run.head_branch == 'main' &&
+       github.event.workflow_run.head_repository.full_name == github.repository)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment:
+      name: production
+      url: https://joeyfinkel.com
+    env:
+      CI: "true"
+      WRANGLER_SEND_METRICS: "false"
+    steps:
+      - name: Check out the tested commit
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+          persist-credentials: false
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@f40ffcd9367d9f12939873eb1018b921a783ffaa # v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version-file: .node-version
+          cache: pnpm
+
+      - name: Install locked dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Check formatting and lint
+        run: pnpm check
+
+      - name: Generate Worker types
+        run: pnpm cf-typegen
+
+      - name: Test resume publishing
+        run: pnpm test
+
+      - name: Build production assets
+        run: pnpm build
+
+      - name: Check TypeScript
+        run: pnpm typecheck
+
+      - name: Validate deployment packaging
+        run: pnpm deploy:check
+
+      - name: Deploy the verified build
+        run: |
+          secretsFile="$RUNNER_TEMP/joeyfinkel-worker-secrets.json"
+          trap 'rm -f "$secretsFile"' EXIT
+          node --input-type=module <<'NODE'
+          import { writeFileSync } from 'node:fs';
+          import { join } from 'node:path';
+
+          const password = process.env.PUBLISH_PASSWORD;
+
+          if (!password || password.length < 32) {
+            throw new Error('Configure PUBLISH_PASSWORD with at least 32 characters in the production environment.');
+          }
+
+          writeFileSync(
+            join(process.env.RUNNER_TEMP, 'joeyfinkel-worker-secrets.json'),
+            JSON.stringify({ PUBLISH_PASSWORD: password }),
+            { mode: 0o600 },
+          );
+          NODE
+          pnpm exec wrangler deploy --secrets-file "$secretsFile"
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          PUBLISH_PASSWORD: ${{ secrets.PUBLISH_PASSWORD }}

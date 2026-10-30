@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+@custom-variant dark (&:is(.dark *));
+
 @theme inline {
 	--font-sans: "Segoe UI", Helvetica, Arial, sans-serif;
 	--color-background: var(--background);
@@ -30,9 +32,21 @@
 	--secondary: #e8eae2;
 	--muted-foreground: #60665f;
 	--border: #d8dcd2;
+	--selection: #cddbc8;
 	font-synthesis: none;
 	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: antialiased;
+}
+
+.dark {
+	--background: #141916;
+	--foreground: #e7eae3;
+	--primary: #a3cfb5;
+	--primary-foreground: #102217;
+	--secondary: #222c25;
+	--muted-foreground: #a4ada4;
+	--border: #364139;
+	--selection: #375542;
 }
 
 @layer base {
@@ -49,6 +63,10 @@
 	}
 
 	::selection {
-		background: #cddbc8;
+		background: var(--selection);
 	}
+}
+
+html {
+	scroll-padding-top: 9rem;
 }
