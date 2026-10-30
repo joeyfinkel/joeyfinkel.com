@@ -24,3 +24,17 @@ export const catalogSchema = summarySchema.extend({
 });
 
 export type LibraryGroupData = z.infer<typeof catalogSchema>['groups'][number];
+
+export const catalogSearchSchema = z.object({
+	category: z.string().optional(),
+	library: z.string().optional(),
+});
+
+export const catalogViewSchema = catalogSchema.extend({
+	selectedGroup: catalogSchema.shape.groups.element.nullable(),
+	selectedLibrary: z
+		.object({ name: z.string(), description: z.string() })
+		.nullable(),
+});
+
+export type CatalogView = z.infer<typeof catalogViewSchema>;

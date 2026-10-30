@@ -66,3 +66,7 @@
 		background: var(--selection);
 	}
 }
+
+html {
+	scroll-padding-top: 9rem;
+}

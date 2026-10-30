@@ -10,14 +10,39 @@ export function readProjects(request: Request) {
 	}
 
 	const summary = { publishedLibraryCount: libraries.length };
-	const catalog = new URL(request.url).pathname === '/api/projects/jfdevelops';
+	const url = new URL(request.url);
+	const catalog = url.pathname === '/api/projects/jfdevelops';
+	const category = url.searchParams.get('category');
+	const libraryName = url.searchParams.get('library');
+	const catalogGroups = groups.map((group) => ({
+		...group,
+		libraries: libraries.filter((library) => library.group === group.id),
+	}));
+	const selectedLibrary = libraryName
+		? libraries.find((library) => library.name === libraryName)
+		: null;
+	const selectedGroup =
+		catalogGroups.find(
+			(group) => group.id === (category ?? selectedLibrary?.group),
+		) ?? null;
+
+	if (
+		catalog &&
+		((libraryName && !selectedLibrary) ||
+			(category && !selectedGroup) ||
+			(selectedLibrary && selectedLibrary.group !== selectedGroup?.id))
+	) {
+		return Response.json(
+			{ error: 'Category or library not found' },
+			{ status: 404 },
+		);
+	}
 	const data = catalog
 		? {
 				...summary,
-				groups: groups.map((group) => ({
-					...group,
-					libraries: libraries.filter((library) => library.group === group.id),
-				})),
+				groups: catalogGroups,
+				selectedGroup,
+				selectedLibrary: selectedLibrary ?? null,
 			}
 		: summary;
 	const response = Response.json(data, {

@@ -49,7 +49,12 @@ update that catalog when publishing a new package.
 
 Project cards open focused routes under `/projects/`. PaneDeck includes a gesture
 guide and run instructions; Material UI Helper includes filter and query examples.
-The JF Develops page groups every package with installation and usage examples.
+The JF Develops overview has category cards and a docs sidebar. Category and
+library selections are shareable search parameters (`?category=layouts` and
+`?category=layouts&library=@jfdevelops/react-layout`). The Worker resolves and
+validates the selection; the page shows only that category or library. The
+shadcn sidebar is adapted into small modules under `src/components/ui/sidebar/`,
+with a sticky desktop rail and a Radix-backed mobile sheet.
 `worker/projects/groups.ts` owns the group descriptions and examples. The Worker
 computes the published-library count and grouping from the full catalog; the home
 card reads that count from `/api/projects`, and the library page reads the groups

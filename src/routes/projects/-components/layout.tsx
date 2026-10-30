@@ -4,6 +4,7 @@ import type { ReactNode } from 'react';
 import { StickyHeader } from '@/components/sticky-header';
 import { ThemeSelect } from '@/components/theme-select';
 import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 export function ProjectLayout({
 	title,
@@ -12,6 +13,7 @@ export function ProjectLayout({
 	sourceUrl,
 	sourceLabel = 'View on GitHub',
 	children,
+	presentation,
 }: {
 	title: string;
 	category: string;
@@ -19,9 +21,15 @@ export function ProjectLayout({
 	sourceUrl: string;
 	sourceLabel?: string;
 	children: ReactNode;
+	presentation: string;
 }) {
 	return (
-		<div className="mx-auto max-w-4xl px-6 sm:px-10">
+		<div
+			className={cn(
+				'mx-auto px-6 sm:px-10',
+				presentation === 'docs' ? 'max-w-6xl' : 'max-w-4xl',
+			)}
+		>
 			<Link
 				to="."
 				hash="project-main"
@@ -41,14 +49,14 @@ export function ProjectLayout({
 				<ThemeSelect />
 			</StickyHeader>
 			<main id="project-main" className="pb-12">
-				<div className="border-b py-14 sm:py-20">
+				<div className="border-b py-8 sm:py-10">
 					<p className="mb-4 font-mono text-[11px] uppercase tracking-[0.16em] text-primary">
 						{category}
 					</p>
 					<h1 className="text-4xl font-medium tracking-[-0.04em] sm:text-5xl">
 						{title}
 					</h1>
-					<p className="mt-6 max-w-2xl text-base leading-8 text-muted-foreground">
+					<p className="mt-4 max-w-2xl text-sm leading-7 text-muted-foreground">
 						{description}
 					</p>
 					<Button

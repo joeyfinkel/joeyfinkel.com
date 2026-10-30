@@ -1,7 +1,11 @@
 import { createExecutionContext } from 'cloudflare:test';
 import { env } from 'cloudflare:workers';
 import { expect, it } from 'vitest';
-import { catalogSchema, summarySchema } from '../src/projects/schema';
+import {
+	catalogSchema,
+	catalogViewSchema,
+	summarySchema,
+} from '../src/projects/schema';
 import worker from '../worker';
 import { libraries } from '../worker/projects/libraries';
 
@@ -34,6 +38,40 @@ it('returns the same authoritative count for the home card and grouped catalog',
 		),
 	).toBe(true);
 });
+
+it('selects a library and its category on the server', async () => {
+	const response = await worker.fetch(
+		new Request(
+			'https://joeyfinkel.com/api/projects/jfdevelops?library=%40jfdevelops%2Freact-layout',
+		),
+		env,
+		createExecutionContext(),
+	);
+	const catalog = catalogViewSchema.parse(await response.json());
+
+	expect(catalog.selectedLibrary?.name).toBe('@jfdevelops/react-layout');
+	expect(catalog.selectedGroup?.id).toBe('layouts');
+	expect(catalog.groups).toHaveLength(4);
+});
+
+it.each([
+	'category=missing',
+	'library=missing',
+	'category=forms&library=%40jfdevelops%2Freact-layout',
+])(
+	'rejects an unknown or mismatched catalog selection: %s',
+	async (selection) => {
+		const response = await worker.fetch(
+			new Request(
+				`https://joeyfinkel.com/api/projects/jfdevelops?${selection}`,
+			),
+			env,
+			createExecutionContext(),
+		);
+
+		expect(response.status).toBe(404);
+	},
+);
 
 it('groups related packages together without dropping secondary integrations', async () => {
 	const response = await worker.fetch(

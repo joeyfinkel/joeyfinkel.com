@@ -9,6 +9,7 @@ export const { createResourceLayout: createProjectLayout } =
 			description: createProp.string(),
 			sourceUrl: createProp.string(),
 			sourceLabel: createProp.string(),
+			presentation: createProp.string(),
 		},
 		layout: {
 			props: {
@@ -17,6 +18,7 @@ export const { createResourceLayout: createProjectLayout } =
 					description: true,
 					sourceUrl: true,
 					sourceLabel: true,
+					presentation: true,
 				},
 				custom: {
 					category: createProp.string(),

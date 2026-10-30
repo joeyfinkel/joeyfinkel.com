@@ -8,7 +8,7 @@ export function LibraryGroup({ group }: { group: LibraryGroupData }) {
 		<section
 			id={group.id}
 			aria-labelledby={`${group.id}-heading`}
-			className="scroll-mt-8 border-b py-10 last:border-b-0"
+			className="scroll-mt-32"
 		>
 			<h2
 				id={`${group.id}-heading`}
@@ -26,7 +26,8 @@ export function LibraryGroup({ group }: { group: LibraryGroupData }) {
 				{group.libraries.map((library) => (
 					<li key={library.name} className="min-w-0 rounded-xl border p-5">
 						<Link
-							to={new URL(`https://www.npmjs.com/package/${library.name}`).href}
+							to="/projects/jfdevelops"
+							search={{ category: group.id, library: library.name }}
 							className="flex items-start gap-2 font-mono text-xs leading-6 text-primary underline underline-offset-4"
 						>
 							<span className="min-w-0 break-all">{library.name}</span>

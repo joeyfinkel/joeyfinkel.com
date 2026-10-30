@@ -3,9 +3,10 @@ import { createProjectLayout } from '../../-utils/layout';
 export const JfdevelopsPage = createProjectLayout({
 	resource: 'jfdevelops',
 	name: 'JfdevelopsPage',
+	presentation: 'docs',
 	title: 'jfdevelops',
 	description:
-		'Small, focused packages for building TypeScript and React applications. Find the pieces you need, see how they fit together, and start with a working pattern.',
+		'My open-source libraries for layouts, forms, developer tools, and typed errors.',
 	sourceUrl: 'https://www.npmjs.com/search?q=%40jfdevelops',
 	sourceLabel: 'Browse on npm',
 });
