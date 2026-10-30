@@ -54,6 +54,12 @@ jobs:
       - name: Check formatting and lint
         run: pnpm check
 
+      - name: Generate Worker types
+        run: pnpm cf-typegen
+
+      - name: Test resume publishing
+        run: pnpm test
+
       - name: Build production assets
         run: pnpm build
 

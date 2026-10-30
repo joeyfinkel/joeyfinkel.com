@@ -1,8 +1,8 @@
 # joeyfinkel.com
 
 A small personal project showcase built with React, TypeScript, Vite, TanStack
-Router, Tailwind CSS, and shadcn/ui. Cloudflare Workers Static Assets serves the
-compiled site. There is no application server, database, or runtime API.
+Router, Tailwind CSS, and shadcn/ui. Cloudflare serves static assets plus a small
+Worker for resume publishing. R2 stores resume versions; KV stores OAuth grants.
 
 ## Development
 
@@ -18,10 +18,13 @@ reported by Portless when using an existing proxy configuration). `pnpm preview`
 also runs through Portless. Do not start Vite directly.
 
 `AGENTS.md` is copied from `jfdevelops/glammed-by-arielie`. Its backend and admin
-rules apply when those features exist; this site remains a static application.
+rules apply when those features exist. The frontend remains static; the resume
+service uses Workers rather than Convex.
 
 ```sh
 pnpm check
+pnpm cf-typegen
+pnpm test
 pnpm build
 pnpm typecheck
 pnpm deploy:check
@@ -84,9 +87,15 @@ upstream MIT license. It uses the existing Radix Slot and `cn` utility.
 Company logos are served locally from `public/companies/`; a generic icon is
 used when a logo is missing or fails to load. Asset sources are recorded there.
 
-`public/resume.pdf` is an unchanged copy of the supplied master resume, served
-at `https://joeyfinkel.com/resume.pdf` after deployment. Replace that file to
-publish an updated resume. Header and experience links open the PDF directly.
+`public/resume.pdf` is the original master resume, used until the first publication.
+After that, `/resume.pdf` and the timeline read the published version from R2.
+Resume links include the timeline's revision so an already-open page continues
+to link to its matching PDF. Failed or incomplete uploads never replace the
+current version. A service outage shows an experience retry message while the
+project showcase remains available.
+
+See [resume publishing setup](docs/resume-publishing.md) for Cloudflare setup,
+Claude connector authorization, and instructions for the Job Search project.
 
 ## Hosting
 

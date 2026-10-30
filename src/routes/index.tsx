@@ -5,10 +5,16 @@ import { Button } from '@/components/ui/button';
 import { Experience } from './-home/components/experience';
 import { Project } from './-home/components/project';
 import { projects } from './-home/projects';
+import { loadResume } from './-home/utils/resume';
 
-export const Route = createFileRoute('/')({ component: Home });
+export const Route = createFileRoute('/')({
+	component: Home,
+	loader: loadResume,
+});
 
 function Home() {
+	const resume = Route.useLoaderData();
+
 	return (
 		<div className="mx-auto max-w-3xl px-6 sm:px-10">
 			<a
@@ -33,7 +39,7 @@ function Home() {
 					</Link>
 					<Link
 						to="."
-						href="/resume.pdf"
+						href={resume.resumeUrl}
 						reloadDocument
 						className="hover:text-primary"
 					>
@@ -102,7 +108,11 @@ function Home() {
 						))}
 					</ul>
 				</section>
-				<Experience />
+				<Experience
+					experience={resume.experience}
+					resumeUrl={resume.resumeUrl}
+					unavailable={resume.unavailable}
+				/>
 			</main>
 			<footer className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t py-8 text-xs text-muted-foreground">
 				<p>

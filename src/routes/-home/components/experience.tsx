@@ -1,3 +1,4 @@
+import { Link } from '@tanstack/react-router';
 import { ArrowUpRight } from 'lucide-react';
 import { TimelineContent } from '@/components/reui/timeline/content';
 import { TimelineDate } from '@/components/reui/timeline/date';
@@ -7,10 +8,18 @@ import { TimelineItem } from '@/components/reui/timeline/item';
 import { Timeline } from '@/components/reui/timeline/root';
 import { TimelineSeparator } from '@/components/reui/timeline/separator';
 import { TimelineTitle } from '@/components/reui/timeline/title';
-import { experience } from '../utils/experience';
+import type { Experience as ExperienceData } from '@/resume/schema';
 import { CompanyLogo } from './company-logo';
 
-export function Experience() {
+export function Experience({
+	experience,
+	resumeUrl,
+	unavailable,
+}: {
+	experience: ExperienceData;
+	resumeUrl: string;
+	unavailable: boolean;
+}) {
 	return (
 		<section
 			id="experience"
@@ -28,71 +37,83 @@ export function Experience() {
 				</div>
 				<Link
 					to="."
-					href="/resume.pdf"
+					href={resumeUrl}
 					reloadDocument
 					className="inline-flex items-center gap-1 text-xs text-primary underline underline-offset-4"
 				>
 					View resume <ArrowUpRight className="size-3.5" aria-hidden="true" />
 				</Link>
 			</div>
-			<Timeline
-				defaultValue={0}
-				role="list"
-				aria-label="Employment history, current role first"
-			>
-				{experience.map((job, index) => (
-					<TimelineItem
-						key={job.company}
-						step={index + 1}
-						role="listitem"
-						className="group-data-[orientation=vertical]/timeline:ms-14 group-data-[orientation=vertical]/timeline:not-last:pb-12"
+			{unavailable ? (
+				<p role="status" className="text-sm leading-7 text-muted-foreground">
+					Experience is temporarily unavailable.{' '}
+					<Link
+						to="/"
+						reloadDocument
+						className="text-primary underline underline-offset-4"
 					>
-						<TimelineSeparator className="bg-border group-data-[orientation=vertical]/timeline:-left-9 group-data-[orientation=vertical]/timeline:h-[calc(100%-2.75rem)] group-data-[orientation=vertical]/timeline:translate-y-11" />
-						<TimelineIndicator className="size-10 rounded-lg border-0 bg-background group-data-[orientation=vertical]/timeline:-left-9">
-							<CompanyLogo src={job.logo} />
-						</TimelineIndicator>
-						<TimelineHeader>
-							<TimelineDate
-								asChild
-								className="mb-2 h-auto! font-mono text-[11px]"
-							>
-								<p>
-									<time dateTime={job.start}>{job.period}</time>
+						Try again
+					</Link>
+					.
+				</p>
+			) : (
+				<Timeline
+					defaultValue={0}
+					role="list"
+					aria-label="Employment history, current role first"
+				>
+					{experience.map((job, index) => (
+						<TimelineItem
+							key={`${job.company}:${job.role}:${job.start}`}
+							step={index + 1}
+							role="listitem"
+							className="group-data-[orientation=vertical]/timeline:ms-14 group-data-[orientation=vertical]/timeline:not-last:pb-12"
+						>
+							<TimelineSeparator className="bg-border group-data-[orientation=vertical]/timeline:-left-9 group-data-[orientation=vertical]/timeline:h-[calc(100%-2.75rem)] group-data-[orientation=vertical]/timeline:translate-y-11" />
+							<TimelineIndicator className="size-10 rounded-lg border-0 bg-background group-data-[orientation=vertical]/timeline:-left-9">
+								<CompanyLogo src={job.logo} />
+							</TimelineIndicator>
+							<TimelineHeader>
+								<TimelineDate
+									asChild
+									className="mb-2 h-auto! font-mono text-[11px]"
+								>
+									<p>
+										<time dateTime={job.start}>{job.period}</time>
+									</p>
+								</TimelineDate>
+								<TimelineTitle className="text-xl tracking-tight">
+									{job.company}
+								</TimelineTitle>
+								<p className="mt-1 text-sm font-medium">{job.role}</p>
+								<p className="mt-1 text-xs leading-6 text-muted-foreground">
+									{job.location}
 								</p>
-							</TimelineDate>
-							<TimelineTitle className="text-xl tracking-tight">
-								{job.company}
-							</TimelineTitle>
-							<p className="mt-1 text-sm font-medium">{job.role}</p>
-							<p className="mt-1 text-xs leading-6 text-muted-foreground">
-								{job.location}
-							</p>
-						</TimelineHeader>
-						<TimelineContent className="mt-4">
-							<ul className="space-y-3 text-sm leading-7">
-								{job.highlights.map((highlight) => (
-									<li key={highlight}>{highlight}</li>
-								))}
-							</ul>
-							<ul
-								className="mt-5 flex flex-wrap gap-x-4 gap-y-2"
-								aria-label="Technologies"
-							>
-								{job.technologies.map((technology) => (
-									<li
-										key={technology}
-										className="font-mono text-[11px] text-primary"
-									>
-										{technology}
-									</li>
-								))}
-							</ul>
-						</TimelineContent>
-					</TimelineItem>
-				))}
-			</Timeline>
+							</TimelineHeader>
+							<TimelineContent className="mt-4">
+								<ul className="space-y-3 text-sm leading-7">
+									{job.highlights.map((highlight) => (
+										<li key={highlight}>{highlight}</li>
+									))}
+								</ul>
+								<ul
+									className="mt-5 flex flex-wrap gap-x-4 gap-y-2"
+									aria-label="Technologies"
+								>
+									{job.technologies.map((technology) => (
+										<li
+											key={technology}
+											className="font-mono text-[11px] text-primary"
+										>
+											{technology}
+										</li>
+									))}
+								</ul>
+							</TimelineContent>
+						</TimelineItem>
+					))}
+				</Timeline>
+			)}
 		</section>
 	);
 }
-
-import { Link } from '@tanstack/react-router';
