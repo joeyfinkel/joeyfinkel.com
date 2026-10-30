@@ -9,9 +9,6 @@ export function HireMe() {
 			aria-labelledby="hire-me-heading"
 			className="scroll-mt-8 border-t py-12 sm:py-16"
 		>
-			<p className="mb-3 font-mono text-[11px] uppercase tracking-[0.16em] text-primary">
-				Let’s build something useful
-			</p>
 			<h2 id="hire-me-heading" className="text-3xl font-medium tracking-tight">
 				Hire me
 			</h2>

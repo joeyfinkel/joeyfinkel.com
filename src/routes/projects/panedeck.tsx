@@ -21,7 +21,7 @@ function PaneDeck() {
 				</p>
 				<ol className="mt-6 grid gap-6 text-sm leading-7 sm:grid-cols-3">
 					<li>
-						<span className="font-mono text-xs text-primary">01 / Split</span>
+						<h3 className="text-base font-medium">Split</h3>
 						<p className="mt-2">
 							Hold{' '}
 							<kbd className="rounded border px-1.5 py-0.5 font-mono text-xs">
@@ -32,14 +32,14 @@ function PaneDeck() {
 						</p>
 					</li>
 					<li>
-						<span className="font-mono text-xs text-primary">02 / Tab</span>
+						<h3 className="text-base font-medium">Tab</h3>
 						<p className="mt-2">
 							Use the tab destination above the target window to group apps into
 							tabs. Switch between them from the shared strip.
 						</p>
 					</li>
 					<li>
-						<span className="font-mono text-xs text-primary">03 / Arrange</span>
+						<h3 className="text-base font-medium">Arrange</h3>
 						<p className="mt-2">
 							Move the group from its topbar, drag a shared divider to resize
 							panes, or detach a tab to restore its window.

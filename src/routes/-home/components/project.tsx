@@ -37,13 +37,13 @@ export function Project({
 						aria-hidden="true"
 					/>
 				</div>
-				<p className="mt-6 text-xs text-muted-foreground">{project.category}</p>
-				<h3 className="mt-2 text-2xl font-medium tracking-tight">
+				<h3 className="mt-6 text-2xl font-medium tracking-tight">
 					{project.name}
 				</h3>
 				<p className="mt-3 max-w-xl flex-1 text-sm leading-7 text-muted-foreground">
 					{project.description}
 				</p>
+				<p className="mt-4 text-sm text-muted-foreground">{project.category}</p>
 				<ul
 					className="mt-5 flex flex-wrap gap-x-4 gap-y-2"
 					aria-label="Technologies"

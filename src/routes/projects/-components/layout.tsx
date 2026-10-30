@@ -52,15 +52,13 @@ export function ProjectLayout({
 			</StickyHeader>
 			<main id="project-main" className="pb-12">
 				<div className="border-b py-8 sm:py-10">
-					<p className="mb-4 font-mono text-[11px] uppercase tracking-[0.16em] text-primary">
-						{category}
-					</p>
 					<h1 className="text-4xl font-medium tracking-[-0.04em] sm:text-5xl">
 						{title}
 					</h1>
 					<p className="mt-4 max-w-2xl text-sm leading-7 text-muted-foreground">
 						{description}
 					</p>
+					<p className="mt-3 text-sm text-muted-foreground">{category}</p>
 					<Button
 						asChild
 						variant="outline"

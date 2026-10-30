@@ -14,21 +14,24 @@ export function LibraryDetail({
 
 	return (
 		<article aria-labelledby="library-heading">
-			<Link
-				to="/projects/jfdevelops/categories/$category"
-				params={{ category: group.id }}
-				className="text-xs text-primary underline underline-offset-4"
-			>
-				{group.title}
-			</Link>
 			<h2
 				id="library-heading"
-				className="mt-4 break-words text-2xl font-medium tracking-tight"
+				className="break-words text-2xl font-medium tracking-tight"
 			>
 				{library.name}
 			</h2>
 			<p className="mt-4 text-sm leading-7 text-muted-foreground">
 				{library.description}
+			</p>
+			<p className="mt-3 text-sm text-muted-foreground">
+				Category:{' '}
+				<Link
+					to="/projects/jfdevelops/categories/$category"
+					params={{ category: group.id }}
+					className="text-primary underline underline-offset-4"
+				>
+					{group.title}
+				</Link>
 			</p>
 			<CodeExample
 				title="Install this library"

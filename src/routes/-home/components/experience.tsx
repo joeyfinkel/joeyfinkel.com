@@ -74,18 +74,16 @@ export function Experience({
 								<CompanyLogo src={job.logo} />
 							</TimelineIndicator>
 							<TimelineHeader>
-								<TimelineDate
-									asChild
-									className="mb-2 h-auto! font-mono text-[11px]"
-								>
-									<p>
-										<time dateTime={job.start}>{job.period}</time>
-									</p>
-								</TimelineDate>
 								<TimelineTitle className="text-xl tracking-tight">
 									{job.company}
 								</TimelineTitle>
 								<p className="mt-1 text-sm font-medium">{job.role}</p>
+								<TimelineDate
+									dateTime={job.start}
+									className="mt-2 mb-0 h-auto! text-sm font-normal"
+								>
+									{job.period}
+								</TimelineDate>
 								<p className="mt-1 text-xs leading-6 text-muted-foreground">
 									{job.location}
 								</p>
