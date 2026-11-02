@@ -19,13 +19,13 @@ export function Sidebar({
 					<Dialog.Overlay className="fixed inset-0 z-[60] bg-black/40 data-[state=open]:animate-in data-[state=open]:fade-in-0 motion-reduce:animate-none" />
 					<Dialog.Content className="fixed inset-y-0 left-0 z-[60] w-[min(21rem,90vw)] overflow-y-auto border-r bg-background p-6 data-[state=open]:animate-in data-[state=open]:slide-in-from-left motion-reduce:animate-none">
 						<Dialog.Title className="mb-1 text-lg font-medium">
-							jfdevelops libraries
+							Projects
 						</Dialog.Title>
 						<Dialog.Description className="mb-8 text-xs text-muted-foreground">
-							Choose a category or library.
+							Choose a project, category or library.
 						</Dialog.Description>
 						<Dialog.Close
-							aria-label="Close library navigation"
+							aria-label="Close project navigation"
 							className="absolute right-4 top-4 rounded-md p-2 hover:bg-secondary"
 						>
 							<X className="size-4" aria-hidden="true" />

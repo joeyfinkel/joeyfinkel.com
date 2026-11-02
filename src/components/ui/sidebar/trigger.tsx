@@ -14,7 +14,7 @@ export function SidebarTrigger() {
 			onClick={toggleSidebar}
 		>
 			<PanelLeft className="size-4" aria-hidden="true" />
-			Browse libraries
+			Browse projects
 		</Button>
 	);
 }

@@ -11,7 +11,7 @@ import {
 } from '../../-components/layout';
 
 export const projectLayouts = createDefinedResourceLayout({
-  resources: ['panedeck', 'material-ui-helper', 'jfdevelops'],
+  resources: ['projects', 'panedeck', 'material-ui-helper', 'jfdevelops'],
   options: {
     title: createProp.string(),
     description: createProp.string(),
@@ -29,7 +29,8 @@ export const projectLayouts = createDefinedResourceLayout({
           package: createProp.string(),
           label: createProp.string(),
         }),
-      ),
+      )
+      .optional(),
   },
   props: {
     include: {
@@ -75,6 +76,10 @@ export const createSourceUrl = createReusable({
     },
   },
   fn: ({ meta }) => {
+    if (!meta) {
+      return '';
+    }
+
     if (meta.source === 'github') {
       const { owner, repo, source } = meta;
 
