@@ -1,8 +1,60 @@
 import { useMatches } from '@tanstack/react-router';
+import { projectLinks } from './links';
 
-export function useBreadcrumbs(title: string, projectPath: string) {
+type JoinSegments<
+	TSegments extends Array<string>,
+	TDelimiter extends string = '/',
+	TIncludeLeading extends boolean = false,
+> = TSegments extends [infer TFirst, ...infer TRest]
+	? TFirst extends string
+		? TRest extends [string, ...Array<string>]
+			? `${TIncludeLeading extends true ? TDelimiter : ''}${TFirst}${TDelimiter}${JoinSegments<TRest, TDelimiter>}`
+			: `${TIncludeLeading extends true ? TDelimiter : ''}${TFirst}`
+		: never
+	: '';
+
+function joinWithoutLeading<TSegments extends Array<string>>(
+	...segments: TSegments
+) {
+	return segments.join('/') as JoinSegments<TSegments>;
+}
+
+function joinWithLeading<TSegments extends Array<string>>(
+	...segments: TSegments
+) {
+	return `/${joinWithoutLeading(...segments)}` as const;
+}
+
+const createPath = Object.assign(joinWithLeading, {
+	withoutLeading: joinWithoutLeading,
+});
+
+export function useBreadcrumbs() {
+	const project = useMatches({
+		select: (matches) => {
+			for (const match of matches) {
+				const routeId = match.routeId.replace(/\/$/, '');
+				for (const group of projectLinks) {
+					const link = group.links.find(
+						({ resource }) => routeId === createPath('projects', resource),
+					);
+
+					if (link) {
+						return {
+							label: link.label,
+							to: createPath('projects', link.resource),
+						};
+					}
+				}
+			}
+
+			return null;
+		},
+	});
 	const nested = useMatches({
 		select: (matches) => {
+			const projectsPath = createPath.withoutLeading('projects', 'jfdevelops');
+
 			for (const match of matches) {
 				if (
 					match.routeId === '/projects/jfdevelops/$library' &&
@@ -13,11 +65,18 @@ export function useBreadcrumbs(title: string, projectPath: string) {
 					return [
 						{
 							label: group.title,
-							to: `/projects/jfdevelops/categories/${encodeURIComponent(group.id)}`,
+							to: createPath(
+								projectsPath,
+								'categories',
+								encodeURIComponent(group.id),
+							),
 						},
 						{
 							label: library.name,
-							to: `/projects/jfdevelops/${encodeURIComponent(library.name.replace('@jfdevelops/', ''))}`,
+							to: createPath(
+								projectsPath,
+								encodeURIComponent(library.name.replace('@jfdevelops/', '')),
+							),
 						},
 					];
 				}
@@ -31,7 +90,11 @@ export function useBreadcrumbs(title: string, projectPath: string) {
 					return [
 						{
 							label: group.title,
-							to: `/projects/jfdevelops/categories/${encodeURIComponent(group.id)}`,
+							to: createPath(
+								projectsPath,
+								'categories',
+								encodeURIComponent(group.id),
+							),
 						},
 					];
 				}
@@ -42,8 +105,8 @@ export function useBreadcrumbs(title: string, projectPath: string) {
 	});
 
 	return [
-		{ label: 'Projects', to: '/', hash: 'projects' },
-		{ label: title, to: projectPath },
+		{ label: 'Projects', to: '/' as const, hash: 'projects' },
+		...(project ? [project] : []),
 		...nested,
 	];
 }

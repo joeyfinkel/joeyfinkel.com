@@ -10,11 +10,12 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as ProjectsJfdevelopsRouteImport } from './routes/projects/jfdevelops'
-import { Route as ProjectsMaterialUiHelperRouteImport } from './routes/projects/material-ui-helper'
-import { Route as ProjectsPanedeckRouteImport } from './routes/projects/panedeck'
+import { Route as ProjectsRouteRouteImport } from './routes/projects/route'
+import { Route as ProjectsJfdevelopsRouteRouteImport } from './routes/projects/jfdevelops/route'
 import { Route as ProjectsJfdevelopsIndexRouteImport } from './routes/projects/jfdevelops/index'
 import { Route as ProjectsJfdevelopsLibraryRouteImport } from './routes/projects/jfdevelops/$library'
+import { Route as ProjectsMaterialUiHelperIndexRouteImport } from './routes/projects/material-ui-helper/index'
+import { Route as ProjectsPanedeckIndexRouteImport } from './routes/projects/panedeck/index'
 import { Route as ProjectsJfdevelopsCategoriesCategoryRouteImport } from './routes/projects/jfdevelops/categories.$category'
 
 const IndexRoute = IndexRouteImport.update({
@@ -22,101 +23,110 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ProjectsJfdevelopsRoute = ProjectsJfdevelopsRouteImport.update({
-  id: '/projects/jfdevelops',
-  path: '/projects/jfdevelops',
+const ProjectsRouteRoute = ProjectsRouteRouteImport.update({
+  id: '/projects',
+  path: '/projects',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ProjectsMaterialUiHelperRoute =
-  ProjectsMaterialUiHelperRouteImport.update({
-    id: '/projects/material-ui-helper',
-    path: '/projects/material-ui-helper',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const ProjectsPanedeckRoute = ProjectsPanedeckRouteImport.update({
-  id: '/projects/panedeck',
-  path: '/projects/panedeck',
-  getParentRoute: () => rootRouteImport,
+const ProjectsJfdevelopsRouteRoute = ProjectsJfdevelopsRouteRouteImport.update({
+  id: '/jfdevelops',
+  path: '/jfdevelops',
+  getParentRoute: () => ProjectsRouteRoute,
 } as any)
 const ProjectsJfdevelopsIndexRoute = ProjectsJfdevelopsIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => ProjectsJfdevelopsRoute,
+  getParentRoute: () => ProjectsJfdevelopsRouteRoute,
 } as any)
 const ProjectsJfdevelopsLibraryRoute =
   ProjectsJfdevelopsLibraryRouteImport.update({
     id: '/$library',
     path: '/$library',
-    getParentRoute: () => ProjectsJfdevelopsRoute,
+    getParentRoute: () => ProjectsJfdevelopsRouteRoute,
   } as any)
+const ProjectsMaterialUiHelperIndexRoute =
+  ProjectsMaterialUiHelperIndexRouteImport.update({
+    id: '/material-ui-helper/',
+    path: '/material-ui-helper/',
+    getParentRoute: () => ProjectsRouteRoute,
+  } as any)
+const ProjectsPanedeckIndexRoute = ProjectsPanedeckIndexRouteImport.update({
+  id: '/panedeck/',
+  path: '/panedeck/',
+  getParentRoute: () => ProjectsRouteRoute,
+} as any)
 const ProjectsJfdevelopsCategoriesCategoryRoute =
   ProjectsJfdevelopsCategoriesCategoryRouteImport.update({
     id: '/categories/$category',
     path: '/categories/$category',
-    getParentRoute: () => ProjectsJfdevelopsRoute,
+    getParentRoute: () => ProjectsJfdevelopsRouteRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/projects/jfdevelops': typeof ProjectsJfdevelopsRouteWithChildren
-  '/projects/material-ui-helper': typeof ProjectsMaterialUiHelperRoute
-  '/projects/panedeck': typeof ProjectsPanedeckRoute
+  '/projects': typeof ProjectsRouteRouteWithChildren
+  '/projects/jfdevelops': typeof ProjectsJfdevelopsRouteRouteWithChildren
   '/projects/jfdevelops/$library': typeof ProjectsJfdevelopsLibraryRoute
   '/projects/jfdevelops/': typeof ProjectsJfdevelopsIndexRoute
+  '/projects/material-ui-helper/': typeof ProjectsMaterialUiHelperIndexRoute
+  '/projects/panedeck/': typeof ProjectsPanedeckIndexRoute
   '/projects/jfdevelops/categories/$category': typeof ProjectsJfdevelopsCategoriesCategoryRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/projects/material-ui-helper': typeof ProjectsMaterialUiHelperRoute
-  '/projects/panedeck': typeof ProjectsPanedeckRoute
+  '/projects': typeof ProjectsRouteRouteWithChildren
   '/projects/jfdevelops/$library': typeof ProjectsJfdevelopsLibraryRoute
   '/projects/jfdevelops': typeof ProjectsJfdevelopsIndexRoute
+  '/projects/material-ui-helper': typeof ProjectsMaterialUiHelperIndexRoute
+  '/projects/panedeck': typeof ProjectsPanedeckIndexRoute
   '/projects/jfdevelops/categories/$category': typeof ProjectsJfdevelopsCategoriesCategoryRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/projects/jfdevelops': typeof ProjectsJfdevelopsRouteWithChildren
-  '/projects/material-ui-helper': typeof ProjectsMaterialUiHelperRoute
-  '/projects/panedeck': typeof ProjectsPanedeckRoute
+  '/projects': typeof ProjectsRouteRouteWithChildren
+  '/projects/jfdevelops': typeof ProjectsJfdevelopsRouteRouteWithChildren
   '/projects/jfdevelops/$library': typeof ProjectsJfdevelopsLibraryRoute
   '/projects/jfdevelops/': typeof ProjectsJfdevelopsIndexRoute
+  '/projects/material-ui-helper/': typeof ProjectsMaterialUiHelperIndexRoute
+  '/projects/panedeck/': typeof ProjectsPanedeckIndexRoute
   '/projects/jfdevelops/categories/$category': typeof ProjectsJfdevelopsCategoriesCategoryRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/projects'
     | '/projects/jfdevelops'
-    | '/projects/material-ui-helper'
-    | '/projects/panedeck'
     | '/projects/jfdevelops/$library'
     | '/projects/jfdevelops/'
+    | '/projects/material-ui-helper/'
+    | '/projects/panedeck/'
     | '/projects/jfdevelops/categories/$category'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/projects/material-ui-helper'
-    | '/projects/panedeck'
+    | '/projects'
     | '/projects/jfdevelops/$library'
     | '/projects/jfdevelops'
+    | '/projects/material-ui-helper'
+    | '/projects/panedeck'
     | '/projects/jfdevelops/categories/$category'
   id:
     | '__root__'
     | '/'
+    | '/projects'
     | '/projects/jfdevelops'
-    | '/projects/material-ui-helper'
-    | '/projects/panedeck'
     | '/projects/jfdevelops/$library'
     | '/projects/jfdevelops/'
+    | '/projects/material-ui-helper/'
+    | '/projects/panedeck/'
     | '/projects/jfdevelops/categories/$category'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  ProjectsJfdevelopsRoute: typeof ProjectsJfdevelopsRouteWithChildren
-  ProjectsMaterialUiHelperRoute: typeof ProjectsMaterialUiHelperRoute
-  ProjectsPanedeckRoute: typeof ProjectsPanedeckRoute
+  ProjectsRouteRoute: typeof ProjectsRouteRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -128,72 +138,96 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/projects': {
+      id: '/projects'
+      path: '/projects'
+      fullPath: '/projects'
+      preLoaderRoute: typeof ProjectsRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/projects/jfdevelops': {
       id: '/projects/jfdevelops'
-      path: '/projects/jfdevelops'
+      path: '/jfdevelops'
       fullPath: '/projects/jfdevelops'
-      preLoaderRoute: typeof ProjectsJfdevelopsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/projects/material-ui-helper': {
-      id: '/projects/material-ui-helper'
-      path: '/projects/material-ui-helper'
-      fullPath: '/projects/material-ui-helper'
-      preLoaderRoute: typeof ProjectsMaterialUiHelperRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/projects/panedeck': {
-      id: '/projects/panedeck'
-      path: '/projects/panedeck'
-      fullPath: '/projects/panedeck'
-      preLoaderRoute: typeof ProjectsPanedeckRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof ProjectsJfdevelopsRouteRouteImport
+      parentRoute: typeof ProjectsRouteRoute
     }
     '/projects/jfdevelops/': {
       id: '/projects/jfdevelops/'
       path: '/'
       fullPath: '/projects/jfdevelops/'
       preLoaderRoute: typeof ProjectsJfdevelopsIndexRouteImport
-      parentRoute: typeof ProjectsJfdevelopsRoute
+      parentRoute: typeof ProjectsJfdevelopsRouteRoute
     }
     '/projects/jfdevelops/$library': {
       id: '/projects/jfdevelops/$library'
       path: '/$library'
       fullPath: '/projects/jfdevelops/$library'
       preLoaderRoute: typeof ProjectsJfdevelopsLibraryRouteImport
-      parentRoute: typeof ProjectsJfdevelopsRoute
+      parentRoute: typeof ProjectsJfdevelopsRouteRoute
+    }
+    '/projects/material-ui-helper/': {
+      id: '/projects/material-ui-helper/'
+      path: '/material-ui-helper'
+      fullPath: '/projects/material-ui-helper/'
+      preLoaderRoute: typeof ProjectsMaterialUiHelperIndexRouteImport
+      parentRoute: typeof ProjectsRouteRoute
+    }
+    '/projects/panedeck/': {
+      id: '/projects/panedeck/'
+      path: '/panedeck'
+      fullPath: '/projects/panedeck/'
+      preLoaderRoute: typeof ProjectsPanedeckIndexRouteImport
+      parentRoute: typeof ProjectsRouteRoute
     }
     '/projects/jfdevelops/categories/$category': {
       id: '/projects/jfdevelops/categories/$category'
       path: '/categories/$category'
       fullPath: '/projects/jfdevelops/categories/$category'
       preLoaderRoute: typeof ProjectsJfdevelopsCategoriesCategoryRouteImport
-      parentRoute: typeof ProjectsJfdevelopsRoute
+      parentRoute: typeof ProjectsJfdevelopsRouteRoute
     }
   }
 }
 
-interface ProjectsJfdevelopsRouteChildren {
+interface ProjectsJfdevelopsRouteRouteChildren {
   ProjectsJfdevelopsLibraryRoute: typeof ProjectsJfdevelopsLibraryRoute
   ProjectsJfdevelopsIndexRoute: typeof ProjectsJfdevelopsIndexRoute
   ProjectsJfdevelopsCategoriesCategoryRoute: typeof ProjectsJfdevelopsCategoriesCategoryRoute
 }
 
-const ProjectsJfdevelopsRouteChildren: ProjectsJfdevelopsRouteChildren = {
-  ProjectsJfdevelopsLibraryRoute: ProjectsJfdevelopsLibraryRoute,
-  ProjectsJfdevelopsIndexRoute: ProjectsJfdevelopsIndexRoute,
-  ProjectsJfdevelopsCategoriesCategoryRoute:
-    ProjectsJfdevelopsCategoriesCategoryRoute,
+const ProjectsJfdevelopsRouteRouteChildren: ProjectsJfdevelopsRouteRouteChildren =
+  {
+    ProjectsJfdevelopsLibraryRoute: ProjectsJfdevelopsLibraryRoute,
+    ProjectsJfdevelopsIndexRoute: ProjectsJfdevelopsIndexRoute,
+    ProjectsJfdevelopsCategoriesCategoryRoute:
+      ProjectsJfdevelopsCategoriesCategoryRoute,
+  }
+
+const ProjectsJfdevelopsRouteRouteWithChildren =
+  ProjectsJfdevelopsRouteRoute._addFileChildren(
+    ProjectsJfdevelopsRouteRouteChildren,
+  )
+
+interface ProjectsRouteRouteChildren {
+  ProjectsJfdevelopsRouteRoute: typeof ProjectsJfdevelopsRouteRouteWithChildren
+  ProjectsMaterialUiHelperIndexRoute: typeof ProjectsMaterialUiHelperIndexRoute
+  ProjectsPanedeckIndexRoute: typeof ProjectsPanedeckIndexRoute
 }
 
-const ProjectsJfdevelopsRouteWithChildren =
-  ProjectsJfdevelopsRoute._addFileChildren(ProjectsJfdevelopsRouteChildren)
+const ProjectsRouteRouteChildren: ProjectsRouteRouteChildren = {
+  ProjectsJfdevelopsRouteRoute: ProjectsJfdevelopsRouteRouteWithChildren,
+  ProjectsMaterialUiHelperIndexRoute: ProjectsMaterialUiHelperIndexRoute,
+  ProjectsPanedeckIndexRoute: ProjectsPanedeckIndexRoute,
+}
+
+const ProjectsRouteRouteWithChildren = ProjectsRouteRoute._addFileChildren(
+  ProjectsRouteRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  ProjectsJfdevelopsRoute: ProjectsJfdevelopsRouteWithChildren,
-  ProjectsMaterialUiHelperRoute: ProjectsMaterialUiHelperRoute,
-  ProjectsPanedeckRoute: ProjectsPanedeckRoute,
+  ProjectsRouteRoute: ProjectsRouteRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

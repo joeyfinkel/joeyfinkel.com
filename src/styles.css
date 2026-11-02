@@ -4,6 +4,14 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+	--color-sidebar: var(--sidebar);
+	--color-sidebar-foreground: var(--sidebar-foreground);
+	--color-sidebar-primary: var(--sidebar-primary);
+	--color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+	--color-sidebar-accent: var(--sidebar-accent);
+	--color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+	--color-sidebar-border: var(--sidebar-border);
+	--color-sidebar-ring: var(--sidebar-ring);
 	--font-sans: "Segoe UI", Helvetica, Arial, sans-serif;
 	--color-background: var(--background);
 	--color-foreground: var(--foreground);
@@ -36,6 +44,14 @@
 	font-synthesis: none;
 	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: antialiased;
+	--sidebar: hsl(0 0% 98%);
+	--sidebar-foreground: hsl(240 5.3% 26.1%);
+	--sidebar-primary: hsl(240 5.9% 10%);
+	--sidebar-primary-foreground: hsl(0 0% 98%);
+	--sidebar-accent: hsl(240 4.8% 95.9%);
+	--sidebar-accent-foreground: hsl(240 5.9% 10%);
+	--sidebar-border: hsl(220 13% 91%);
+	--sidebar-ring: hsl(217.2 91.2% 59.8%);
 }
 
 .dark {
@@ -47,6 +63,14 @@
 	--muted-foreground: #a4ada4;
 	--border: #364139;
 	--selection: #375542;
+	--sidebar: hsl(240 5.9% 10%);
+	--sidebar-foreground: hsl(240 4.8% 95.9%);
+	--sidebar-primary: hsl(224.3 76.3% 48%);
+	--sidebar-primary-foreground: hsl(0 0% 100%);
+	--sidebar-accent: hsl(240 3.7% 15.9%);
+	--sidebar-accent-foreground: hsl(240 4.8% 95.9%);
+	--sidebar-border: hsl(240 3.7% 15.9%);
+	--sidebar-ring: hsl(217.2 91.2% 59.8%);
 }
 
 @layer base {
@@ -69,4 +93,61 @@
 
 html {
 	scroll-padding-top: 9rem;
+}
+.code-syntax {
+	--code-comment: #60665f;
+	--code-keyword: #7c3aa0;
+	--code-string: #23643b;
+	--code-number: #9a4c13;
+	--code-function: #245da6;
+	--code-operator: #8a3149;
+}
+
+.dark .code-syntax {
+	--code-comment: #a4ada4;
+	--code-keyword: #d7a8ef;
+	--code-string: #a3cf9b;
+	--code-number: #efbd89;
+	--code-function: #9cc7f3;
+	--code-operator: #f1a9bc;
+}
+
+.code-syntax .token.comment,
+.code-syntax .token.prolog,
+.code-syntax .token.doctype,
+.code-syntax .token.cdata {
+	color: var(--code-comment);
+}
+
+.code-syntax .token.keyword,
+.code-syntax .token.tag,
+.code-syntax .token.atrule {
+	color: var(--code-keyword);
+}
+
+.code-syntax .token.string,
+.code-syntax .token.char,
+.code-syntax .token.attr-value,
+.code-syntax .token.regex {
+	color: var(--code-string);
+}
+
+.code-syntax .token.number,
+.code-syntax .token.boolean,
+.code-syntax .token.constant {
+	color: var(--code-number);
+}
+
+.code-syntax .token.function,
+.code-syntax .token.class-name,
+.code-syntax .token.builtin,
+.code-syntax .token.property,
+.code-syntax .token.attr-name {
+	color: var(--code-function);
+}
+
+.code-syntax .token.operator,
+.code-syntax .token.variable,
+.code-syntax .token.interpolation-punctuation {
+	color: var(--code-operator);
 }

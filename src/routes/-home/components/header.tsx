@@ -1,13 +1,9 @@
 import { Link } from '@tanstack/react-router';
+import { MobileMenu } from '@/components/mobile-menu';
+import { SiteNavigation } from '@/components/site-navigation';
 import { StickyHeader } from '@/components/sticky-header';
-import { ThemeSelect } from '@/components/theme-select';
-import { useIsMobile } from '@/hooks/use-mobile';
-import { MobileMenu } from './mobile-menu';
-import { HomeNavigation } from './navigation';
 
 export function HomeHeader() {
-	const isMobile = useIsMobile();
-
 	return (
 		<StickyHeader>
 			<Link
@@ -17,10 +13,9 @@ export function HomeHeader() {
 				Joey Finkel<span className="text-primary">.</span>
 			</Link>
 			<div className="hidden items-center gap-4 md:flex">
-				<HomeNavigation className="items-center gap-4 text-xs" />
-				<ThemeSelect />
+				<SiteNavigation className="items-center gap-4 text-xs" />
 			</div>
-			{isMobile && <MobileMenu />}
+			<MobileMenu />
 		</StickyHeader>
 	);
 }

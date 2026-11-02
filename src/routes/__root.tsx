@@ -1,15 +1,20 @@
-import { createRootRoute, Link, Outlet } from '@tanstack/react-router';
+import { ReactLayoutDevtools } from '@jfdevelops/react-layout-devtools-react';
+import { createRootRoute, Outlet } from '@tanstack/react-router';
+import { RouteError } from './-site/components/error';
+import { NotFound } from './-site/components/not-found';
+import { projectLayouts } from './projects/-utils/layout/base';
 
 export const Route = createRootRoute({
-	component: Outlet,
-	notFoundComponent: function NotFound() {
-		return (
-			<main className="mx-auto max-w-3xl px-6 py-24">
-				<h1 className="mb-4 text-3xl font-semibold">Page not found</h1>
-				<Link to="/" className="underline underline-offset-4">
-					Back to home
-				</Link>
-			</main>
-		);
-	},
+	component: RootLayout,
+	notFoundComponent: NotFound,
+	errorComponent: RouteError,
 });
+
+function RootLayout() {
+	return (
+		<>
+			<Outlet />
+			{import.meta.env.DEV && <ReactLayoutDevtools source={projectLayouts} />}
+		</>
+	);
+}

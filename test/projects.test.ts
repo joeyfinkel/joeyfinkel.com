@@ -50,7 +50,7 @@ it('selects a library and its category on the server', async () => {
 	const catalog = catalogViewSchema.parse(await response.json());
 
 	expect(catalog.selectedLibrary?.name).toBe('@jfdevelops/react-layout');
-	expect(catalog.selectedGroup?.id).toBe('layouts');
+	expect(catalog.selectedGroup?.id).toBe('react-layout');
 	expect(catalog.groups).toHaveLength(4);
 });
 
@@ -81,14 +81,23 @@ it('groups related packages together without dropping secondary integrations', a
 	);
 	const catalog = catalogSchema.parse(await response.json());
 	const devtools = catalog.groups.find((group) => group.id === 'devtools');
+	const reactLayout = catalog.groups.find(
+		(group) => group.id === 'react-layout',
+	);
 
-	expect(devtools?.libraries.map((library) => library.name)).toEqual(
+	expect(devtools?.libraries.map((library) => library.name)).toEqual([
+		'@jfdevelops/devtools-kit',
+		'@jfdevelops/devtools-kit-react',
+	]);
+	expect(reactLayout?.libraries.map((library) => library.name)).toEqual(
 		expect.arrayContaining([
-			'@jfdevelops/devtools-kit',
-			'@jfdevelops/devtools-kit-react',
+			'@jfdevelops/react-layout',
+			'@jfdevelops/react-layout-composable-breadcrumb',
+			'@jfdevelops/react-layout-composables',
 			'@jfdevelops/react-layout-devtools-core',
 			'@jfdevelops/react-layout-devtools-react',
 			'@jfdevelops/react-layout-devtools-vite',
+			'@jfdevelops/react-layout-validator',
 		]),
 	);
 });
