@@ -1,6 +1,5 @@
 import { Link } from '@tanstack/react-router';
 import { StickyHeader } from '@/components/sticky-header';
-import { ThemeSelect } from '@/components/theme-select';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { MobileMenu } from './mobile-menu';
 import { HomeNavigation } from './navigation';
@@ -18,7 +17,6 @@ export function HomeHeader() {
 			</Link>
 			<div className="hidden items-center gap-4 md:flex">
 				<HomeNavigation className="items-center gap-4 text-xs" />
-				<ThemeSelect />
 			</div>
 			{isMobile && <MobileMenu />}
 		</StickyHeader>

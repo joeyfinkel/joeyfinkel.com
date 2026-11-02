@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { ThemeSelect } from '@/components/theme-select';
 import {
 	Sheet,
 	SheetContent,
@@ -25,6 +26,10 @@ export function ProjectsSidebar({ children }: { children: ReactNode }) {
 						</SheetDescription>
 					</SheetHeader>
 					{children}
+					<div className="mt-6 flex shrink-0 items-center justify-between gap-4 border-t pt-5">
+						<p className="text-sm text-muted-foreground">Appearance</p>
+						<ThemeSelect />
+					</div>
 				</SheetContent>
 			</Sheet>
 		);
