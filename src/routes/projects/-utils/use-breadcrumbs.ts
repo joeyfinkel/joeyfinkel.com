@@ -29,22 +29,22 @@ const createPath = Object.assign(joinWithLeading, {
 	withoutLeading: joinWithoutLeading,
 });
 
-const links = projectLinks.flatMap((group) => group.links);
-
 export function useBreadcrumbs() {
 	const project = useMatches({
 		select: (matches) => {
 			for (const match of matches) {
 				const routeId = match.routeId.replace(/\/$/, '');
-				const link = links.find(
-					({ resource }) => routeId === createPath('projects', resource),
-				);
+				for (const group of projectLinks) {
+					const link = group.links.find(
+						({ resource }) => routeId === createPath('projects', resource),
+					);
 
-				if (link) {
-					return {
-						label: link.label,
-						to: createPath('projects', link.resource),
-					};
+					if (link) {
+						return {
+							label: link.label,
+							to: createPath('projects', link.resource),
+						};
+					}
 				}
 			}
 

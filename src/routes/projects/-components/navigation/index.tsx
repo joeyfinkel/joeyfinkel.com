@@ -1,33 +1,48 @@
 import { Link } from '@tanstack/react-router';
-import { Sidebar } from '@/components/ui/sidebar/sidebar';
-import { useSidebar } from '@/components/ui/sidebar/use-sidebar';
+import {
+	SidebarContent,
+	SidebarGroup,
+	SidebarMenu,
+	SidebarMenuButton,
+	SidebarMenuItem,
+	useSidebar,
+} from '@/components/ui/sidebar';
 import { projectLinks } from '../../-utils/links';
 import { JfdevelopsLinks } from './jfdevelops-links';
-
-const links = projectLinks.flatMap((group) => group.links);
+import { ProjectsSidebar } from './sidebar';
 
 export function ProjectsNavigation() {
 	const { setOpenMobile } = useSidebar();
 
 	return (
-		<Sidebar>
-			<nav aria-label="Project navigation" className="pb-6">
-				<ul className="space-y-4">
-					{links.map((link) => (
-						<li key={link.resource}>
-							<Link
-								to={link.href.given}
-								activeProps={{ className: 'text-primary' }}
-								onClick={() => setOpenMobile(false)}
-								className="block text-sm font-medium hover:text-primary"
-							>
-								{link.label}
-							</Link>
-							{link.resource === 'jfdevelops' && <JfdevelopsLinks />}
-						</li>
+		<ProjectsSidebar>
+			<SidebarContent>
+				<nav aria-label="Project navigation" className="pb-6">
+					{projectLinks.map((group) => (
+						<SidebarGroup key={group.links[0]?.resource}>
+							<SidebarMenu>
+								{group.links.map((link) => (
+									<SidebarMenuItem key={link.resource}>
+										<SidebarMenuButton asChild>
+											<Link
+												to={link.href.given}
+												activeProps={{
+													className:
+														'bg-sidebar-accent text-sidebar-accent-foreground',
+												}}
+												onClick={() => setOpenMobile(false)}
+											>
+												{link.label}
+											</Link>
+										</SidebarMenuButton>
+										{link.resource === 'jfdevelops' && <JfdevelopsLinks />}
+									</SidebarMenuItem>
+								))}
+							</SidebarMenu>
+						</SidebarGroup>
 					))}
-				</ul>
-			</nav>
-		</Sidebar>
+				</nav>
+			</SidebarContent>
+		</ProjectsSidebar>
 	);
 }

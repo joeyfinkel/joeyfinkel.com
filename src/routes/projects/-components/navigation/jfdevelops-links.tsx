@@ -1,5 +1,10 @@
 import { Link, useMatch } from '@tanstack/react-router';
-import { useSidebar } from '@/components/ui/sidebar/use-sidebar';
+import {
+	SidebarMenuSub,
+	SidebarMenuSubButton,
+	SidebarMenuSubItem,
+	useSidebar,
+} from '@/components/ui/sidebar';
 
 export function JfdevelopsLinks() {
 	const { setOpenMobile } = useSidebar();
@@ -14,48 +19,63 @@ export function JfdevelopsLinks() {
 	}
 
 	return (
-		<div className="mt-4 space-y-5 border-l pl-3">
-			<Link
-				to="/projects/jfdevelops"
-				activeOptions={{ exact: true }}
-				activeProps={{ className: 'text-primary' }}
-				onClick={() => setOpenMobile(false)}
-				className="block text-xs font-medium hover:text-primary"
-			>
-				All libraries
-			</Link>
-			{catalog.groups.map((group) => (
-				<div key={group.id}>
+		<SidebarMenuSub>
+			<SidebarMenuSubItem>
+				<SidebarMenuSubButton asChild>
 					<Link
-						to="/projects/jfdevelops/categories/$category"
-						params={{ category: group.id }}
+						to="/projects/jfdevelops"
 						activeOptions={{ exact: true }}
-						activeProps={{ className: 'text-primary' }}
+						activeProps={{
+							className: 'bg-sidebar-accent text-sidebar-accent-foreground',
+						}}
 						onClick={() => setOpenMobile(false)}
-						className="block text-xs font-semibold hover:text-primary"
 					>
-						{group.title}
+						All libraries
 					</Link>
-					<ul className="mt-3 space-y-1 border-l pl-3">
+				</SidebarMenuSubButton>
+			</SidebarMenuSubItem>
+			{catalog.groups.map((group) => (
+				<SidebarMenuSubItem key={group.id}>
+					<SidebarMenuSubButton asChild className="font-semibold">
+						<Link
+							to="/projects/jfdevelops/categories/$category"
+							params={{ category: group.id }}
+							activeOptions={{ exact: true }}
+							activeProps={{
+								className: 'bg-sidebar-accent text-sidebar-accent-foreground',
+							}}
+							onClick={() => setOpenMobile(false)}
+						>
+							{group.title}
+						</Link>
+					</SidebarMenuSubButton>
+					<SidebarMenuSub>
 						{group.libraries.map((library) => (
-							<li key={library.name}>
-								<Link
-									to="/projects/jfdevelops/$library"
-									params={{
-										library: library.name.replace('@jfdevelops/', ''),
-									}}
-									activeOptions={{ exact: true }}
-									activeProps={{ className: 'bg-secondary text-primary' }}
-									onClick={() => setOpenMobile(false)}
-									className="block break-words rounded-md px-2 py-1.5 text-xs leading-5 text-muted-foreground hover:bg-secondary hover:text-foreground"
+							<SidebarMenuSubItem key={library.name}>
+								<SidebarMenuSubButton
+									asChild
+									className="h-auto min-h-7 break-words leading-5"
 								>
-									{library.name.replace('@jfdevelops/', '')}
-								</Link>
-							</li>
+									<Link
+										to="/projects/jfdevelops/$library"
+										params={{
+											library: library.name.replace('@jfdevelops/', ''),
+										}}
+										activeOptions={{ exact: true }}
+										activeProps={{
+											className:
+												'bg-sidebar-accent text-sidebar-accent-foreground',
+										}}
+										onClick={() => setOpenMobile(false)}
+									>
+										{library.name.replace('@jfdevelops/', '')}
+									</Link>
+								</SidebarMenuSubButton>
+							</SidebarMenuSubItem>
 						))}
-					</ul>
-				</div>
+					</SidebarMenuSub>
+				</SidebarMenuSubItem>
 			))}
-		</div>
+		</SidebarMenuSub>
 	);
 }

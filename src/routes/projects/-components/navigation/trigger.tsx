@@ -1,8 +1,8 @@
 import { PanelLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useSidebar } from './use-sidebar';
+import { useSidebar } from '@/components/ui/sidebar';
 
-export function SidebarTrigger() {
+export function ProjectsNavigationTrigger() {
 	const { toggleSidebar, openMobile } = useSidebar();
 
 	return (

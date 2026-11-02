@@ -2,10 +2,10 @@ import { Link } from '@tanstack/react-router';
 import { ArrowLeftIcon } from 'lucide-react';
 import { StickyHeader } from '@/components/sticky-header';
 import { ThemeSelect } from '@/components/theme-select';
-import { SidebarProvider } from '@/components/ui/sidebar/provider';
-import { SidebarTrigger } from '@/components/ui/sidebar/trigger';
+import { SidebarProvider } from '@/components/ui/sidebar';
 import { cn } from '@/lib/utils';
 import { ProjectsNavigation } from '../../../../-components/navigation';
+import { ProjectsNavigationTrigger } from '../../../../-components/navigation/trigger';
 import { HeadingVisibleContext } from '../../../heading-visible';
 import { useBreadcrumbs } from '../../../use-breadcrumbs';
 import { useHeaderTitle } from '../../../use-header-title';
@@ -65,14 +65,17 @@ export const layout = createRenderState({
 					</div>
 					<ThemeSelect />
 				</StickyHeader>
-				<SidebarProvider className="flex-1 pt-4">
+				<SidebarProvider
+					open
+					className="min-h-0 flex-1 items-start gap-10 pt-4"
+				>
 					<ProjectsNavigation />
 					<main
 						ref={mainRef}
 						id="project-main"
 						className="min-w-0 flex-1 pb-12"
 					>
-						<SidebarTrigger />
+						<ProjectsNavigationTrigger />
 						{children}
 					</main>
 				</SidebarProvider>
