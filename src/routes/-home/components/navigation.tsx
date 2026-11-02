@@ -1,13 +1,12 @@
 import { Link } from '@tanstack/react-router';
 import { ArrowUpRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { resumeUrl } from '../utils/resume-url';
 
 export function HomeNavigation({
-	resumeUrl,
 	onNavigate,
 	className,
 }: {
-	resumeUrl: string;
 	onNavigate?: () => void;
 	className?: string;
 }) {
@@ -40,13 +39,7 @@ export function HomeNavigation({
 			>
 				Hire me
 			</Link>
-			<Link
-				to="."
-				href={resumeUrl}
-				reloadDocument
-				onClick={onNavigate}
-				className="hover:text-primary"
-			>
+			<Link to={resumeUrl} onClick={onNavigate} className="hover:text-primary">
 				Resume
 			</Link>
 			<Link

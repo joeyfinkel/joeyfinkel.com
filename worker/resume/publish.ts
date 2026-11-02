@@ -3,18 +3,16 @@ import { getDraft } from './draft';
 import { ResumeError } from './error';
 
 export async function publishResume(bucket: R2Bucket, revision: string) {
-	const draft = await getDraft(bucket, revision);
 	const current = await bucket.get('current.json');
 	const existing = current
 		? publicationSchema.parse(await current.json())
 		: null;
 
 	if (existing?.revision === revision) {
-		await bucket.put(`published/${revision}.json`, JSON.stringify(existing));
-
 		return existing;
 	}
 
+	const draft = await getDraft(bucket, revision);
 	const pdf = await bucket.head(`pdfs/${revision}.pdf`);
 
 	if (!pdf || pdf.customMetadata?.sha256 !== draft.pdfSha256) {
@@ -40,9 +38,14 @@ export async function publishResume(bucket: R2Bucket, revision: string) {
 		);
 	}
 
-	// The current record switches both public resources in one conditional write.
-	// Archive only successful publications so a draft URL never exposes a PDF.
-	await bucket.put(`published/${revision}.json`, JSON.stringify(publication));
+	// Only the current resume is kept, so drop the replaced PDF and the used draft.
+	const stale = [`drafts/${revision}.json`];
+
+	if (existing) {
+		stale.push(`pdfs/${existing.revision}.pdf`);
+	}
+
+	await bucket.delete(stale);
 
 	return publication;
 }

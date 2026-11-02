@@ -1,25 +1,14 @@
-import { z } from 'zod';
 import { experience } from '../../src/routes/-home/utils/experience';
 import { ResumeError } from './error';
 import { getPublication } from './publication';
 
 export async function readResume(request: Request, env: Env) {
 	const url = new URL(request.url);
-	const requestedRevision = url.searchParams.get('revision');
-	const revision = requestedRevision
-		? z.uuid().parse(requestedRevision)
-		: undefined;
-	const publication = await getPublication(env.RESUMES, revision);
+	const publication = await getPublication(env.RESUMES);
 
 	if (url.pathname === '/api/resume') {
 		return Response.json(
-			{
-				revision: publication?.revision ?? null,
-				experience: publication?.experience ?? experience,
-				resumeUrl: publication
-					? `/resume.pdf?revision=${publication.revision}`
-					: '/resume.pdf',
-			},
+			{ experience: publication?.experience ?? experience },
 			{ headers: { 'Cache-Control': 'no-store' } },
 		);
 	}
