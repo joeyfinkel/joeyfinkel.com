@@ -12,8 +12,23 @@ importers:
         specifier: ^1.2.4
         version: 1.2.4
       '@jfdevelops/react-layout':
-        specifier: 2.0.0
-        version: 2.0.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        specifier: 2.5.0
+        version: 2.5.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+      '@jfdevelops/react-layout-composable-breadcrumb':
+        specifier: ^0.2.12
+        version: 0.2.12(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+      '@jfdevelops/react-layout-composables':
+        specifier: ^0.5.0
+        version: 0.5.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+      '@jfdevelops/react-layout-devtools-react':
+        specifier: ^0.4.0
+        version: 0.4.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+      '@jfdevelops/react-layout-devtools-vite':
+        specifier: ^0.1.2
+        version: 0.1.2(vite@8.3.5(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))
+      '@jfdevelops/react-layout-validator':
+        specifier: ^0.4.0
+        version: 0.4.0(react@19.3.1)
       '@modelcontextprotocol/server':
         specifier: 2.4.0
         version: 2.4.0
@@ -730,25 +745,45 @@ packages:
     resolution: {integrity: sha512-ZzD36TzBRUsfHb9M112PWzUmFJtHytArtnpdGL7uZnhYJ1DSBdnyqTFQIgkiotT1zqhczxnHm0NwTi5STBahJQ==}
     engines: {node: '>=20.19.0'}
 
-  '@jfdevelops/react-layout-composables@0.3.1':
-    resolution: {integrity: sha512-c1xzH+FvXTv5mPhbHCcJi/ufJO8PDe25vJ0WWKtgxRBeMCwmoXFwu2DVClnTeqCY0WaosVPOYPVH557itimYqg==}
+  '@jfdevelops/react-layout-composable-breadcrumb@0.2.12':
+    resolution: {integrity: sha512-od+pM+KEzAi54Lbr19gdW7gqR1ttJDp8yT+TfkZu0phjRIY/B3YFOCoImjDwEVNp45H6fp+x0+Epg12pdWcXqQ==}
     engines: {node: ^20.19.0 || >=22.12.0}
     peerDependencies:
       react: '>=18'
       react-dom: '>=18'
 
-  '@jfdevelops/react-layout-devtools-core@0.3.0':
-    resolution: {integrity: sha512-Vmr3oWQ+HrcDiT9KhJ/0hd1a8DQDOm8rn39fpwbJRs3FrjFyf2qxJcNnTWaWW01ly6OEtCyMKq6kpOj101HwVg==}
+  '@jfdevelops/react-layout-composables@0.5.0':
+    resolution: {integrity: sha512-/ZgztbXksDT0Pns39pRW8tfBNuCwubUZSZ8atyUlpqFnyyOg9zRcoGXEcwL81X8QKpVjZ205kfPr6K6Zpd/nCQ==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    peerDependencies:
+      react: '>=18'
+      react-dom: '>=18'
+
+  '@jfdevelops/react-layout-devtools-core@0.4.0':
+    resolution: {integrity: sha512-x1fx0//kRBNXxDFuwRnOXuDSpAZ7LqXRzAp9oTxscCsq+8b8WuYrRkBKomaSDOFG9nWizfpYbCnQIXc0PYjMwA==}
     engines: {node: ^20.19.0 || >=22.12.0}
 
-  '@jfdevelops/react-layout-validator@0.3.1':
-    resolution: {integrity: sha512-oUFeulddYrMBfYsvu4uepwNqnqM0O9a7Z6g+wK6L8OOCzXKF0cEkmIepEVkXN0Mi3/qyA9nY9Ta1A5H5nyIFeg==}
+  '@jfdevelops/react-layout-devtools-react@0.4.0':
+    resolution: {integrity: sha512-CUD5MUMijXnj+MTXvD8tf5gO5PBas0bjU8l+8zK2MeqTsEphm1gefJ0ebSpAtmb9jSCYbnrXCqVPxn7bIQ5EwA==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    peerDependencies:
+      react: '>=18'
+      react-dom: '>=18'
+
+  '@jfdevelops/react-layout-devtools-vite@0.1.2':
+    resolution: {integrity: sha512-KAVixo+ZITspl2U1dNDqQuATvZ7ozgGHwJeh0nCCtbVG/rbLWKLNvvpA+9wxmoJcYCYjlvIz+ENg+iJ/LQGwbA==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    peerDependencies:
+      vite: ^6.0.0 || ^7.0.0 || ^8.0.0
+
+  '@jfdevelops/react-layout-validator@0.4.0':
+    resolution: {integrity: sha512-bZLitC+ggMQHmrA5JqomEupO/KD7PZUgcyt/mVBMuUkZMQyNcsSpOA53CVfydiD8DL+ETxkbd6o5Fyh87wblYA==}
     engines: {node: ^20.19.0 || >=22.12.0}
     peerDependencies:
       react: '>=18'
 
-  '@jfdevelops/react-layout@2.0.0':
-    resolution: {integrity: sha512-pJgkhBEzQ7pavK47/kTGFRYGWLXBjcAaoXVxB1zGSWAvbcl9c5wuQS42V+ajW7U/LVayxxlK4YUBtao2f3LuYw==}
+  '@jfdevelops/react-layout@2.5.0':
+    resolution: {integrity: sha512-ePj5Ar+klYy76EcrHGsyMlFDTESm4bTZLvswBYpymIcoPJiyfgcaaT5ZLm9LK9hLqRDE3puji04J0FvoAZf+Yg==}
     engines: {node: ^20.19.0 || >=22.12.0}
     peerDependencies:
       react: '>=18'
@@ -2082,6 +2117,11 @@ packages:
   tw-animate-css@1.4.0:
     resolution: {integrity: sha512-7bziOlRqH0hJx80h/3mbicLW7o8qLsH5+RaLR2t+OHM3D0JlWGODQKQ4cxbK7WlvmUxpcj6Kgu6EKqjrGFe3QQ==}
 
+  typescript@6.0.3:
+    resolution: {integrity: sha512-y2TvuxSZPDyQakkFRPZHKFm+KKVqIisdg9/CZwm9ftvKXLP8NRWj38/ODjNbr43SsoXqNuAisEf1GdCxqWcdBw==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+
   typescript@7.0.2:
     resolution: {integrity: sha512-8FYau96o3NKOhbjKi/qNvG/W5jhzxkbdm5sj9AbZ/5T5sWqn3hJgLfGx27sRKZWTvyzCP8dLRBTf5tBTSRVUNA==}
     engines: {node: '>=16.20.0'}
@@ -2830,28 +2870,46 @@ snapshots:
     dependencies:
       '@standard-schema/spec': 1.1.0
 
-  '@jfdevelops/react-layout-composables@0.3.1(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
+  '@jfdevelops/react-layout-composable-breadcrumb@0.2.12(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
+    dependencies:
+      '@jfdevelops/react-layout-composables': 0.5.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+      '@jfdevelops/react-layout-validator': 0.4.0(react@19.3.1)
+      react: 19.3.1
+      react-dom: 19.3.1(react@19.3.1)
+
+  '@jfdevelops/react-layout-composables@0.5.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
     dependencies:
       '@jfdevelops/create-error': 0.2.0
-      '@jfdevelops/react-layout-validator': 0.3.1(react@19.3.1)
+      '@jfdevelops/react-layout-validator': 0.4.0(react@19.3.1)
       arktype: 2.2.8
       react: 19.3.1
       react-dom: 19.3.1(react@19.3.1)
 
-  '@jfdevelops/react-layout-devtools-core@0.3.0': {}
+  '@jfdevelops/react-layout-devtools-core@0.4.0': {}
 
-  '@jfdevelops/react-layout-validator@0.3.1(react@19.3.1)':
+  '@jfdevelops/react-layout-devtools-react@0.4.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
+    dependencies:
+      react: 19.3.1
+      react-dom: 19.3.1(react@19.3.1)
+
+  '@jfdevelops/react-layout-devtools-vite@0.1.2(vite@8.3.5(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))':
+    dependencies:
+      magic-string: 0.30.21
+      typescript: 6.0.3
+      vite: 8.3.5(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1)
+
+  '@jfdevelops/react-layout-validator@0.4.0(react@19.3.1)':
     dependencies:
       '@jfdevelops/create-error': 0.2.0
       arktype: 2.2.8
       react: 19.3.1
 
-  '@jfdevelops/react-layout@2.0.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
+  '@jfdevelops/react-layout@2.5.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
     dependencies:
       '@jfdevelops/create-error': 0.2.0
-      '@jfdevelops/react-layout-composables': 0.3.1(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
-      '@jfdevelops/react-layout-devtools-core': 0.3.0
-      '@jfdevelops/react-layout-validator': 0.3.1(react@19.3.1)
+      '@jfdevelops/react-layout-composables': 0.5.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+      '@jfdevelops/react-layout-devtools-core': 0.4.0
+      '@jfdevelops/react-layout-validator': 0.4.0(react@19.3.1)
       arktype: 2.2.8
       react: 19.3.1
       react-dom: 19.3.1(react@19.3.1)
@@ -3918,6 +3976,8 @@ snapshots:
   tslib@2.8.1: {}
 
   tw-animate-css@1.4.0: {}
+
+  typescript@6.0.3: {}
 
   typescript@7.0.2:
     optionalDependencies:
