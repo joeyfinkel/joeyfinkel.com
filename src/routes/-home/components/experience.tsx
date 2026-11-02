@@ -22,7 +22,7 @@ export function Experience({
 	return (
 		<section
 			id="experience"
-			className="scroll-mt-8 border-t pt-12 pb-8"
+			className="scroll-mt-8 pt-12 pb-8"
 			aria-labelledby="experience-heading"
 		>
 			<div className="mb-10 flex flex-wrap items-center justify-between gap-4">
