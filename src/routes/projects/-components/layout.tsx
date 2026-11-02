@@ -1,66 +1,66 @@
+import type { ComponentPropsWithRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import type { ComponentPropsWithRef } from 'react';
 
 function ProjectLayout({ className, ...props }: ComponentPropsWithRef<'div'>) {
-  return <div className={cn('border-b py-8 sm:py-10', className)} {...props} />;
+	return <div className={cn('border-b py-8 sm:py-10', className)} {...props} />;
 }
 
 function ProjectTitle({ className, ...props }: ComponentPropsWithRef<'h1'>) {
-  return (
-    <h1
-      data-project-title
-      className={cn(
-        'text-4xl font-medium tracking-[-0.04em] sm:text-5xl',
-        className,
-      )}
-      {...props}
-    />
-  );
+	return (
+		<h1
+			data-project-title
+			className={cn(
+				'text-4xl font-medium tracking-[-0.04em] sm:text-5xl',
+				className,
+			)}
+			{...props}
+		/>
+	);
 }
 
 function ProjectDescription({
-  className,
-  ...props
+	className,
+	...props
 }: ComponentPropsWithRef<'p'>) {
-  return (
-    <p
-      className={cn(
-        'mt-4 max-w-2xl text-sm leading-7 text-muted-foreground',
-        className,
-      )}
-      {...props}
-    />
-  );
+	return (
+		<p
+			className={cn(
+				'mt-4 max-w-2xl text-sm leading-7 text-muted-foreground',
+				className,
+			)}
+			{...props}
+		/>
+	);
 }
 
 function ProjectCategory({ className, ...props }: ComponentPropsWithRef<'p'>) {
-  return (
-    <p
-      className={cn('mt-3 text-sm text-muted-foreground', className)}
-      {...props}
-    />
-  );
+	return (
+		<p
+			className={cn('mt-3 text-sm text-muted-foreground', className)}
+			{...props}
+		/>
+	);
 }
 
 function ProjectSource({
-  className,
-  ...props
+	className,
+	...props
 }: ComponentPropsWithRef<typeof Button>) {
-  return (
-    <Button
-      asChild
-      variant='outline'
-      className={cn('mt-6 rounded-full bg-transparent shadow-none', className)}
-      {...props}
-    />
-  );
+	return (
+		<Button
+			asChild
+			variant="outline"
+			className={cn('mt-6 rounded-full bg-transparent shadow-none', className)}
+			{...props}
+		/>
+	);
 }
 
 export {
-  ProjectCategory,
-  ProjectDescription,
-  ProjectLayout,
-  ProjectSource,
-  ProjectTitle,
+	ProjectCategory,
+	ProjectDescription,
+	ProjectLayout,
+	ProjectSource,
+	ProjectTitle,
 };
