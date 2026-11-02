@@ -9,15 +9,14 @@ import { Timeline } from '@/components/reui/timeline/root';
 import { TimelineSeparator } from '@/components/reui/timeline/separator';
 import { TimelineTitle } from '@/components/reui/timeline/title';
 import type { Experience as ExperienceData } from '@/resume/schema';
+import { resumeUrl } from '../utils/resume-url';
 import { CompanyLogo } from './company-logo';
 
 export function Experience({
 	experience,
-	resumeUrl,
 	unavailable,
 }: {
 	experience: ExperienceData;
-	resumeUrl: string;
 	unavailable: boolean;
 }) {
 	return (
@@ -36,9 +35,7 @@ export function Experience({
 					</p>
 				</div>
 				<Link
-					to="."
-					href={resumeUrl}
-					reloadDocument
+					to={resumeUrl}
 					className="inline-flex items-center gap-1 text-xs text-primary underline underline-offset-4"
 				>
 					View resume <ArrowUpRight className="size-3.5" aria-hidden="true" />

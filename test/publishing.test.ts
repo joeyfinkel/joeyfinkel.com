@@ -26,7 +26,9 @@ async function request(path: string, init?: RequestInit) {
 
 async function pdfBytes() {
 	const document = await PDFDocument.create();
-	document.addPage().drawText('Joseph Finkel - master resume');
+	document
+		.addPage()
+		.drawText(`Joseph Finkel - master resume ${crypto.randomUUID()}`);
 
 	return new Uint8Array(await document.save());
 }
@@ -77,18 +79,15 @@ it('requires OAuth authentication for MCP and exposes discovery', async () => {
 it('serves the initial experience before the first publication', async () => {
 	const response = await request('/api/resume');
 	expect(response.status).toBe(200);
-	expect(await response.json()).toMatchObject({
-		revision: null,
+	expect(await response.json()).toEqual({
 		experience: JSON.parse(JSON.stringify(experience)),
-		resumeUrl: '/resume.pdf',
 	});
 });
 
 it('keeps drafts private and refuses publishing before upload', async () => {
-	const { draft } = await stagedResume();
-	expect((await request(`/resume.pdf?revision=${draft.revision}`)).status).toBe(
-		404,
-	);
+	const { draft, pdf } = await stagedResume();
+	const served = await request('/resume.pdf');
+	expect(new Uint8Array(await served.arrayBuffer())).not.toEqual(pdf);
 	await expect(publishResume(env.RESUMES, draft.revision)).rejects.toThrow(
 		'Upload the matching PDF',
 	);
@@ -125,10 +124,9 @@ it('publishes a matching pair, preserves exact PDF bytes, and is idempotent', as
 		(await publishResume(env.RESUMES, staged.draft.revision)).revision,
 	).toBe(publication.revision);
 	const response = await request('/api/resume');
-	const data = await response.json<{ revision: string; resumeUrl: string }>();
-	expect(data.revision).toBe(publication.revision);
+	expect(await response.json()).toEqual({ experience: publication.experience });
 	expect(response.headers.get('Cache-Control')).toBe('no-store');
-	const pdf = await request(data.resumeUrl);
+	const pdf = await request('/resume.pdf');
 	expect(pdf.headers.get('Content-Type')).toBe('application/pdf');
 	expect(new Uint8Array(await pdf.arrayBuffer())).toEqual(staged.pdf);
 	const head = await request('/resume.pdf', { method: 'HEAD' });
@@ -145,25 +143,23 @@ it('rejects stale publications without replacing the current resume', async () =
 	await expect(
 		publishResume(env.RESUMES, second.draft.revision),
 	).rejects.toThrow('Another resume was published');
-	const response = await request('/api/resume');
-	expect(await response.json()).toMatchObject({
-		revision: first.draft.revision,
-	});
-	expect(
-		(await request(`/resume.pdf?revision=${second.draft.revision}`)).status,
-	).toBe(404);
+	const pdf = await request('/resume.pdf');
+	expect(new Uint8Array(await pdf.arrayBuffer())).toEqual(first.pdf);
 });
 
-it('keeps historical PDFs available for an already rendered timeline', async () => {
+it('keeps only the current resume after a replacement', async () => {
 	const first = await stagedResume();
 	await upload(first);
 	await publishResume(env.RESUMES, first.draft.revision);
 	const second = await stagedResume();
 	await upload(second);
 	await publishResume(env.RESUMES, second.draft.revision);
-	const oldPdf = await request(`/resume.pdf?revision=${first.draft.revision}`);
-	expect(oldPdf.status).toBe(200);
-	expect(new Uint8Array(await oldPdf.arrayBuffer())).toEqual(first.pdf);
+	const pdf = await request('/resume.pdf');
+	expect(new Uint8Array(await pdf.arrayBuffer())).toEqual(second.pdf);
+	const stored = await env.RESUMES.list();
+	expect(stored.objects.map((object) => object.key).sort()).toEqual(
+		['current.json', `pdfs/${second.draft.revision}.pdf`].sort(),
+	);
 });
 
 it('expires upload credentials and validates PDF structure, body size, and metadata', async () => {

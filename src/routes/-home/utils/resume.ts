@@ -14,17 +14,10 @@ export async function loadResume() {
 		const data = await response.json();
 		const experience = experienceSchema.parse(data.experience);
 
-		if (
-			typeof data.resumeUrl !== 'string' ||
-			!/^\/resume\.pdf(?:\?revision=[a-f0-9-]+)?$/.test(data.resumeUrl)
-		) {
-			throw new Error('Invalid resume link');
-		}
-
-		return { experience, resumeUrl: data.resumeUrl, unavailable: false };
+		return { experience, unavailable: false };
 	} catch {
 		const experience: Experience = [];
 
-		return { experience, resumeUrl: '/resume.pdf', unavailable: true };
+		return { experience, unavailable: true };
 	}
 }

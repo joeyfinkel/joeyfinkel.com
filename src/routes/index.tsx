@@ -23,7 +23,7 @@ function Home() {
 			>
 				Skip to content
 			</a>
-			<HomeHeader resumeUrl={resume.resumeUrl} />
+			<HomeHeader />
 			<main id="main">
 				<section className="py-12 sm:py-16" aria-labelledby="intro">
 					<h1
@@ -60,7 +60,6 @@ function Home() {
 				</section>
 				<Experience
 					experience={resume.experience}
-					resumeUrl={resume.resumeUrl}
 					unavailable={resume.unavailable}
 				/>
 				<HireMe />

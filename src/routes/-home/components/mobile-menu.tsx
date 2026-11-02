@@ -5,7 +5,7 @@ import { ThemeSelect } from '@/components/theme-select';
 import { Button } from '@/components/ui/button';
 import { HomeNavigation } from './navigation';
 
-export function MobileMenu({ resumeUrl }: { resumeUrl: string }) {
+export function MobileMenu() {
 	const [open, setOpen] = useState(false);
 
 	return (
@@ -42,7 +42,6 @@ export function MobileMenu({ resumeUrl }: { resumeUrl: string }) {
 						</Button>
 					</Dialog.Close>
 					<HomeNavigation
-						resumeUrl={resumeUrl}
 						onNavigate={() => setOpen(false)}
 						className="mt-7 flex-col items-start gap-1 [&>a]:w-full [&>a]:py-3"
 					/>

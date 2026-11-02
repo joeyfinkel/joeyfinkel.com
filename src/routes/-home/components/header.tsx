@@ -5,7 +5,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { MobileMenu } from './mobile-menu';
 import { HomeNavigation } from './navigation';
 
-export function HomeHeader({ resumeUrl }: { resumeUrl: string }) {
+export function HomeHeader() {
 	const isMobile = useIsMobile();
 
 	return (
@@ -17,13 +17,10 @@ export function HomeHeader({ resumeUrl }: { resumeUrl: string }) {
 				Joey Finkel<span className="text-primary">.</span>
 			</Link>
 			<div className="hidden items-center gap-4 md:flex">
-				<HomeNavigation
-					resumeUrl={resumeUrl}
-					className="items-center gap-4 text-xs"
-				/>
+				<HomeNavigation className="items-center gap-4 text-xs" />
 				<ThemeSelect />
 			</div>
-			{isMobile && <MobileMenu resumeUrl={resumeUrl} />}
+			{isMobile && <MobileMenu />}
 		</StickyHeader>
 	);
 }
