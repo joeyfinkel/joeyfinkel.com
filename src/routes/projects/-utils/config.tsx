@@ -1,12 +1,11 @@
-import { Link } from '@tanstack/react-router';
+import { Link, Outlet } from '@tanstack/react-router';
 import { Button } from '@/components/ui/button';
 import { RetryButton } from '../-components/retry-button';
-import { Jfdevelops } from '../-jfdevelops/components/content';
-import { JfdevelopsPage } from '../-jfdevelops/utils/page';
-import { MaterialUiHelper } from '../-material-ui-helper/components/content';
-import { MaterialUiHelperPage } from '../-material-ui-helper/utils/page';
-import { PaneDeck } from '../-panedeck/components/content';
-import { PaneDeckPage } from '../-panedeck/utils/page';
+import { JfdevelopsPage } from '../jfdevelops/-utils/page';
+import { MaterialUiHelper } from '../material-ui-helper/-components/content';
+import { MaterialUiHelperPage } from '../material-ui-helper/-utils/page';
+import { PaneDeck } from '../panedeck/-components/content';
+import { PaneDeckPage } from '../panedeck/-utils/page';
 import { createResourceConfig } from './layout/states/default';
 
 export const projectConfig = createResourceConfig({
@@ -43,7 +42,7 @@ export const projectConfig = createResourceConfig({
 		),
 	},
 	jfdevelops: {
-		component: <Jfdevelops />,
+		component: <Outlet />,
 		errorComponent: (
 			<JfdevelopsPage.Error message="The library catalog could not be loaded. You can try again or browse the packages on npm.">
 				<RetryButton />

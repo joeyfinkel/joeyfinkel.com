@@ -1,5 +1,6 @@
 import { createFileRoute, getRouteApi } from '@tanstack/react-router';
-import { CategoryCard } from '../-jfdevelops/components/category-card';
+import { CategoryCard } from './-components/category-card';
+import { Jfdevelops } from './-components/content';
 
 const parentRoute = getRouteApi('/projects/jfdevelops');
 
@@ -11,7 +12,7 @@ function CatalogOverview() {
 	const catalog = parentRoute.useLoaderData();
 
 	return (
-		<>
+		<Jfdevelops>
 			<h2 className="text-2xl font-medium tracking-tight">
 				Choose a library or category to learn more.
 			</h2>
@@ -24,6 +25,6 @@ function CatalogOverview() {
 					<CategoryCard key={group.id} group={group} />
 				))}
 			</div>
-		</>
+		</Jfdevelops>
 	);
 }

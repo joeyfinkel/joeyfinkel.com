@@ -1,6 +1,7 @@
 import { createFileRoute, notFound } from '@tanstack/react-router';
-import { LibraryGroup } from '../-jfdevelops/components/group';
-import { loadCatalog } from '../-jfdevelops/utils/load';
+import { Jfdevelops } from './-components/content';
+import { LibraryGroup } from './-components/group';
+import { loadCatalog } from './-utils/load';
 
 export const Route = createFileRoute(
 	'/projects/jfdevelops/categories/$category',
@@ -20,5 +21,9 @@ export const Route = createFileRoute(
 function CategoryPage() {
 	const group = Route.useLoaderData();
 
-	return <LibraryGroup group={group} />;
+	return (
+		<Jfdevelops>
+			<LibraryGroup group={group} />
+		</Jfdevelops>
+	);
 }

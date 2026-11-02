@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { loadCatalog } from './-jfdevelops/utils/load';
-import { projectConfig } from './-utils/config';
+import { projectConfig } from '../-utils/config';
+import { loadCatalog } from './-utils/load';
 
 const getPage = projectConfig.getComponent.forResource({
 	resource: 'jfdevelops',

@@ -1,6 +1,7 @@
 import { createFileRoute, notFound } from '@tanstack/react-router';
-import { LibraryDetail } from '../-jfdevelops/components/library';
-import { loadCatalog } from '../-jfdevelops/utils/load';
+import { Jfdevelops } from './-components/content';
+import { LibraryDetail } from './-components/library';
+import { loadCatalog } from './-utils/load';
 
 export const Route = createFileRoute('/projects/jfdevelops/$library')({
 	component: PackagePage,
@@ -20,5 +21,9 @@ export const Route = createFileRoute('/projects/jfdevelops/$library')({
 function PackagePage() {
 	const { library, group } = Route.useLoaderData();
 
-	return <LibraryDetail library={library} group={group} />;
+	return (
+		<Jfdevelops>
+			<LibraryDetail library={library} group={group} />
+		</Jfdevelops>
+	);
 }
