@@ -1,12 +1,7 @@
-import type { ReactNode } from 'react';
+﻿import type { ReactNode } from 'react';
+import { MobileSidebar } from '@/components/mobile-sidebar';
 import { ThemeSelect } from '@/components/theme-select';
-import {
-	Sheet,
-	SheetContent,
-	SheetDescription,
-	SheetHeader,
-	SheetTitle,
-} from '@/components/ui/sheet';
+import { Sheet } from '@/components/ui/sheet';
 import { Sidebar, useSidebar } from '@/components/ui/sidebar';
 
 export function ProjectsSidebar({ children }: { children: ReactNode }) {
@@ -15,22 +10,16 @@ export function ProjectsSidebar({ children }: { children: ReactNode }) {
 	if (isMobile) {
 		return (
 			<Sheet open={openMobile} onOpenChange={setOpenMobile}>
-				<SheetContent
-					side="left"
-					className="w-[min(21rem,90vw)] gap-0 bg-background p-6 sm:max-w-none"
+				<MobileSidebar
+					title="Projects"
+					description="Choose a project, category or library."
 				>
-					<SheetHeader className="mb-8 gap-1 p-0">
-						<SheetTitle className="text-lg font-medium">Projects</SheetTitle>
-						<SheetDescription className="text-xs">
-							Choose a project, category or library.
-						</SheetDescription>
-					</SheetHeader>
 					{children}
-					<div className="mt-6 flex shrink-0 items-center justify-between gap-4 border-t pt-5">
+					<div className="mt-6 flex items-center justify-between gap-4 border-t pt-5">
 						<p className="text-sm text-muted-foreground">Appearance</p>
 						<ThemeSelect />
 					</div>
-				</SheetContent>
+				</MobileSidebar>
 			</Sheet>
 		);
 	}

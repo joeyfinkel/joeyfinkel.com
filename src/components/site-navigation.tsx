@@ -1,9 +1,9 @@
 import { Link } from '@tanstack/react-router';
 import { ArrowUpRight } from 'lucide-react';
+import { resumeUrl } from '@/lib/resume-url';
 import { cn } from '@/lib/utils';
-import { resumeUrl } from '../utils/resume-url';
 
-export function HomeNavigation({
+export function SiteNavigation({
 	onNavigate,
 	className,
 }: {
