@@ -89,7 +89,7 @@ export const createSourceUrl = createReusable({
 		if (meta.source === 'npm') {
 			const { package: packageName, source } = meta;
 
-			return `https://${source}.com/package/${packageName}`;
+			return `https://${source}js.com/search?q=${encodeURIComponent(packageName)}`;
 		}
 
 		return '';
