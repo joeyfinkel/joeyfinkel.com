@@ -1,6 +1,6 @@
 import { Link } from '@tanstack/react-router';
 import { CodeExample } from '@/components/code-example';
-import { PaneDeckPage } from '../utils/page';
+import { PaneDeckPage } from '../-utils/page';
 import { Workspace } from './workspace';
 
 export function PaneDeck() {

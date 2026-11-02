@@ -1,11 +1,11 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { projectConfig } from './-utils/config';
+import { projectConfig } from '../-utils/config';
 
 const getPage = projectConfig.getComponent.forResource({
 	resource: 'material-ui-helper',
 });
 
-export const Route = createFileRoute('/projects/material-ui-helper')({
+export const Route = createFileRoute('/projects/material-ui-helper/')({
 	component: function MaterialUiHelperRoute() {
 		return getPage();
 	},

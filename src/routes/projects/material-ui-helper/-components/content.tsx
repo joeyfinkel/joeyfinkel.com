@@ -1,7 +1,7 @@
 import { Link } from '@tanstack/react-router';
 import { CodeExample } from '@/components/code-example';
-import { examples } from '../utils/examples';
-import { MaterialUiHelperPage } from '../utils/page';
+import { examples } from '../-utils/examples';
+import { MaterialUiHelperPage } from '../-utils/page';
 
 export function MaterialUiHelper() {
 	return (
