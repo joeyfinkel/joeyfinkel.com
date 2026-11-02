@@ -1,13 +1,15 @@
-import { createProjectLayout } from '../../-utils/layout';
+import { createProjectLayout } from '../../-utils/layout/states/default';
 
 export const JfdevelopsPage = createProjectLayout({
-	resource: 'jfdevelops',
-	projectPath: '/projects/jfdevelops',
-	name: 'JfdevelopsPage',
-	presentation: 'docs',
-	title: 'jfdevelops',
-	description:
-		'My open-source libraries for layouts, forms, developer tools, and typed errors.',
-	sourceUrl: 'https://www.npmjs.com/search?q=%40jfdevelops',
-	sourceLabel: 'Browse on npm',
+  resource: 'jfdevelops',
+  name: 'JfdevelopsPage',
+  presentation: 'docs',
+  title: 'jfdevelops',
+  description:
+    'My open-source libraries for layouts, forms, developer tools, and typed errors.',
+  meta: {
+    source: 'npm',
+    label: 'Browse on npm',
+    package: '@jfdevelops',
+  },
 });
