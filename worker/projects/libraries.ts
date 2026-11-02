@@ -31,28 +31,28 @@ export const libraries = [
 	{
 		name: '@jfdevelops/react-layout',
 		githubUrl: 'https://github.com/jfdevelops/react-layout',
-		group: 'layouts',
+		group: 'react-layout',
 		description: 'Composable, type-safe primitives for building React layouts.',
 	},
 	{
 		name: '@jfdevelops/react-layout-composable-breadcrumb',
 		githubUrl:
 			'https://github.com/jfdevelops/react-layout/tree/main/packages/composable-breadcrumb',
-		group: 'layouts',
+		group: 'react-layout',
 		description: 'A ready-made breadcrumb composable for React Layout.',
 	},
 	{
 		name: '@jfdevelops/react-layout-composables',
 		githubUrl:
 			'https://github.com/jfdevelops/react-layout/tree/main/packages/composables',
-		group: 'layouts',
+		group: 'react-layout',
 		description: 'Reusable components for composing React Layout interfaces.',
 	},
 	{
 		name: '@jfdevelops/react-layout-devtools-core',
 		githubUrl:
 			'https://github.com/jfdevelops/react-layout/tree/main/packages/devtools-core',
-		group: 'devtools',
+		group: 'react-layout',
 		description:
 			'An inspection protocol and graph store for React Layout developer tools.',
 	},
@@ -60,14 +60,14 @@ export const libraries = [
 		name: '@jfdevelops/react-layout-devtools-react',
 		githubUrl:
 			'https://github.com/jfdevelops/react-layout/tree/main/packages/devtools-react',
-		group: 'devtools',
+		group: 'react-layout',
 		description: 'A React graph inspector for React Layout.',
 	},
 	{
 		name: '@jfdevelops/react-layout-devtools-vite',
 		githubUrl:
 			'https://github.com/jfdevelops/react-layout/tree/main/packages/devtools-vite',
-		group: 'devtools',
+		group: 'react-layout',
 		description:
 			'Development source locations and render-state previews through Vite.',
 	},
@@ -75,7 +75,7 @@ export const libraries = [
 		name: '@jfdevelops/react-layout-validator',
 		githubUrl:
 			'https://github.com/jfdevelops/react-layout/tree/main/packages/validators',
-		group: 'layouts',
+		group: 'react-layout',
 		description: 'Prop validators for React Layout.',
 	},
 	{

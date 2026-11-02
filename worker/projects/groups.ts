@@ -1,9 +1,9 @@
 export const groups = [
 	{
-		id: 'layouts',
+		id: 'react-layout',
 		title: 'React Layout',
 		description:
-			'Build a consistent page shell, then tailor it to each resource. Add composables, breadcrumbs, and prop validation as your application grows.',
+			'Build a consistent page shell, then tailor it to each resource. Add composables, breadcrumbs, prop validation, and devtools as your application grows.',
 		install: 'pnpm add @jfdevelops/react-layout',
 		example: {
 			title: 'Define a layout once. Create a page for each resource.',
@@ -56,20 +56,29 @@ const registration = defineMultiStepForm({
 		id: 'devtools',
 		title: 'Developer tools',
 		description:
-			'Inspect layout graphs and render states, or build developer tools for your own library. Framework-independent cores pair with React panels and optional Vite instrumentation.',
-		install: 'pnpm add -D @jfdevelops/react-layout-devtools-vite',
+			'Build developer tools for your own library. A dev-only event channel and memoised client pair with a React panel shell, and all of it compiles to nothing in production.',
+		install: 'pnpm add @jfdevelops/devtools-kit zod',
 		example: {
-			title: 'Add source locations and render-state previews in development.',
+			title: "Describe your library's devtools data once.",
 			language: 'TypeScript',
-			sourceUrl:
-				'https://github.com/jfdevelops/react-layout/tree/main/packages/devtools-vite',
-			code: `import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
-import { reactLayoutDevtools } from '@jfdevelops/react-layout-devtools-vite';
+			sourceUrl: 'https://github.com/jfdevelops/devtools#readme',
+			code: `import { z } from 'zod';
+import { createDevtools } from '@jfdevelops/devtools-kit';
 
-export default defineConfig({
-  plugins: [react(), reactLayoutDevtools()],
-});`,
+export const devtools = createDevtools({
+  key: '__MY_LIB_DEVTOOLS__',
+  entities: {
+    step: z.object({ id: z.string(), title: z.string() }),
+    field: z.object({ name: z.string(), valid: z.boolean() }),
+  },
+  events: z.discriminatedUnion('type', [
+    z.object({ type: z.literal('step:enter'), at: z.number(), id: z.string() }),
+    z.object({ type: z.literal('validation:fail'), at: z.number(), message: z.string() }),
+  ]),
+});
+
+devtools.putEntity('step', step.id, step);
+devtools.emit({ type: 'step:enter', at: Date.now(), id: step.id });`,
 		},
 	},
 	{
