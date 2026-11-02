@@ -1,3 +1,5 @@
+import { HighlightedCode } from './highlighted-code';
+
 export function CodeExample({
 	title,
 	language,
@@ -19,9 +21,7 @@ export function CodeExample({
 				tabIndex={0}
 				className="max-w-full overflow-x-auto p-4 text-xs leading-6 outline-offset-[-2px] focus-visible:outline-2 focus-visible:outline-ring sm:p-6"
 			>
-				<pre>
-					<code>{code}</code>
-				</pre>
+				<HighlightedCode code={code} language={language} />
 			</section>
 		</figure>
 	);

@@ -94,3 +94,60 @@
 html {
 	scroll-padding-top: 9rem;
 }
+.code-syntax {
+	--code-comment: #60665f;
+	--code-keyword: #7c3aa0;
+	--code-string: #23643b;
+	--code-number: #9a4c13;
+	--code-function: #245da6;
+	--code-operator: #8a3149;
+}
+
+.dark .code-syntax {
+	--code-comment: #a4ada4;
+	--code-keyword: #d7a8ef;
+	--code-string: #a3cf9b;
+	--code-number: #efbd89;
+	--code-function: #9cc7f3;
+	--code-operator: #f1a9bc;
+}
+
+.code-syntax .token.comment,
+.code-syntax .token.prolog,
+.code-syntax .token.doctype,
+.code-syntax .token.cdata {
+	color: var(--code-comment);
+}
+
+.code-syntax .token.keyword,
+.code-syntax .token.tag,
+.code-syntax .token.atrule {
+	color: var(--code-keyword);
+}
+
+.code-syntax .token.string,
+.code-syntax .token.char,
+.code-syntax .token.attr-value,
+.code-syntax .token.regex {
+	color: var(--code-string);
+}
+
+.code-syntax .token.number,
+.code-syntax .token.boolean,
+.code-syntax .token.constant {
+	color: var(--code-number);
+}
+
+.code-syntax .token.function,
+.code-syntax .token.class-name,
+.code-syntax .token.builtin,
+.code-syntax .token.property,
+.code-syntax .token.attr-name {
+	color: var(--code-function);
+}
+
+.code-syntax .token.operator,
+.code-syntax .token.variable,
+.code-syntax .token.interpolation-punctuation {
+	color: var(--code-operator);
+}
