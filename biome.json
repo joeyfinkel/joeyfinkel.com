@@ -13,6 +13,7 @@
 		{
 			"includes": [
 				"src/components/ui/button.tsx",
+				"src/components/ui/dropdown-menu.tsx",
 				"src/components/ui/input.tsx",
 				"src/components/ui/separator.tsx",
 				"src/components/ui/sheet.tsx",
