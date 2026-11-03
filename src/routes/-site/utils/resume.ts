@@ -1,4 +1,9 @@
-import { type Experience, experienceSchema } from '@/resume/schema';
+import {
+	type Credentials,
+	credentialsSchema,
+	type Experience,
+	experienceSchema,
+} from '@/resume/schema';
 
 export async function loadResume() {
 	try {
@@ -13,11 +18,13 @@ export async function loadResume() {
 
 		const data = await response.json();
 		const experience = experienceSchema.parse(data.experience);
+		const credentials = credentialsSchema.parse(data.credentials);
 
-		return { experience, unavailable: false };
+		return { experience, credentials, unavailable: false };
 	} catch {
 		const experience: Experience = [];
+		const credentials: Credentials = [];
 
-		return { experience, unavailable: true };
+		return { experience, credentials, unavailable: true };
 	}
 }

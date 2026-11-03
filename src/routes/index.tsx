@@ -1,5 +1,6 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, getRouteApi } from '@tanstack/react-router';
 import { ArrowUpRight } from 'lucide-react';
+import { Credentials } from './-home/components/credentials';
 import { Experience } from './-home/components/experience';
 import { HomeHeader } from './-home/components/header';
 import { HireMe } from './-home/components/hire-me';
@@ -7,13 +8,18 @@ import { Project } from './-home/components/project';
 import { loadHome } from './-home/utils/load';
 import { projects } from './-home/utils/projects';
 
+const rootRoute = getRouteApi('__root__');
+
 export const Route = createFileRoute('/')({
 	component: Home,
 	loader: loadHome,
 });
 
 function Home() {
-	const resume = Route.useLoaderData();
+	const { publishedLibraryCount } = Route.useLoaderData();
+	const hasCredentials = rootRoute.useLoaderData({
+		select: ({ credentials }) => credentials.length > 0,
+	});
 
 	return (
 		<div className="mx-auto max-w-[57.5rem] px-6 sm:px-10">
@@ -60,15 +66,13 @@ function Home() {
 							<Project
 								key={project.name}
 								project={project}
-								publishedLibraryCount={resume.publishedLibraryCount}
+								publishedLibraryCount={publishedLibraryCount}
 							/>
 						))}
 					</ul>
 				</section>
-				<Experience
-					experience={resume.experience}
-					unavailable={resume.unavailable}
-				/>
+				<Experience />
+				{hasCredentials && <Credentials />}
 				<HireMe />
 			</main>
 			<footer className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t py-8 text-xs text-muted-foreground">

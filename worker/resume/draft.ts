@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { experienceSchema } from '../../src/resume/schema';
+import { credentialsSchema, experienceSchema } from '../../src/resume/schema';
 import { ResumeError } from './error';
 
 export const draftSchema = z.object({
@@ -9,6 +9,7 @@ export const draftSchema = z.object({
 	uploadTokenHash: z.string(),
 	pdfSha256: z.string().regex(/^[a-f0-9]{64}$/),
 	experience: experienceSchema,
+	credentials: credentialsSchema,
 });
 
 export async function getDraft(bucket: R2Bucket, revision: string) {

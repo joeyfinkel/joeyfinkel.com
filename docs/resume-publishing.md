@@ -52,22 +52,33 @@ alone cannot read a sandbox-local PDF. See [Claude file creation and network set
 Keep my public master resume separate from resumes tailored to individual jobs.
 When I explicitly ask you to publish my master resume to joeyfinkel.com:
 
-1. Read `get_published_resume` to check the current revision.
+1. Read `get_published_resume` to check the current revision and the
+   credentials already on the site.
 2. Finalize the master PDF and derive the experience entries from that exact
    version. Preserve names, titles, dates, and concurrent engagements; never
    invent responsibilities or metrics. Put the current role first, then past roles.
-3. Compute the PDF's SHA-256 using code execution. Call `prepare_resume` with
-   `pdfSha256` and the complete `experience` array. Each entry contains company,
-   role, start (`YYYY-MM`), period (displayed date range), location, highlights,
-   and technologies. Optional logo values are the existing local paths for JF
-   Develops, Febyte, and Ecom Diversify; omit the logo for other employers.
-4. From code execution, PUT the exact PDF bytes to the returned `uploadUrl`, with
+3. Compare the certifications listed on the PDF with the published credentials.
+   Keep the published entry, including its url and badge, for each certification
+   still on the resume, and drop any the resume no longer lists. For each new
+   certification, ask me for its public verification URL and any field the PDF
+   does not state (issuer, award date, badge image URL). Never guess a URL or
+   date. Wait for my answers before preparing the draft.
+4. Compute the PDF's SHA-256 using code execution. Call `prepare_resume` with
+   `pdfSha256`, the complete `experience` array, and the complete `credentials`
+   array (empty if the resume lists none). Each experience entry contains
+   company, role, start (`YYYY-MM`), period (displayed date range), location,
+   highlights, and technologies. Optional logo values are the existing local
+   paths for JF Develops, Febyte, and Ecom Diversify; omit the logo for other
+   employers. Each credential contains title, issuer, awardedOn (`YYYY-MM-DD`),
+   and url (https), plus optional program (such as "Microsoft Applied Skills")
+   and badge (https image URL).
+5. From code execution, PUT the exact PDF bytes to the returned `uploadUrl`, with
    `Content-Type: application/pdf` and `Authorization: Bearer <uploadToken>`.
    Keep this credential out of URLs, shared files, and printed command output.
-5. Only after a successful upload, call `publish_resume` with the draft revision.
+6. Only after a successful upload, call `publish_resume` with the draft revision.
    If a newer version was published meanwhile, reread it and prepare again;
    do not silently overwrite it.
-6. Verify the public PDF and timeline and report the publication revision.
+7. Verify the public PDF, timeline, and credentials, and report the publication revision.
 
 Updating or saving a file inside this project does not itself publish it.
 Do not publish job-specific drafts unless I explicitly select one as the master.

@@ -1,4 +1,4 @@
-import { experienceSchema } from '../../src/resume/schema';
+import { credentialsSchema, experienceSchema } from '../../src/resume/schema';
 import { digest } from './crypto';
 import { draftSchema } from './draft';
 
@@ -7,10 +7,12 @@ export async function prepareResume(
 	origin: string,
 	input: {
 		experience: unknown;
+		credentials: unknown;
 		pdfSha256: string;
 	},
 ) {
 	const experience = experienceSchema.parse(input.experience);
+	const credentials = credentialsSchema.parse(input.credentials);
 	const current = await bucket.head('current.json');
 	const revision = crypto.randomUUID();
 	const uploadToken = Array.from(
@@ -24,6 +26,7 @@ export async function prepareResume(
 		uploadTokenHash: await digest(uploadToken),
 		pdfSha256: input.pdfSha256,
 		experience,
+		credentials,
 	});
 
 	await bucket.put(`drafts/${revision}.json`, JSON.stringify(draft));

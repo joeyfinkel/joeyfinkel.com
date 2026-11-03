@@ -203,6 +203,7 @@ it('authenticates the owner through browser-bound consent and PKCE, then serves 
 		.parse(
 			await callTool(token.access_token, 'prepare_resume', {
 				experience,
+				credentials: [],
 				pdfSha256: await digest(pdf),
 			}),
 		);
@@ -220,7 +221,10 @@ it('authenticates the owner through browser-bound consent and PKCE, then serves 
 	});
 	expect(publication.revision).toBe(draft.revision);
 	const current = await request('/api/resume');
-	expect(await current.json()).toEqual({ experience: publication.experience });
+	expect(await current.json()).toEqual({
+		experience: publication.experience,
+		credentials: publication.credentials,
+	});
 	const publishedPdf = await request('/resume.pdf');
 	expect(new Uint8Array(await publishedPdf.arrayBuffer())).toEqual(pdf);
 });

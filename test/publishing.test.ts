@@ -9,6 +9,16 @@ import { prepareResume } from '../worker/resume/prepare';
 import { publishResume } from '../worker/resume/publish';
 
 const origin = 'https://joeyfinkel.com';
+const credentials = [
+	{
+		title: 'Example Certification',
+		program: 'Example Program',
+		issuer: 'Example Issuer',
+		awardedOn: '2026-11-03',
+		badge: 'https://example.com/badge.png',
+		url: 'https://example.com/credentials/example',
+	},
+];
 
 async function request(path: string, init?: RequestInit) {
 	const headers = new Headers(init?.headers);
@@ -37,6 +47,7 @@ async function stagedResume() {
 	const pdf = await pdfBytes();
 	const draft = await prepareResume(env.RESUMES, origin, {
 		experience,
+		credentials,
 		pdfSha256: await digest(pdf),
 	});
 
@@ -81,6 +92,7 @@ it('serves the initial experience before the first publication', async () => {
 	expect(response.status).toBe(200);
 	expect(await response.json()).toEqual({
 		experience: JSON.parse(JSON.stringify(experience)),
+		credentials: [],
 	});
 });
 
@@ -124,7 +136,10 @@ it('publishes a matching pair, preserves exact PDF bytes, and is idempotent', as
 		(await publishResume(env.RESUMES, staged.draft.revision)).revision,
 	).toBe(publication.revision);
 	const response = await request('/api/resume');
-	expect(await response.json()).toEqual({ experience: publication.experience });
+	expect(await response.json()).toEqual({
+		experience: publication.experience,
+		credentials: publication.credentials,
+	});
 	expect(response.headers.get('Cache-Control')).toBe('no-store');
 	const pdf = await request('/resume.pdf');
 	expect(pdf.headers.get('Content-Type')).toBe('application/pdf');
@@ -174,12 +189,21 @@ it('expires upload credentials and validates PDF structure, body size, and metad
 	await expect(
 		prepareResume(env.RESUMES, origin, {
 			experience: [{ ...experience[0], logo: 'https://evil.test/tracker' }],
+			credentials,
+			pdfSha256: 'a'.repeat(64),
+		}),
+	).rejects.toThrow();
+	await expect(
+		prepareResume(env.RESUMES, origin, {
+			experience,
+			credentials: [{ ...credentials[0], badge: 'http://evil.test/tracker' }],
 			pdfSha256: 'a'.repeat(64),
 		}),
 	).rejects.toThrow();
 	const invalid = new TextEncoder().encode('%PDF-1.7 not a document');
 	const invalidDraft = await prepareResume(env.RESUMES, origin, {
 		experience,
+		credentials,
 		pdfSha256: await digest(invalid),
 	});
 	const invalidUpload = await request(

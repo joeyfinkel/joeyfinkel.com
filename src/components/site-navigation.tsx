@@ -1,7 +1,9 @@
-import { Link } from '@tanstack/react-router';
+import { getRouteApi, Link } from '@tanstack/react-router';
 import { ArrowUpRight } from 'lucide-react';
 import { resumeUrl } from '@/lib/resume-url';
 import { cn } from '@/lib/utils';
+
+const rootRoute = getRouteApi('__root__');
 
 export function SiteNavigation({
 	onNavigate,
@@ -10,6 +12,10 @@ export function SiteNavigation({
 	onNavigate?: () => void;
 	className?: string;
 }) {
+	const hasCredentials = rootRoute.useLoaderData({
+		select: ({ credentials }) => credentials.length > 0,
+	});
+
 	return (
 		<nav
 			aria-label="Main navigation"
@@ -31,6 +37,16 @@ export function SiteNavigation({
 			>
 				Experience
 			</Link>
+			{hasCredentials && (
+				<Link
+					to="/"
+					hash="credentials"
+					onClick={onNavigate}
+					className="hover:text-primary"
+				>
+					Credentials
+				</Link>
+			)}
 			<Link
 				to="/"
 				hash="hire-me"

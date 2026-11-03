@@ -8,7 +8,10 @@ export async function readResume(request: Request, env: Env) {
 
 	if (url.pathname === '/api/resume') {
 		return Response.json(
-			{ experience: publication?.experience ?? experience },
+			{
+				experience: publication?.experience ?? experience,
+				credentials: publication?.credentials ?? [],
+			},
 			{ headers: { 'Cache-Control': 'no-store' } },
 		);
 	}
