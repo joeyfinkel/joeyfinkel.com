@@ -23,6 +23,8 @@
 	--color-muted-foreground: var(--muted-foreground);
 	--color-accent: var(--secondary);
 	--color-accent-foreground: var(--foreground);
+	--color-popover: var(--background);
+	--color-popover-foreground: var(--foreground);
 	--color-border: var(--border);
 	--color-input: var(--border);
 	--color-ring: var(--primary);

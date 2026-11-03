@@ -2,12 +2,14 @@
 export const libraries = [
 	{
 		name: '@jfdevelops/create-error',
+		label: 'Create error',
 		githubUrl: 'https://github.com/jfdevelops/error-blueprint',
 		group: 'errors',
 		description: 'Strongly typed, configurable error families for TypeScript.',
 	},
 	{
 		name: '@jfdevelops/devtools-kit',
+		label: 'Devtools kit',
 		githubUrl:
 			'https://github.com/jfdevelops/devtools/tree/main/packages/devtools-kit',
 		group: 'devtools',
@@ -16,6 +18,7 @@ export const libraries = [
 	},
 	{
 		name: '@jfdevelops/devtools-kit-react',
+		label: 'Devtools kit React',
 		githubUrl:
 			'https://github.com/jfdevelops/devtools/tree/main/packages/devtools-kit-react',
 		group: 'devtools',
@@ -23,6 +26,7 @@ export const libraries = [
 	},
 	{
 		name: '@jfdevelops/multi-step-form-core',
+		label: 'Core',
 		githubUrl: 'https://github.com/jfdevelops/multi-step-form',
 		group: 'forms',
 		description:
@@ -30,12 +34,14 @@ export const libraries = [
 	},
 	{
 		name: '@jfdevelops/react-layout',
+		label: 'Overview',
 		githubUrl: 'https://github.com/jfdevelops/react-layout',
 		group: 'react-layout',
 		description: 'Composable, type-safe primitives for building React layouts.',
 	},
 	{
 		name: '@jfdevelops/react-layout-composable-breadcrumb',
+		label: 'Composable breadcrumb',
 		githubUrl:
 			'https://github.com/jfdevelops/react-layout/tree/main/packages/composable-breadcrumb',
 		group: 'react-layout',
@@ -43,6 +49,7 @@ export const libraries = [
 	},
 	{
 		name: '@jfdevelops/react-layout-composables',
+		label: 'Composables',
 		githubUrl:
 			'https://github.com/jfdevelops/react-layout/tree/main/packages/composables',
 		group: 'react-layout',
@@ -50,6 +57,7 @@ export const libraries = [
 	},
 	{
 		name: '@jfdevelops/react-layout-devtools-core',
+		label: 'Devtools core',
 		githubUrl:
 			'https://github.com/jfdevelops/react-layout/tree/main/packages/devtools-core',
 		group: 'react-layout',
@@ -58,6 +66,7 @@ export const libraries = [
 	},
 	{
 		name: '@jfdevelops/react-layout-devtools-react',
+		label: 'Devtools React',
 		githubUrl:
 			'https://github.com/jfdevelops/react-layout/tree/main/packages/devtools-react',
 		group: 'react-layout',
@@ -65,6 +74,7 @@ export const libraries = [
 	},
 	{
 		name: '@jfdevelops/react-layout-devtools-vite',
+		label: 'Devtools Vite',
 		githubUrl:
 			'https://github.com/jfdevelops/react-layout/tree/main/packages/devtools-vite',
 		group: 'react-layout',
@@ -73,6 +83,7 @@ export const libraries = [
 	},
 	{
 		name: '@jfdevelops/react-layout-validator',
+		label: 'Validator',
 		githubUrl:
 			'https://github.com/jfdevelops/react-layout/tree/main/packages/validators',
 		group: 'react-layout',
@@ -80,6 +91,7 @@ export const libraries = [
 	},
 	{
 		name: '@jfdevelops/react-multi-step-form',
+		label: 'React',
 		githubUrl: 'https://github.com/jfdevelops/multi-step-form',
 		group: 'forms',
 		description: 'React components, hooks, and bindings for multi-step forms.',

@@ -27,7 +27,7 @@ export function ProjectsSidebar({ children }: { children: ReactNode }) {
 	return (
 		<Sidebar
 			collapsible="none"
-			className="sticky top-28 hidden h-fit max-h-[calc(100svh-8rem)] w-60 shrink-0 overflow-y-auto bg-transparent pr-5 md:flex"
+			className="sticky top-28 hidden h-fit max-h-[calc(100svh-8rem)] w-[17rem] shrink-0 overflow-y-auto bg-transparent md:flex"
 		>
 			{children}
 		</Sidebar>
