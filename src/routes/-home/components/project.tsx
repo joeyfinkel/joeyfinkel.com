@@ -29,7 +29,7 @@ export function Project({
 		: project.action;
 
 	return (
-		<li className={cn('flex', isLibraryProject && 'sm:col-span-2')}>
+		<li className={cn('flex min-w-0', isLibraryProject && 'sm:col-span-2')}>
 			<Link
 				to={project.to}
 				className="group flex w-full flex-col overflow-hidden rounded-xl border outline-hidden transition-colors hover:border-primary/50 hover:bg-secondary/30 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
