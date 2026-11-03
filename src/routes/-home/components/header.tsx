@@ -3,7 +3,7 @@ import { MobileMenu } from '@/components/mobile-menu';
 import { SiteNavigation } from '@/components/site-navigation';
 import { StickyHeader } from '@/components/sticky-header';
 
-export function HomeHeader({ showCredentials }: { showCredentials: boolean }) {
+export function HomeHeader() {
 	return (
 		<StickyHeader>
 			<Link
@@ -13,12 +13,9 @@ export function HomeHeader({ showCredentials }: { showCredentials: boolean }) {
 				Joey Finkel<span className="text-primary">.</span>
 			</Link>
 			<div className="hidden items-center gap-4 md:flex">
-				<SiteNavigation
-					showCredentials={showCredentials}
-					className="items-center gap-4 text-xs"
-				/>
+				<SiteNavigation className="items-center gap-4 text-xs" />
 			</div>
-			<MobileMenu showCredentials={showCredentials} />
+			<MobileMenu />
 		</StickyHeader>
 	);
 }

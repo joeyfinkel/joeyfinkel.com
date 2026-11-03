@@ -8,17 +8,13 @@ import { TimelineItem } from '@/components/reui/timeline/item';
 import { Timeline } from '@/components/reui/timeline/root';
 import { TimelineSeparator } from '@/components/reui/timeline/separator';
 import { TimelineTitle } from '@/components/reui/timeline/title';
+import { useResume } from '@/hooks/use-resume';
 import { resumeUrl } from '@/lib/resume-url';
-import type { Experience as ExperienceData } from '@/resume/schema';
 import { CompanyLogo } from './company-logo';
 
-export function Experience({
-	experience,
-	unavailable,
-}: {
-	experience: ExperienceData;
-	unavailable: boolean;
-}) {
+export function Experience() {
+	const { experience, unavailable } = useResume();
+
 	return (
 		<section
 			id="experience"

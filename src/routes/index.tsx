@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { ArrowUpRight } from 'lucide-react';
+import { useResume } from '@/hooks/use-resume';
 import { Credentials } from './-home/components/credentials';
 import { Experience } from './-home/components/experience';
 import { HomeHeader } from './-home/components/header';
@@ -14,7 +15,8 @@ export const Route = createFileRoute('/')({
 });
 
 function Home() {
-	const resume = Route.useLoaderData();
+	const { publishedLibraryCount } = Route.useLoaderData();
+	const { credentials } = useResume();
 
 	return (
 		<div className="mx-auto max-w-[57.5rem] px-6 sm:px-10">
@@ -24,7 +26,7 @@ function Home() {
 			>
 				Skip to content
 			</a>
-			<HomeHeader showCredentials={resume.credentials.length > 0} />
+			<HomeHeader />
 			<main id="main">
 				<section className="py-12 sm:py-16" aria-labelledby="intro">
 					<h1
@@ -61,16 +63,13 @@ function Home() {
 							<Project
 								key={project.name}
 								project={project}
-								publishedLibraryCount={resume.publishedLibraryCount}
+								publishedLibraryCount={publishedLibraryCount}
 							/>
 						))}
 					</ul>
 				</section>
-				<Experience
-					experience={resume.experience}
-					unavailable={resume.unavailable}
-				/>
-				<Credentials credentials={resume.credentials} />
+				<Experience />
+				{credentials.length > 0 && <Credentials />}
 				<HireMe />
 			</main>
 			<footer className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t py-8 text-xs text-muted-foreground">

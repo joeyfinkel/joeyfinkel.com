@@ -1,6 +1,6 @@
 import { Link } from '@tanstack/react-router';
 import { ArrowUpRight, Award } from 'lucide-react';
-import type { Credentials as CredentialsData } from '@/resume/schema';
+import { useResume } from '@/hooks/use-resume';
 
 const awardedDate = new Intl.DateTimeFormat('en-US', {
 	month: 'long',
@@ -8,10 +8,8 @@ const awardedDate = new Intl.DateTimeFormat('en-US', {
 	timeZone: 'UTC',
 });
 
-export function Credentials({ credentials }: { credentials: CredentialsData }) {
-	if (credentials.length === 0) {
-		return null;
-	}
+export function Credentials() {
+	const { credentials } = useResume();
 
 	return (
 		<section

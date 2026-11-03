@@ -1,17 +1,18 @@
 import { Link } from '@tanstack/react-router';
 import { ArrowUpRight } from 'lucide-react';
+import { useResume } from '@/hooks/use-resume';
 import { resumeUrl } from '@/lib/resume-url';
 import { cn } from '@/lib/utils';
 
 export function SiteNavigation({
 	onNavigate,
-	showCredentials = false,
 	className,
 }: {
 	onNavigate?: () => void;
-	showCredentials?: boolean;
 	className?: string;
 }) {
+	const { credentials } = useResume();
+
 	return (
 		<nav
 			aria-label="Main navigation"
@@ -33,7 +34,7 @@ export function SiteNavigation({
 			>
 				Experience
 			</Link>
-			{showCredentials && (
+			{credentials.length > 0 && (
 				<Link
 					to="/"
 					hash="credentials"

@@ -1,5 +1,4 @@
 import { summarySchema } from '@/projects/schema';
-import { loadResume } from './resume';
 
 async function loadLibraryCount() {
 	try {
@@ -18,10 +17,7 @@ async function loadLibraryCount() {
 }
 
 export async function loadHome() {
-	const [resume, publishedLibraryCount] = await Promise.all([
-		loadResume(),
-		loadLibraryCount(),
-	]);
+	const publishedLibraryCount = await loadLibraryCount();
 
-	return { ...resume, publishedLibraryCount };
+	return { publishedLibraryCount };
 }
