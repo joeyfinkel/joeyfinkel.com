@@ -16,7 +16,7 @@ function Home() {
 	const resume = Route.useLoaderData();
 
 	return (
-		<div className="mx-auto max-w-3xl px-6 sm:px-10">
+		<div className="mx-auto max-w-[57.5rem] px-6 sm:px-10">
 			<a
 				href="#main"
 				className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:bg-background focus:p-3"
@@ -43,10 +43,17 @@ function Home() {
 					className="scroll-mt-8"
 					aria-labelledby="projects-heading"
 				>
-					<div className="mb-6 flex items-baseline justify-between">
-						<h2 id="projects-heading" className="text-sm font-medium">
-							Projects
+					<div className="mb-8">
+						<h2
+							id="projects-heading"
+							className="text-2xl font-medium tracking-tight sm:text-3xl"
+						>
+							Selected projects
 						</h2>
+						<p className="mt-3 max-w-xl text-base leading-7 text-muted-foreground">
+							Desktop tools and developer libraries built to make everyday work
+							easier.
+						</p>
 					</div>
 					<ul className="grid gap-4 sm:grid-cols-2">
 						{projects.map((project) => (

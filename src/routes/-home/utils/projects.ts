@@ -5,8 +5,9 @@ export const projects = [
 		to: '/projects/panedeck',
 		category: 'Desktop application',
 		description:
-			'Bring your Windows apps together in focused, flexible workspaces. Group windows into splits and tabs, then move and resize them together.',
+			'Group your Windows apps into splits and tabs, then move and resize them together as one focused workspace.',
 		tags: ['Windows', 'C#', '.NET'],
+		action: 'Explore PaneDeck',
 		number: '01',
 	},
 	{
@@ -15,18 +16,20 @@ export const projects = [
 		to: '/projects/material-ui-helper',
 		category: 'Developer library',
 		description:
-			'Connect MUI Data Grid filtering to your .NET backend. Translate filter models into LINQ queries for collections and query providers.',
+			'Turn MUI Data Grid filters into LINQ queries on your .NET backend, for in-memory collections and query providers.',
 		tags: ['C#', 'LINQ', 'MUI'],
+		action: 'Explore Material UI Helper',
 		number: '02',
 	},
 	{
 		name: 'jfdevelops',
 		slug: 'jfdevelops',
 		to: '/projects/jfdevelops',
-		category: 'Open source libraries',
+		category: 'Library collection',
 		description:
-			'Type-safe layouts, multi-step forms, error handling, and developer tools. Small libraries for the parts of an application you build again and again.',
+			'A collection of open-source TypeScript and React libraries for layouts, multi-step forms, typed errors, and developer tools.',
 		tags: ['React', 'TypeScript', 'Open source'],
+		action: 'Browse the libraries',
 		number: '03',
 	},
 ] as const;
