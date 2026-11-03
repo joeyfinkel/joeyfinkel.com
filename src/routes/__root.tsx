@@ -8,6 +8,8 @@ import { projectLayouts } from './projects/-utils/layout/base';
 export const Route = createRootRoute({
 	component: RootLayout,
 	loader: loadResume,
+	// The resume rarely changes, so load it once per visit instead of on every navigation.
+	staleTime: Number.POSITIVE_INFINITY,
 	notFoundComponent: NotFound,
 	errorComponent: RouteError,
 });
