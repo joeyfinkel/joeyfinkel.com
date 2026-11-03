@@ -9,3 +9,4 @@ dist/
 !.dev.vars.example
 *.tsbuildinfo
 worker-configuration.d.ts
+public/og-image.png
