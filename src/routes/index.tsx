@@ -24,7 +24,7 @@ function Home() {
 			>
 				Skip to content
 			</a>
-			<HomeHeader />
+			<HomeHeader showCredentials={resume.credentials.length > 0} />
 			<main id="main">
 				<section className="py-12 sm:py-16" aria-labelledby="intro">
 					<h1
@@ -70,10 +70,7 @@ function Home() {
 					experience={resume.experience}
 					unavailable={resume.unavailable}
 				/>
-				<Credentials
-					credentials={resume.credentials}
-					unavailable={resume.unavailable}
-				/>
+				<Credentials credentials={resume.credentials} />
 				<HireMe />
 			</main>
 			<footer className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t py-8 text-xs text-muted-foreground">

@@ -5,9 +5,11 @@ import { cn } from '@/lib/utils';
 
 export function SiteNavigation({
 	onNavigate,
+	showCredentials = false,
 	className,
 }: {
 	onNavigate?: () => void;
+	showCredentials?: boolean;
 	className?: string;
 }) {
 	return (
@@ -31,14 +33,16 @@ export function SiteNavigation({
 			>
 				Experience
 			</Link>
-			<Link
-				to="/"
-				hash="credentials"
-				onClick={onNavigate}
-				className="hover:text-primary"
-			>
-				Credentials
-			</Link>
+			{showCredentials && (
+				<Link
+					to="/"
+					hash="credentials"
+					onClick={onNavigate}
+					className="hover:text-primary"
+				>
+					Credentials
+				</Link>
+			)}
 			<Link
 				to="/"
 				hash="hire-me"
