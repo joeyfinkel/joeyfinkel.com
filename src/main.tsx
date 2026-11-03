@@ -1,3 +1,4 @@
+import { ReactLayoutDevtoolsContent } from '@jfdevelops/react-layout-devtools-react';
 import { TanStackDevtools } from '@tanstack/react-devtools';
 import { RouterProvider } from '@tanstack/react-router';
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools';
@@ -5,6 +6,7 @@ import { ThemeProvider } from 'next-themes';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { router } from './router';
+import { projectLayouts } from './routes/projects/-utils/layout/base';
 import './styles.css';
 
 const root = document.getElementById('root');
@@ -28,6 +30,10 @@ createRoot(root).render(
 					{
 						name: 'TanStack Router',
 						render: <TanStackRouterDevtoolsPanel router={router} />,
+					},
+					{
+						name: 'React Layout',
+						render: <ReactLayoutDevtoolsContent source={projectLayouts} />,
 					},
 				]}
 			/>
