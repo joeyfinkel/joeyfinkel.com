@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { ArrowUpRight } from 'lucide-react';
+import { Credentials } from './-home/components/credentials';
 import { Experience } from './-home/components/experience';
 import { HomeHeader } from './-home/components/header';
 import { HireMe } from './-home/components/hire-me';
@@ -67,6 +68,10 @@ function Home() {
 				</section>
 				<Experience
 					experience={resume.experience}
+					unavailable={resume.unavailable}
+				/>
+				<Credentials
+					credentials={resume.credentials}
 					unavailable={resume.unavailable}
 				/>
 				<HireMe />

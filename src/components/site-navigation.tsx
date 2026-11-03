@@ -33,6 +33,14 @@ export function SiteNavigation({
 			</Link>
 			<Link
 				to="/"
+				hash="credentials"
+				onClick={onNavigate}
+				className="hover:text-primary"
+			>
+				Credentials
+			</Link>
+			<Link
+				to="/"
 				hash="hire-me"
 				onClick={onNavigate}
 				className="hover:text-primary"

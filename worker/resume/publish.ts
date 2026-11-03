@@ -23,6 +23,7 @@ export async function publishResume(bucket: R2Bucket, revision: string) {
 		revision,
 		publishedAt: new Date().toISOString(),
 		experience: draft.experience,
+		credentials: draft.credentials,
 	});
 	const stored = await bucket.put('current.json', JSON.stringify(publication), {
 		onlyIf: draft.baseEtag
