@@ -1,7 +1,7 @@
-import { Link } from '@tanstack/react-router';
+import { getRouteApi, Link } from '@tanstack/react-router';
 import { ArrowUpRight, Award } from 'lucide-react';
-import { useResume } from '@/hooks/use-resume';
 
+const rootRoute = getRouteApi('__root__');
 const awardedDate = new Intl.DateTimeFormat('en-US', {
 	month: 'long',
 	year: 'numeric',
@@ -9,7 +9,7 @@ const awardedDate = new Intl.DateTimeFormat('en-US', {
 });
 
 export function Credentials() {
-	const { credentials } = useResume();
+	const { credentials } = rootRoute.useLoaderData();
 
 	return (
 		<section

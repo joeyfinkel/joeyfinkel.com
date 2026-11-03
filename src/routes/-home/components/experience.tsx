@@ -1,4 +1,4 @@
-import { Link } from '@tanstack/react-router';
+import { getRouteApi, Link } from '@tanstack/react-router';
 import { ArrowUpRight } from 'lucide-react';
 import { TimelineContent } from '@/components/reui/timeline/content';
 import { TimelineDate } from '@/components/reui/timeline/date';
@@ -8,12 +8,13 @@ import { TimelineItem } from '@/components/reui/timeline/item';
 import { Timeline } from '@/components/reui/timeline/root';
 import { TimelineSeparator } from '@/components/reui/timeline/separator';
 import { TimelineTitle } from '@/components/reui/timeline/title';
-import { useResume } from '@/hooks/use-resume';
 import { resumeUrl } from '@/lib/resume-url';
 import { CompanyLogo } from './company-logo';
 
+const rootRoute = getRouteApi('__root__');
+
 export function Experience() {
-	const { experience, unavailable } = useResume();
+	const { experience, unavailable } = rootRoute.useLoaderData();
 
 	return (
 		<section

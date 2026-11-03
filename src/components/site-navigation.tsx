@@ -1,8 +1,9 @@
-import { Link } from '@tanstack/react-router';
+import { getRouteApi, Link } from '@tanstack/react-router';
 import { ArrowUpRight } from 'lucide-react';
-import { useResume } from '@/hooks/use-resume';
 import { resumeUrl } from '@/lib/resume-url';
 import { cn } from '@/lib/utils';
+
+const rootRoute = getRouteApi('__root__');
 
 export function SiteNavigation({
 	onNavigate,
@@ -11,7 +12,9 @@ export function SiteNavigation({
 	onNavigate?: () => void;
 	className?: string;
 }) {
-	const { credentials } = useResume();
+	const hasCredentials = rootRoute.useLoaderData({
+		select: ({ credentials }) => credentials.length > 0,
+	});
 
 	return (
 		<nav
@@ -34,7 +37,7 @@ export function SiteNavigation({
 			>
 				Experience
 			</Link>
-			{credentials.length > 0 && (
+			{hasCredentials && (
 				<Link
 					to="/"
 					hash="credentials"

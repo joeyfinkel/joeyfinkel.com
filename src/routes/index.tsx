@@ -1,6 +1,5 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, getRouteApi } from '@tanstack/react-router';
 import { ArrowUpRight } from 'lucide-react';
-import { useResume } from '@/hooks/use-resume';
 import { Credentials } from './-home/components/credentials';
 import { Experience } from './-home/components/experience';
 import { HomeHeader } from './-home/components/header';
@@ -9,6 +8,8 @@ import { Project } from './-home/components/project';
 import { loadHome } from './-home/utils/load';
 import { projects } from './-home/utils/projects';
 
+const rootRoute = getRouteApi('__root__');
+
 export const Route = createFileRoute('/')({
 	component: Home,
 	loader: loadHome,
@@ -16,7 +17,9 @@ export const Route = createFileRoute('/')({
 
 function Home() {
 	const { publishedLibraryCount } = Route.useLoaderData();
-	const { credentials } = useResume();
+	const hasCredentials = rootRoute.useLoaderData({
+		select: ({ credentials }) => credentials.length > 0,
+	});
 
 	return (
 		<div className="mx-auto max-w-[57.5rem] px-6 sm:px-10">
@@ -69,7 +72,7 @@ function Home() {
 					</ul>
 				</section>
 				<Experience />
-				{credentials.length > 0 && <Credentials />}
+				{hasCredentials && <Credentials />}
 				<HireMe />
 			</main>
 			<footer className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t py-8 text-xs text-muted-foreground">
