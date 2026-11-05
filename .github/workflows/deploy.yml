@@ -83,9 +83,15 @@ jobs:
             throw new Error('Configure PUBLISH_PASSWORD with at least 32 characters in the production environment.');
           }
 
+          const filesPassword = process.env.FILES_PASSWORD;
+
+          if (!filesPassword) {
+            throw new Error('Configure FILES_PASSWORD in the production environment.');
+          }
+
           writeFileSync(
             join(process.env.RUNNER_TEMP, 'joeyfinkel-worker-secrets.json'),
-            JSON.stringify({ PUBLISH_PASSWORD: password }),
+            JSON.stringify({ PUBLISH_PASSWORD: password, FILES_PASSWORD: filesPassword }),
             { mode: 0o600 },
           );
           NODE
@@ -94,3 +100,4 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           PUBLISH_PASSWORD: ${{ secrets.PUBLISH_PASSWORD }}
+          FILES_PASSWORD: ${{ secrets.FILES_PASSWORD }}

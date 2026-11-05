@@ -30,11 +30,12 @@ export function createResumeServer(env: Env) {
 		'prepare_resume',
 		{
 			description:
-				'Stage a complete replacement of the PUBLIC MASTER resume experience and credentials, each in the exact intended display order. Credentials are the certifications listed on the resume; pass an empty array when it lists none. Supply the SHA-256 of the final PDF. Returns a 15-minute upload credential for code execution to PUT that PDF. Nothing is public until publish_resume. Do not publish job-specific drafts.',
+				'Stage a complete replacement of the PUBLIC MASTER resume experience and credentials, each in the exact intended display order. Credentials are the certifications listed on the resume; pass an empty array when it lists none. Supply the SHA-256 of the final PDF and of the LaTeX source it was compiled from. Returns a 15-minute upload credential for code execution to PUT both files. Nothing is public until publish_resume. Do not publish job-specific drafts.',
 			inputSchema: z.object({
 				experience: experienceSchema,
 				credentials: credentialsSchema,
 				pdfSha256: z.string().regex(/^[a-f0-9]{64}$/),
+				latexSha256: z.string().regex(/^[a-f0-9]{64}$/),
 			}),
 			annotations: { destructiveHint: false },
 		},
@@ -54,7 +55,7 @@ export function createResumeServer(env: Env) {
 		'publish_resume',
 		{
 			description:
-				'Publish the staged PDF, experience, and credentials together after uploading the PDF and receiving the user’s explicit instruction to publish the master resume. If there is a version conflict, reread the current resume and prepare a new draft; never silently overwrite a newer publication.',
+				'Publish the staged PDF, LaTeX source, experience, and credentials together after uploading both files and receiving the user’s explicit instruction to publish the master resume. If there is a version conflict, reread the current resume and prepare a new draft; never silently overwrite a newer publication.',
 			inputSchema: z.object({ revision: z.uuid() }),
 			annotations: { destructiveHint: true, idempotentHint: true },
 		},

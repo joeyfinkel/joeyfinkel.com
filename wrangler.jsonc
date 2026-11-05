@@ -6,7 +6,7 @@
 	"compatibility_date": "2026-10-30",
 	"compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
 	"vars": { "SITE_ORIGIN": "https://joeyfinkel.com" },
-	"secrets": { "required": ["PUBLISH_PASSWORD"] },
+	"secrets": { "required": ["PUBLISH_PASSWORD", "FILES_PASSWORD"] },
 	"r2_buckets": [{ "binding": "RESUMES", "bucket_name": "joeyfinkel-resumes" }],
 	"kv_namespaces": [
 		{ "binding": "OAUTH_KV", "id": "a5bcff7baf8c48efa4cca05bb0087750" }
@@ -29,7 +29,8 @@
 			"/authorize",
 			"/oauth/*",
 			"/.well-known/*",
-			"/resume.pdf"
+			"/resume.pdf",
+			"/resume.tex"
 		]
 	},
 	"routes": [{ "pattern": "joeyfinkel.com", "custom_domain": true }]

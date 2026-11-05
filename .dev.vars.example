@@ -1,3 +1,6 @@
 # Generate a unique, long password and set it with wrangler secret put in production.
 # This authenticates the owner during Claude connector authorization.
 PUBLISH_PASSWORD=
+
+# Unlocks the upload button on the /files page.
+FILES_PASSWORD=

@@ -14,9 +14,17 @@ export async function publishResume(bucket: R2Bucket, revision: string) {
 
 	const draft = await getDraft(bucket, revision);
 	const pdf = await bucket.head(`pdfs/${revision}.pdf`);
+	const latex = await bucket.head(`latex/${revision}.tex`);
 
 	if (!pdf || pdf.customMetadata?.sha256 !== draft.pdfSha256) {
 		throw new ResumeError('Upload the matching PDF before publishing', 409);
+	}
+
+	if (!latex || latex.customMetadata?.sha256 !== draft.latexSha256) {
+		throw new ResumeError(
+			'Upload the matching LaTeX file before publishing',
+			409,
+		);
 	}
 
 	const publication = publicationSchema.parse({
@@ -39,11 +47,14 @@ export async function publishResume(bucket: R2Bucket, revision: string) {
 		);
 	}
 
-	// Only the current resume is kept, so drop the replaced PDF and the used draft.
+	// Only the current resume is kept, so drop the replaced files and the used draft.
 	const stale = [`drafts/${revision}.json`];
 
 	if (existing) {
-		stale.push(`pdfs/${existing.revision}.pdf`);
+		stale.push(
+			`pdfs/${existing.revision}.pdf`,
+			`latex/${existing.revision}.tex`,
+		);
 	}
 
 	await bucket.delete(stale);

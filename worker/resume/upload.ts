@@ -3,6 +3,7 @@ import { readBody } from './body';
 import { digest, secretsMatch } from './crypto';
 import { getDraft } from './draft';
 import { ResumeError } from './error';
+import { uploadLatex } from './upload-latex';
 
 export async function uploadResume(
 	request: Request,
@@ -20,10 +21,17 @@ export async function uploadResume(
 		throw new ResumeError('Invalid upload token', 401);
 	}
 
-	if (
-		request.headers.get('content-type')?.split(';')[0] !== 'application/pdf'
-	) {
-		throw new ResumeError('Upload must be application/pdf', 415);
+	const contentType = request.headers.get('content-type')?.split(';')[0];
+
+	if (contentType === 'application/x-tex') {
+		return uploadLatex(request, bucket, revision, draft.latexSha256);
+	}
+
+	if (contentType !== 'application/pdf') {
+		throw new ResumeError(
+			'Upload must be application/pdf or application/x-tex',
+			415,
+		);
 	}
 
 	const bytes = await readBody(request, 2 * 1024 * 1024);
