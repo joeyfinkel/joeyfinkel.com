@@ -4,6 +4,7 @@
 		"worker",
 		"worker-configuration.d.ts",
 		"src/resume",
+		"src/files",
 		"test",
 		"vitest.config.ts"
 	],

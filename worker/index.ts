@@ -25,10 +25,13 @@ export default {
 				clientIdMetadataDocumentEnabled: true,
 			});
 
-			// MCP and OAuth messages are small; PDF uploads have their own 2 MiB cap.
+			// MCP and OAuth messages are small; resume and file uploads have their own caps.
+			const { pathname } = new URL(request.url);
+			const hasOwnLimit =
+				pathname.startsWith('/api/resume/upload/') ||
+				pathname.startsWith('/api/files/');
 			const boundedRequest =
-				request.body &&
-				!new URL(request.url).pathname.startsWith('/api/resume/upload/')
+				request.body && !hasOwnLimit
 					? new Request(request, { body: await readBody(request, 128 * 1024) })
 					: request;
 

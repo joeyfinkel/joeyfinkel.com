@@ -12,7 +12,8 @@ needed: Claude supplies the structured experience from the master resume.
    are configured in `wrangler.jsonc`; those IDs are public configuration.
 3. GitHub's `production` environment is restricted to `main` and has the
    `CLOUDFLARE_ACCOUNT_ID` secret configured.
-4. Configure `CLOUDFLARE_API_TOKEN` and `PUBLISH_PASSWORD` in that environment.
+4. Configure `CLOUDFLARE_API_TOKEN`, `PUBLISH_PASSWORD`, and `FILES_PASSWORD` in
+   that environment (`FILES_PASSWORD` unlocks uploads on the `/files` page).
    The token needs deployment access for the Worker and its custom domain in
    the intended account. Use a unique publishing password of at least 32 characters
    and retain it in your password manager. This is the owner password for connector

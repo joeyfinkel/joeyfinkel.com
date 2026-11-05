@@ -1,4 +1,7 @@
 import { authorize } from './auth/authorize';
+import { downloadFile } from './files/download';
+import { listFiles } from './files/list';
+import { uploadFile } from './files/upload';
 import { readProjects } from './projects/read';
 import { ResumeError } from './resume/error';
 import { readResume } from './resume/read';
@@ -14,6 +17,28 @@ export const routes = {
 			pathname === '/api/projects/jfdevelops'
 		) {
 			return readProjects(request);
+		}
+
+		if (pathname === '/api/files') {
+			if (request.method !== 'GET') {
+				throw new ResumeError('Method not allowed', 405);
+			}
+
+			return listFiles(env.RESUMES);
+		}
+
+		if (pathname.startsWith('/api/files/')) {
+			const segment = pathname.slice('/api/files/'.length);
+
+			if (request.method === 'PUT') {
+				return uploadFile(request, env, segment);
+			}
+
+			if (['GET', 'HEAD'].includes(request.method)) {
+				return downloadFile(request, env.RESUMES, segment);
+			}
+
+			throw new ResumeError('Method not allowed', 405);
 		}
 
 		if (pathname === '/authorize') {

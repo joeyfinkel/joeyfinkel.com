@@ -117,6 +117,16 @@ to link to its matching PDF. Failed or incomplete uploads never replace the
 current version. A service outage shows an experience retry message while the
 project showcase remains available.
 
+## Files
+
+`/files` lists the published resume PDF and LaTeX source plus any file uploaded
+from the page, each labelled with how it got there. The **Upload file** button
+asks for `FILES_PASSWORD`, which the Worker checks (rate limited) before reading
+the file; a file with the same name is replaced. Uploads are limited to 10 MB,
+stored under `files/` in the `joeyfinkel-resumes` bucket, and served only as
+sandboxed downloads from `/api/files/<name>`. Set the password locally in
+`.dev.vars` and in production as the `FILES_PASSWORD` GitHub environment secret.
+
 See [resume publishing setup](docs/resume-publishing.md) for Cloudflare setup,
 Claude connector authorization, and instructions for the Job Search project.
 
