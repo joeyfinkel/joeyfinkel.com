@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as FilesRouteImport } from './routes/files'
 import { Route as ProjectsRouteRouteImport } from './routes/projects/route'
 import { Route as ProjectsJfdevelopsRouteRouteImport } from './routes/projects/jfdevelops/route'
 import { Route as ProjectsJfdevelopsIndexRouteImport } from './routes/projects/jfdevelops/index'
@@ -21,6 +22,11 @@ import { Route as ProjectsJfdevelopsCategoriesCategoryRouteImport } from './rout
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FilesRoute = FilesRouteImport.update({
+  id: '/files',
+  path: '/files',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProjectsRouteRoute = ProjectsRouteRouteImport.update({
@@ -65,6 +71,7 @@ const ProjectsJfdevelopsCategoriesCategoryRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/projects': typeof ProjectsRouteRouteWithChildren
+  '/files': typeof FilesRoute
   '/projects/jfdevelops': typeof ProjectsJfdevelopsRouteRouteWithChildren
   '/projects/jfdevelops/$library': typeof ProjectsJfdevelopsLibraryRoute
   '/projects/jfdevelops/': typeof ProjectsJfdevelopsIndexRoute
@@ -75,6 +82,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/projects': typeof ProjectsRouteRouteWithChildren
+  '/files': typeof FilesRoute
   '/projects/jfdevelops/$library': typeof ProjectsJfdevelopsLibraryRoute
   '/projects/jfdevelops': typeof ProjectsJfdevelopsIndexRoute
   '/projects/material-ui-helper': typeof ProjectsMaterialUiHelperIndexRoute
@@ -85,6 +93,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/projects': typeof ProjectsRouteRouteWithChildren
+  '/files': typeof FilesRoute
   '/projects/jfdevelops': typeof ProjectsJfdevelopsRouteRouteWithChildren
   '/projects/jfdevelops/$library': typeof ProjectsJfdevelopsLibraryRoute
   '/projects/jfdevelops/': typeof ProjectsJfdevelopsIndexRoute
@@ -97,6 +106,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/projects'
+    | '/files'
     | '/projects/jfdevelops'
     | '/projects/jfdevelops/$library'
     | '/projects/jfdevelops/'
@@ -107,6 +117,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/projects'
+    | '/files'
     | '/projects/jfdevelops/$library'
     | '/projects/jfdevelops'
     | '/projects/material-ui-helper'
@@ -116,6 +127,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/projects'
+    | '/files'
     | '/projects/jfdevelops'
     | '/projects/jfdevelops/$library'
     | '/projects/jfdevelops/'
@@ -127,6 +139,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ProjectsRouteRoute: typeof ProjectsRouteRouteWithChildren
+  FilesRoute: typeof FilesRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -136,6 +149,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/files': {
+      id: '/files'
+      path: '/files'
+      fullPath: '/files'
+      preLoaderRoute: typeof FilesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/projects': {
@@ -228,6 +248,7 @@ const ProjectsRouteRouteWithChildren = ProjectsRouteRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ProjectsRouteRoute: ProjectsRouteRouteWithChildren,
+  FilesRoute: FilesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
