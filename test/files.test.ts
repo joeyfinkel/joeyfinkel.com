@@ -93,6 +93,21 @@ it('replaces a file uploaded with the same name', async () => {
 	expect(files).toHaveLength(1);
 });
 
+it('lists uploads across every storage page', async () => {
+	await Promise.all(
+		Array.from({ length: 1001 }, (_, index) =>
+			env.RESUMES.put(`files/file-${index}.txt`, 'x'),
+		),
+	);
+
+	const { files } = await (await request('/api/files')).json<{
+		files: { name: string }[];
+	}>();
+
+	expect(files).toHaveLength(1001);
+	expect(files.map((file) => file.name)).toContain('file-1000.txt');
+});
+
 it('rejects unsafe names, empty files, and oversized files', async () => {
 	expect((await put('../secret.txt', 'x')).status).toBe(400);
 	expect((await put('.hidden', 'x')).status).toBe(400);

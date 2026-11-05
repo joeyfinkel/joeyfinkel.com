@@ -3,22 +3,42 @@ import { getPublication } from '../resume/publication';
 
 type Entry = FileList['files'][number];
 
+async function listUploadedFiles(bucket: R2Bucket) {
+	const files: Entry[] = [];
+	let cursor: string | undefined;
+
+	do {
+		const listing = await bucket.list({
+			prefix: 'files/',
+			limit: 1000,
+			cursor,
+		});
+
+		files.push(
+			...listing.objects.map((object) => {
+				const name = object.key.slice('files/'.length);
+
+				return {
+					name,
+					href: `/api/files/${encodeURIComponent(name)}`,
+					size: object.size,
+					uploadedAt: object.uploaded.toISOString(),
+					source: 'upload' as const,
+				};
+			}),
+		);
+
+		cursor = listing.truncated ? listing.cursor : undefined;
+	} while (cursor);
+
+	return files;
+}
+
 export async function listFiles(bucket: R2Bucket) {
-	const [listing, publication] = await Promise.all([
-		bucket.list({ prefix: 'files/', limit: 1000 }),
+	const [files, publication] = await Promise.all([
+		listUploadedFiles(bucket),
 		getPublication(bucket),
 	]);
-	const files: Entry[] = listing.objects.map((object) => {
-		const name = object.key.slice('files/'.length);
-
-		return {
-			name,
-			href: `/api/files/${encodeURIComponent(name)}`,
-			size: object.size,
-			uploadedAt: object.uploaded.toISOString(),
-			source: 'upload',
-		};
-	});
 
 	if (publication) {
 		const [pdf, latex] = await Promise.all([

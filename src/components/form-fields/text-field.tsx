@@ -3,6 +3,7 @@ import { useId, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { cn } from '@/lib/utils';
 import { useFieldContext } from './context';
 import { FieldError } from './field-error';
 
@@ -38,7 +39,7 @@ export function TextField({
 					onChange={(event) => field.handleChange(event.target.value)}
 					aria-invalid={hasError || undefined}
 					aria-describedby={hasError ? errorId : undefined}
-					className={isPassword ? 'pr-10' : undefined}
+					className={cn(isPassword && 'pr-10')}
 				/>
 				{isPassword && (
 					<Button
