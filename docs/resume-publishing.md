@@ -54,8 +54,8 @@ When I explicitly ask you to publish my master resume to joeyfinkel.com:
 
 1. Read `get_published_resume` to check the current revision and the
    credentials already on the site.
-2. Finalize the master PDF and derive the experience entries from that exact
-   version. Preserve names, titles, dates, and concurrent engagements; never
+2. Finalize the master resume as a LaTeX source file and the PDF compiled from
+   it, and derive the experience entries from that exact version. Preserve names, titles, dates, and concurrent engagements; never
    invent responsibilities or metrics. Put the current role first, then past roles.
 3. Compare the certifications listed on the PDF with the published credentials.
    Keep the published entry, including its url and badge, for each certification
@@ -63,8 +63,8 @@ When I explicitly ask you to publish my master resume to joeyfinkel.com:
    certification, ask me for its public verification URL and any field the PDF
    does not state (issuer, award date, badge image URL). Never guess a URL or
    date. Wait for my answers before preparing the draft.
-4. Compute the PDF's SHA-256 using code execution. Call `prepare_resume` with
-   `pdfSha256`, the complete `experience` array, and the complete `credentials`
+4. Compute the SHA-256 of the PDF and of the `.tex` source using code execution.
+   Call `prepare_resume` with `pdfSha256`, `latexSha256`, the complete `experience` array, and the complete `credentials`
    array (empty if the resume lists none). Each experience entry contains
    company, role, start (`YYYY-MM`), period (displayed date range), location,
    highlights, and technologies. Optional logo values are the existing local
@@ -74,11 +74,13 @@ When I explicitly ask you to publish my master resume to joeyfinkel.com:
    and badge (https image URL).
 5. From code execution, PUT the exact PDF bytes to the returned `uploadUrl`, with
    `Content-Type: application/pdf` and `Authorization: Bearer <uploadToken>`.
-   Keep this credential out of URLs, shared files, and printed command output.
-6. Only after a successful upload, call `publish_resume` with the draft revision.
+   Then PUT the exact `.tex` bytes to the same URL with `Content-Type:
+   application/x-tex` and the same Authorization header. Keep this credential
+   out of URLs, shared files, and printed command output.
+6. Only after both uploads succeed, call `publish_resume` with the draft revision.
    If a newer version was published meanwhile, reread it and prepare again;
    do not silently overwrite it.
-7. Verify the public PDF, timeline, and credentials, and report the publication revision.
+7. Verify the public PDF, LaTeX source, timeline, and credentials, and report the publication revision.
 
 Updating or saving a file inside this project does not itself publish it.
 Do not publish job-specific drafts unless I explicitly select one as the master.
@@ -92,13 +94,17 @@ short-lived draft upload credential is needed there.
 
 - Draft credentials expire after 15 minutes. The PDF limit is 2 MiB. The service
   verifies its checksum, parses it as a readable unencrypted PDF, and accepts it
-  only once per draft. MCP/authorization request bodies are capped at 128 KiB.
+  only once per draft. The LaTeX source is limited to 512 KiB; the service
+  verifies its checksum, requires valid UTF-8 containing `\documentclass`, and
+  accepts it only once per draft. MCP/authorization request bodies are capped at 128 KiB.
 - Publishing conditionally replaces one `current.json` record containing the
-  experience and the revision of an already uploaded PDF. A stale draft receives
+  experience and the revision of an already uploaded PDF and LaTeX source;
+  publishing is refused until both are uploaded. A stale draft receives
   a conflict instead of overwriting newer work. Retrying the current publication
   is safe. Successful versions are archived for links on already-open pages.
 - Public reads use `Cache-Control: no-store`; a stable `/resume.pdf` URL always
-  resolves to the latest published master. Draft PDFs are not publicly readable.
+  resolves to the latest published master, and `/resume.tex` serves its LaTeX
+  source (404 until a publication includes one). Drafts are not publicly readable.
 - The connector relies on Claude to keep the structured experience faithful to
   the PDF. Validation checks shape and exact PDF bytes; it does not fact-check
   resume prose or perform AI extraction.

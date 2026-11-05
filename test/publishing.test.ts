@@ -43,19 +43,38 @@ async function pdfBytes() {
 	return new Uint8Array(await document.save());
 }
 
+function latexBytes() {
+	return new TextEncoder().encode(
+		`\\documentclass{article}\n\\begin{document}\nJoseph Finkel ${crypto.randomUUID()}\n\\end{document}\n`,
+	);
+}
+
 async function stagedResume() {
 	const pdf = await pdfBytes();
+	const latex = latexBytes();
 	const draft = await prepareResume(env.RESUMES, origin, {
 		experience,
 		credentials,
 		pdfSha256: await digest(pdf),
+		latexSha256: await digest(latex),
 	});
 
-	return { pdf, draft };
+	return { pdf, latex, draft };
+}
+
+async function uploadLatex(staged: Awaited<ReturnType<typeof stagedResume>>) {
+	return request(`/api/resume/upload/${staged.draft.revision}`, {
+		method: 'PUT',
+		headers: {
+			'Content-Type': 'application/x-tex',
+			Authorization: `Bearer ${staged.draft.uploadToken}`,
+		},
+		body: staged.latex,
+	});
 }
 
 async function upload(staged: Awaited<ReturnType<typeof stagedResume>>) {
-	return request(`/api/resume/upload/${staged.draft.revision}`, {
+	const pdf = await request(`/api/resume/upload/${staged.draft.revision}`, {
 		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/pdf',
@@ -63,6 +82,10 @@ async function upload(staged: Awaited<ReturnType<typeof stagedResume>>) {
 		},
 		body: staged.pdf,
 	});
+
+	await uploadLatex(staged);
+
+	return pdf;
 }
 
 beforeEach(async () => {
@@ -131,6 +154,7 @@ it('publishes a matching pair, preserves exact PDF bytes, and is idempotent', as
 	const staged = await stagedResume();
 	expect((await upload(staged)).status).toBe(200);
 	expect((await upload(staged)).status).toBe(409);
+	expect((await uploadLatex(staged)).status).toBe(409);
 	const publication = await publishResume(env.RESUMES, staged.draft.revision);
 	expect(
 		(await publishResume(env.RESUMES, staged.draft.revision)).revision,
@@ -147,6 +171,72 @@ it('publishes a matching pair, preserves exact PDF bytes, and is idempotent', as
 	const head = await request('/resume.pdf', { method: 'HEAD' });
 	expect(await head.text()).toBe('');
 	expect(head.headers.get('Content-Type')).toBe('application/pdf');
+	const latex = await request('/resume.tex');
+	expect(latex.headers.get('Content-Type')).toBe(
+		'application/x-tex; charset=utf-8',
+	);
+	expect(new Uint8Array(await latex.arrayBuffer())).toEqual(staged.latex);
+	const latexHead = await request('/resume.tex', { method: 'HEAD' });
+	expect(await latexHead.text()).toBe('');
+	expect(latexHead.status).toBe(200);
+});
+
+it('serves no LaTeX before one is published and refuses publishing without it', async () => {
+	expect((await request('/resume.tex')).status).toBe(404);
+	const staged = await stagedResume();
+	await request(`/api/resume/upload/${staged.draft.revision}`, {
+		method: 'PUT',
+		headers: {
+			'Content-Type': 'application/pdf',
+			Authorization: `Bearer ${staged.draft.uploadToken}`,
+		},
+		body: staged.pdf,
+	});
+	await expect(
+		publishResume(env.RESUMES, staged.draft.revision),
+	).rejects.toThrow('Upload the matching LaTeX file');
+	expect((await request('/resume.tex')).status).toBe(404);
+});
+
+it('rejects LaTeX uploads that do not match or are not LaTeX', async () => {
+	const staged = await stagedResume();
+	const headers = {
+		'Content-Type': 'application/x-tex',
+		Authorization: `Bearer ${staged.draft.uploadToken}`,
+	};
+	const path = `/api/resume/upload/${staged.draft.revision}`;
+	expect(
+		(await request(path, { method: 'PUT', headers, body: latexBytes() }))
+			.status,
+	).toBe(400);
+	expect(
+		(
+			await request(path, {
+				method: 'PUT',
+				headers: { ...headers, Authorization: 'Bearer wrong' },
+				body: staged.latex,
+			})
+		).status,
+	).toBe(401);
+	const notLatex = new TextEncoder().encode('just some text');
+	const other = await prepareResume(env.RESUMES, origin, {
+		experience,
+		credentials,
+		pdfSha256: 'a'.repeat(64),
+		latexSha256: await digest(notLatex),
+	});
+	expect(
+		(
+			await request(`/api/resume/upload/${other.revision}`, {
+				method: 'PUT',
+				headers: { ...headers, Authorization: `Bearer ${other.uploadToken}` },
+				body: notLatex,
+			})
+		).status,
+	).toBe(400);
+	expect(
+		await env.RESUMES.head(`latex/${staged.draft.revision}.tex`),
+	).toBeNull();
 });
 
 it('rejects stale publications without replacing the current resume', async () => {
@@ -173,7 +263,11 @@ it('keeps only the current resume after a replacement', async () => {
 	expect(new Uint8Array(await pdf.arrayBuffer())).toEqual(second.pdf);
 	const stored = await env.RESUMES.list();
 	expect(stored.objects.map((object) => object.key).sort()).toEqual(
-		['current.json', `pdfs/${second.draft.revision}.pdf`].sort(),
+		[
+			'current.json',
+			`pdfs/${second.draft.revision}.pdf`,
+			`latex/${second.draft.revision}.tex`,
+		].sort(),
 	);
 });
 
@@ -191,6 +285,7 @@ it('expires upload credentials and validates PDF structure, body size, and metad
 			experience: [{ ...experience[0], logo: 'https://evil.test/tracker' }],
 			credentials,
 			pdfSha256: 'a'.repeat(64),
+			latexSha256: 'a'.repeat(64),
 		}),
 	).rejects.toThrow();
 	await expect(
@@ -198,6 +293,7 @@ it('expires upload credentials and validates PDF structure, body size, and metad
 			experience,
 			credentials: [{ ...credentials[0], badge: 'http://evil.test/tracker' }],
 			pdfSha256: 'a'.repeat(64),
+			latexSha256: 'a'.repeat(64),
 		}),
 	).rejects.toThrow();
 	const invalid = new TextEncoder().encode('%PDF-1.7 not a document');
@@ -205,6 +301,7 @@ it('expires upload credentials and validates PDF structure, body size, and metad
 		experience,
 		credentials,
 		pdfSha256: await digest(invalid),
+		latexSha256: 'a'.repeat(64),
 	});
 	const invalidUpload = await request(
 		`/api/resume/upload/${invalidDraft.revision}`,

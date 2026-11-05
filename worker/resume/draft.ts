@@ -8,6 +8,7 @@ export const draftSchema = z.object({
 	baseEtag: z.string().nullable(),
 	uploadTokenHash: z.string(),
 	pdfSha256: z.string().regex(/^[a-f0-9]{64}$/),
+	latexSha256: z.string().regex(/^[a-f0-9]{64}$/),
 	experience: experienceSchema,
 	credentials: credentialsSchema,
 });

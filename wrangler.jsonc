@@ -29,7 +29,8 @@
 			"/authorize",
 			"/oauth/*",
 			"/.well-known/*",
-			"/resume.pdf"
+			"/resume.pdf",
+			"/resume.tex"
 		]
 	},
 	"routes": [{ "pattern": "joeyfinkel.com", "custom_domain": true }]

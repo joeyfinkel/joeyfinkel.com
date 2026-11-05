@@ -9,6 +9,7 @@ export async function prepareResume(
 		experience: unknown;
 		credentials: unknown;
 		pdfSha256: string;
+		latexSha256: string;
 	},
 ) {
 	const experience = experienceSchema.parse(input.experience);
@@ -25,6 +26,7 @@ export async function prepareResume(
 		baseEtag: current?.etag ?? null,
 		uploadTokenHash: await digest(uploadToken),
 		pdfSha256: input.pdfSha256,
+		latexSha256: input.latexSha256,
 		experience,
 		credentials,
 	});
@@ -37,6 +39,6 @@ export async function prepareResume(
 		uploadUrl: `${origin}/api/resume/upload/${revision}`,
 		uploadToken,
 		instruction:
-			'PUT the exact PDF bytes with Content-Type: application/pdf and Authorization: Bearer <uploadToken>. Then call publish_resume with this revision. Never put the token in a URL.',
+			'PUT the exact PDF bytes with Content-Type: application/pdf, then PUT the exact LaTeX source bytes with Content-Type: application/x-tex, both to the uploadUrl with Authorization: Bearer <uploadToken>. Then call publish_resume with this revision. Never put the token in a URL.',
 	};
 }

@@ -198,6 +198,9 @@ it('authenticates the owner through browser-bound consent and PKCE, then serves 
 	const document = await PDFDocument.create();
 	document.addPage().drawText('Connector publishing integration test');
 	const pdf = new Uint8Array(await document.save());
+	const latex = new TextEncoder().encode(
+		'\\documentclass{article}\n\\begin{document}Connector test\\end{document}\n',
+	);
 	const draft = z
 		.object({ revision: z.uuid(), uploadUrl: z.url(), uploadToken: z.string() })
 		.parse(
@@ -205,6 +208,7 @@ it('authenticates the owner through browser-bound consent and PKCE, then serves 
 				experience,
 				credentials: [],
 				pdfSha256: await digest(pdf),
+				latexSha256: await digest(latex),
 			}),
 		);
 	const upload = await request(new URL(draft.uploadUrl).pathname, {
@@ -216,6 +220,15 @@ it('authenticates the owner through browser-bound consent and PKCE, then serves 
 		body: pdf,
 	});
 	expect(upload.status).toBe(200);
+	const latexUpload = await request(new URL(draft.uploadUrl).pathname, {
+		method: 'PUT',
+		headers: {
+			'Content-Type': 'application/x-tex',
+			Authorization: `Bearer ${draft.uploadToken}`,
+		},
+		body: latex,
+	});
+	expect(latexUpload.status).toBe(200);
 	const publication = await callTool(token.access_token, 'publish_resume', {
 		revision: draft.revision,
 	});
@@ -227,6 +240,8 @@ it('authenticates the owner through browser-bound consent and PKCE, then serves 
 	});
 	const publishedPdf = await request('/resume.pdf');
 	expect(new Uint8Array(await publishedPdf.arrayBuffer())).toEqual(pdf);
+	const publishedLatex = await request('/resume.tex');
+	expect(new Uint8Array(await publishedLatex.arrayBuffer())).toEqual(latex);
 });
 
 it('rejects incorrect owner passwords and cross-origin consent submissions', async () => {

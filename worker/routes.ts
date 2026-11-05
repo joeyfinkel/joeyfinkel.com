@@ -2,6 +2,7 @@ import { authorize } from './auth/authorize';
 import { readProjects } from './projects/read';
 import { ResumeError } from './resume/error';
 import { readResume } from './resume/read';
+import { readLatex } from './resume/read-latex';
 import { uploadResume } from './resume/upload';
 
 export const routes = {
@@ -37,6 +38,14 @@ export const routes = {
 			}
 
 			return readResume(request, env);
+		}
+
+		if (pathname === '/resume.tex') {
+			if (!['GET', 'HEAD'].includes(request.method)) {
+				throw new ResumeError('Method not allowed', 405);
+			}
+
+			return readLatex(request, env);
 		}
 
 		if (
