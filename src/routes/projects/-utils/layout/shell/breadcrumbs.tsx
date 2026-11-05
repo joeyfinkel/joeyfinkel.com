@@ -4,6 +4,7 @@ import { Link } from '@tanstack/react-router';
 import { useEffect, useRef } from 'react';
 import { cn } from '@/lib/utils';
 import { useHeadingVisible } from '../../heading-visible';
+import { BreadcrumbDropdown } from './breadcrumb-dropdown';
 
 export const projectBreadcrumbs = createBreadcrumbComposable({
 	name: 'ProjectBreadcrumbs',
@@ -13,6 +14,15 @@ export const projectBreadcrumbs = createBreadcrumbComposable({
 				label: createProp.string(),
 				to: createProp.string(),
 				hash: createProp.string().optional(),
+				options: createProp
+					.array(
+						createProp.object({
+							label: createProp.string(),
+							to: createProp.string(),
+							hash: createProp.string().optional(),
+						}),
+					)
+					.optional(),
 			}),
 		),
 	},
@@ -51,7 +61,13 @@ export const projectBreadcrumbs = createBreadcrumbComposable({
 									/
 								</span>
 							)}
-							{index === segments.length - 1 ? (
+							{item.options ? (
+								<BreadcrumbDropdown
+									current={item}
+									options={item.options}
+									isCurrentPage={index === segments.length - 1}
+								/>
+							) : index === segments.length - 1 ? (
 								<span aria-current="page" className="font-medium">
 									{item.label}
 								</span>
