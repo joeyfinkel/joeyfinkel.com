@@ -2,10 +2,10 @@ import { Link } from '@tanstack/react-router';
 import { projects } from '../../../-home/utils/projects';
 import { JfdevelopsLinks } from '../navigation/jfdevelops-links';
 
-export function PrototypeNavigation() {
+export function ProjectNavigation() {
 	return (
 		<>
-			<nav aria-label="Projects" className="project-prototype-nav">
+			<nav aria-label="Projects" className="project-site-nav">
 				<h2>Things I've made</h2>
 				{projects.map((project) => (
 					<Link
@@ -19,7 +19,7 @@ export function PrototypeNavigation() {
 					</Link>
 				))}
 			</nav>
-			<div className="project-prototype-library-scroll">
+			<div className="project-site-library-scroll">
 				<JfdevelopsLinks />
 			</div>
 		</>
