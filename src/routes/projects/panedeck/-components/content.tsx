@@ -1,11 +1,14 @@
 import { Link } from '@tanstack/react-router';
 import { CodeExample } from '@/components/code-example';
+import { TechnologyLinks } from '@/components/technology-links';
 import { PaneDeckPage } from '../-utils/page';
 import { Workspace } from './workspace';
 
 export function PaneDeck() {
 	return (
-		<PaneDeckPage category="Windows · C# · .NET">
+		<PaneDeckPage
+			category={<TechnologyLinks icons={['windows', 'csharp', 'dotnet']} />}
+		>
 			<Workspace />
 			<section className="border-t py-10" aria-labelledby="panedeck-usage">
 				<h2 id="panedeck-usage" className="text-2xl font-medium tracking-tight">

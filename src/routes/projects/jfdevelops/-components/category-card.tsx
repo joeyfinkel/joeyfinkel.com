@@ -5,9 +5,13 @@ import { GroupDescription } from './description';
 
 export function CategoryCard({ group }: { group: LibraryGroupData }) {
 	return (
-		<section className="min-w-0 rounded-xl border p-5 sm:p-6">
+		<section
+			data-library-category
+			className="min-w-0 rounded-xl border p-5 sm:p-6"
+		>
 			<h3 className="text-lg font-medium">
 				<Link
+					viewTransition
 					to="/projects/jfdevelops/categories/$category"
 					params={{ category: group.id }}
 					className="flex items-center justify-between gap-3 hover:text-primary"
@@ -23,6 +27,7 @@ export function CategoryCard({ group }: { group: LibraryGroupData }) {
 				{group.libraries.map((library) => (
 					<li key={library.name}>
 						<Link
+							viewTransition
 							to="/projects/jfdevelops/$library"
 							params={{ library: library.name.replace('@jfdevelops/', '') }}
 							className="block break-words text-xs leading-5 text-primary underline-offset-4 hover:underline"
