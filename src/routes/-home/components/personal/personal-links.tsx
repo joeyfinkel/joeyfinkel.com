@@ -9,9 +9,9 @@ import {
 } from '@/components/ui/tooltip';
 import { resumeUrl } from '@/lib/resume-url';
 
-export function PrototypePersonalLinks() {
+export function PersonalLinks() {
 	return (
-		<nav aria-label="Personal links" className="prototype-links">
+		<nav aria-label="Personal links" className="personal-links">
 			<TooltipProvider>
 				<Tooltip>
 					<TooltipTrigger asChild>
@@ -19,7 +19,7 @@ export function PrototypePersonalLinks() {
 							to={new URL('https://github.com/joeyfinkel').href}
 							reloadDocument
 							aria-label="GitHub"
-							className="prototype-github"
+							className="personal-github"
 						>
 							<BrandIcon name="github" />
 						</Link>

@@ -10,9 +10,9 @@ import {
 	SheetTitle,
 	SheetTrigger,
 } from '@/components/ui/sheet';
-import { PrototypeNavigation } from './navigation';
+import { ProjectNavigation } from './navigation';
 
-export function PrototypeMobileMenu() {
+export function ProjectMobileMenu() {
 	const [open, setOpen] = useState(false);
 
 	return (
@@ -22,7 +22,7 @@ export function PrototypeMobileMenu() {
 					type="button"
 					variant="ghost"
 					size="icon"
-					className="project-prototype-menu-trigger size-11 shrink-0"
+					className="project-site-menu-trigger size-11 shrink-0"
 					aria-label="Open project navigation"
 				>
 					<Menu className="size-5" aria-hidden="true" />
@@ -43,12 +43,11 @@ export function PrototypeMobileMenu() {
 					<Link
 						viewTransition
 						to="/"
-						search={{ variant: 'B' }}
 						className="inline-flex min-h-11 items-center text-sm text-muted-foreground"
 					>
 						← Back to home
 					</Link>
-					<PrototypeNavigation />
+					<ProjectNavigation />
 				</div>
 			</SheetContent>
 		</Sheet>
