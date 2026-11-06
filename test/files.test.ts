@@ -93,6 +93,8 @@ it('replaces a file uploaded with the same name', async () => {
 	expect(files).toHaveLength(1);
 });
 
+// This crosses R2's 1,000-object page boundary with real storage writes.
+// Allow slower CI workers enough time for fixture creation and pagination.
 it('lists uploads across every storage page', async () => {
 	await Promise.all(
 		Array.from({ length: 1001 }, (_, index) =>
@@ -106,7 +108,7 @@ it('lists uploads across every storage page', async () => {
 
 	expect(files).toHaveLength(1001);
 	expect(files.map((file) => file.name)).toContain('file-1000.txt');
-});
+}, 15_000);
 
 it('rejects unsafe names, empty files, and oversized files', async () => {
 	expect((await put('../secret.txt', 'x')).status).toBe(400);
