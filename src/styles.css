@@ -153,3 +153,64 @@ html {
 .code-syntax .token.interpolation-punctuation {
 	color: var(--code-operator);
 }
+
+::view-transition-old(root),
+::view-transition-new(root) {
+	animation-duration: 160ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	::view-transition-old(root),
+	::view-transition-new(root) {
+		animation: none;
+	}
+}
+
+.brand-icon {
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	flex-shrink: 0;
+	background: currentColor;
+	mask-position: center;
+	mask-size: contain;
+	mask-repeat: no-repeat;
+}
+.technology-links {
+	display: inline-flex;
+	vertical-align: middle;
+	align-items: center;
+	gap: 8px;
+	margin-top: 12px;
+}
+.technology-link {
+	display: inline-flex;
+	width: 40px;
+	height: 40px;
+	align-items: center;
+	justify-content: center;
+	border-radius: 6px;
+	outline-offset: 2px;
+}
+.technology-link img {
+	width: 24px;
+	height: 24px;
+	object-fit: contain;
+	filter: grayscale(1);
+	opacity: 0.85;
+	transition:
+		filter 150ms,
+		opacity 150ms;
+}
+.dark .technology-link img {
+	filter: grayscale(1) invert(1);
+}
+.technology-link:hover img,
+.technology-link:focus-visible img {
+	filter: none;
+	opacity: 1;
+}
+
+.project-category .technology-links {
+	margin-top: 0;
+}

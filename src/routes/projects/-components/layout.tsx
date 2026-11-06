@@ -37,7 +37,10 @@ function ProjectDescription({
 function ProjectCategory({ className, ...props }: ComponentPropsWithRef<'p'>) {
 	return (
 		<p
-			className={cn('mt-3 text-sm text-muted-foreground', className)}
+			className={cn(
+				'project-category mt-3 flex flex-wrap items-center gap-3 text-sm text-muted-foreground',
+				className,
+			)}
 			{...props}
 		/>
 	);

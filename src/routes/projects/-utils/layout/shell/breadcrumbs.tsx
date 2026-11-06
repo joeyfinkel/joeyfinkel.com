@@ -73,6 +73,7 @@ export const projectBreadcrumbs = createBreadcrumbComposable({
 								</span>
 							) : (
 								<Link
+									viewTransition
 									to={item.to}
 									hash={item.hash}
 									activeOptions={{ exact: true }}

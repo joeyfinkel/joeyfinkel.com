@@ -21,6 +21,7 @@ export function JfdevelopsLinks() {
 	return (
 		<nav aria-label="Library navigation" className="mt-6 border-t pt-6">
 			<Link
+				viewTransition
 				to="/projects/jfdevelops"
 				activeOptions={{ exact: true }}
 				className={linkClassName}
@@ -32,6 +33,7 @@ export function JfdevelopsLinks() {
 			{catalog.groups.map((group) => (
 				<section key={group.id} className="mt-6">
 					<Link
+						viewTransition
 						to="/projects/jfdevelops/categories/$category"
 						params={{ category: group.id }}
 						activeOptions={{ exact: true }}
@@ -45,6 +47,7 @@ export function JfdevelopsLinks() {
 						{group.libraries.map((library) => (
 							<li key={library.name}>
 								<Link
+									viewTransition
 									to="/projects/jfdevelops/$library"
 									params={{
 										library: library.name.replace('@jfdevelops/', ''),

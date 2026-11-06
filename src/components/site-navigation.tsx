@@ -1,5 +1,6 @@
 import { getRouteApi, Link } from '@tanstack/react-router';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, FileText } from 'lucide-react';
+import { BrandIcon } from '@/components/brand-icon';
 import { resumeUrl } from '@/lib/resume-url';
 import { cn } from '@/lib/utils';
 
@@ -55,7 +56,12 @@ export function SiteNavigation({
 			>
 				Hire me
 			</Link>
-			<Link to={resumeUrl} onClick={onNavigate} className="hover:text-primary">
+			<Link
+				to={resumeUrl}
+				onClick={onNavigate}
+				className="inline-flex items-center gap-2 hover:text-primary"
+			>
+				<FileText className="size-4" aria-hidden="true" />
 				Resume
 			</Link>
 			<Link
@@ -63,6 +69,7 @@ export function SiteNavigation({
 				onClick={onNavigate}
 				className="inline-flex items-center gap-1 hover:text-primary"
 			>
+				<BrandIcon name="github" />
 				GitHub
 				<ArrowUpRight className="size-3.5" aria-hidden="true" />
 			</Link>

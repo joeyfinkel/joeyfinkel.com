@@ -37,7 +37,12 @@ export function BreadcrumbDropdown({
 			<DropdownMenuContent align="start">
 				{options.map((option) => (
 					<DropdownMenuItem key={option.to} asChild>
-						<Link to={option.to} hash={option.hash} className="justify-between">
+						<Link
+							viewTransition
+							to={option.to}
+							hash={option.hash}
+							className="justify-between"
+						>
 							{option.label}
 							{option.to === current.to && (
 								<CheckIcon className="text-primary" aria-hidden="true" />

@@ -5,6 +5,7 @@ import { SidebarProvider } from '@/components/ui/sidebar';
 import { cn } from '@/lib/utils';
 import { ProjectsNavigation } from '../../../../-components/navigation';
 import { ProjectsNavigationTrigger } from '../../../../-components/navigation/trigger';
+import { ProjectPrototype } from '../../../../-components/prototype/layout';
 import { HeadingVisibleContext } from '../../../heading-visible';
 import { useBreadcrumbs } from '../../../use-breadcrumbs';
 import { useHeaderTitle } from '../../../use-header-title';
@@ -28,6 +29,20 @@ export const layout = createRenderState({
 	render: function ProjectsLayout({ presentation, children }, { composables }) {
 		const { headerRef, mainRef, heading } = useHeaderTitle();
 		const breadcrumbs = useBreadcrumbs();
+
+		if (import.meta.env.DEV) {
+			return (
+				<ProjectPrototype
+					breadcrumbs={
+						<HeadingVisibleContext value={true}>
+							<composables.ProjectBreadcrumbs segments={breadcrumbs} />
+						</HeadingVisibleContext>
+					}
+				>
+					{children}
+				</ProjectPrototype>
+			);
+		}
 
 		return (
 			<div

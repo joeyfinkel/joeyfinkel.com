@@ -5,6 +5,7 @@ import { Experience } from './-home/components/experience';
 import { HomeHeader } from './-home/components/header';
 import { HireMe } from './-home/components/hire-me';
 import { Project } from './-home/components/project';
+import { HomePrototype } from './-home/components/prototype/page';
 import { loadHome } from './-home/utils/load';
 import { projects } from './-home/utils/projects';
 
@@ -12,14 +13,30 @@ const rootRoute = getRouteApi('__root__');
 
 export const Route = createFileRoute('/')({
 	component: Home,
+	validateSearch: (
+		search: Record<string, unknown>,
+	): { variant?: 'A' | 'B' | 'C' | 'original' } => ({
+		variant:
+			search.variant === 'A' ||
+			search.variant === 'B' ||
+			search.variant === 'C' ||
+			search.variant === 'original'
+				? search.variant
+				: undefined,
+	}),
 	loader: loadHome,
 });
 
 function Home() {
+	const { variant } = Route.useSearch();
 	const { publishedLibraryCount } = Route.useLoaderData();
 	const hasCredentials = rootRoute.useLoaderData({
 		select: ({ credentials }) => credentials.length > 0,
 	});
+
+	if (import.meta.env.DEV && variant !== 'original') {
+		return <HomePrototype variant={variant ?? 'B'} />;
+	}
 
 	return (
 		<div className="mx-auto max-w-[57.5rem] px-6 sm:px-10">
