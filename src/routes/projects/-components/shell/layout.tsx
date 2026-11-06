@@ -1,5 +1,5 @@
 import { Link, useLocation } from '@tanstack/react-router';
-import type { ReactNode } from 'react';
+import { type ReactNode, useRef } from 'react';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { SidebarProvider } from '@/components/ui/sidebar';
 import { ProjectMobileMenu } from './mobile-menu';
@@ -13,11 +13,21 @@ export function ProjectShell({
 	children: ReactNode;
 	breadcrumbs: ReactNode;
 }) {
+	const mainRef = useRef<HTMLElement>(null);
 	const pathname = useLocation({ select: (location) => location.pathname });
 
 	return (
 		<div className="project-site">
 			<SidebarProvider open className="contents">
+				<Link
+					to="."
+					search
+					hash="project-main"
+					onClick={() => mainRef.current?.focus({ preventScroll: true })}
+					className="sr-only focus-visible:not-sr-only focus-visible:fixed focus-visible:top-4 focus-visible:left-4 focus-visible:z-50 focus-visible:rounded-md focus-visible:bg-background focus-visible:p-3 focus-visible:shadow-md"
+				>
+					Skip to content
+				</Link>
 				<header className="project-site-header">
 					<div className="project-site-toolbar">
 						<ProjectMobileMenu key={pathname} />
@@ -38,7 +48,12 @@ export function ProjectShell({
 							<ProjectNavigation />
 						</div>
 					</aside>
-					<main id="project-main" className="project-site-content">
+					<main
+						ref={mainRef}
+						id="project-main"
+						tabIndex={-1}
+						className="project-site-content scroll-mt-24"
+					>
 						{children}
 						<footer className="project-site-footer">
 							<Link viewTransition to="/">
