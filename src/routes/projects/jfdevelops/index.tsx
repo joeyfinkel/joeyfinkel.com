@@ -20,7 +20,7 @@ function CatalogOverview() {
 				Browse the packages below for installation details, examples, and
 				documentation.
 			</p>
-			<div className="mt-7 grid gap-4 lg:grid-cols-2">
+			<div className="mt-7">
 				{catalog.groups.map((group) => (
 					<CategoryCard key={group.id} group={group} />
 				))}

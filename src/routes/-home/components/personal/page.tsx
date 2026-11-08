@@ -1,5 +1,4 @@
 import { Link } from '@tanstack/react-router';
-import { TechnologyLinks } from '@/components/technology-links';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { projects } from '../../utils/projects';
 import { PersonalLinks } from './personal-links';
@@ -28,7 +27,7 @@ export function HomePage() {
 						</Link>
 						.
 					</p>
-					<TechnologyLinks />
+					<p className="personal-stack">React · TypeScript · C# / .NET</p>
 					<PersonalLinks />
 				</header>
 				<section

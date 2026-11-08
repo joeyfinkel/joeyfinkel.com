@@ -1,7 +1,5 @@
 import { createProp } from '@jfdevelops/react-layout';
 import { Link } from '@tanstack/react-router';
-import { ArrowUpRightIcon } from 'lucide-react';
-import { BrandIcon } from '@/components/brand-icon';
 import {
 	createRenderState,
 	createSourceUrl,
@@ -40,9 +38,7 @@ const defaultState = createRenderState({
 					{meta && (
 						<composables.Source>
 							<Link to={sourceUrl} reloadDocument>
-								<BrandIcon name={meta.source} />
-								{meta.label}
-								<ArrowUpRightIcon aria-hidden="true" />
+								{meta.label} <span aria-hidden="true">↗</span>
 							</Link>
 						</composables.Source>
 					)}

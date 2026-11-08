@@ -19,9 +19,7 @@ export function ProjectNavigation() {
 					</Link>
 				))}
 			</nav>
-			<div className="project-site-library-scroll">
-				<JfdevelopsLinks />
-			</div>
+			<JfdevelopsLinks />
 		</>
 	);
 }

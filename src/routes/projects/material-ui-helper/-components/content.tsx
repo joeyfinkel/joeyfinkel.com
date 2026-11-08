@@ -1,19 +1,11 @@
 import { Link } from '@tanstack/react-router';
 import { CodeExample } from '@/components/code-example';
-import { TechnologyLinks } from '@/components/technology-links';
 import { examples } from '../-utils/examples';
 import { MaterialUiHelperPage } from '../-utils/page';
 
 export function MaterialUiHelper() {
 	return (
-		<MaterialUiHelperPage
-			category={
-				<>
-					<TechnologyLinks icons={['csharp', 'dotnet']} />
-					<span>LINQ</span>
-				</>
-			}
-		>
+		<MaterialUiHelperPage category={<span>C# · .NET · LINQ</span>}>
 			<section className="py-10" aria-labelledby="filter-example">
 				<h2 id="filter-example" className="text-2xl font-medium tracking-tight">
 					From a grid filter to a query
