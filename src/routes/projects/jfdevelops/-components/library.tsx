@@ -1,5 +1,4 @@
 import { Link } from '@tanstack/react-router';
-import { ArrowUpRight } from 'lucide-react';
 import { CodeExample } from '@/components/code-example';
 import type { LibraryGroupData } from '@/projects/schema';
 import { GroupDescription } from './description';
@@ -42,42 +41,20 @@ export function LibraryDetail({
 				language="Shell"
 				code={install}
 			/>
-			<div className="flex flex-wrap gap-3">
+			<p className="flex flex-wrap gap-6 text-sm">
 				<Link
 					to={library.githubUrl}
-					className="inline-flex items-center gap-2 rounded-lg border px-4 py-2.5 text-sm hover:bg-secondary"
+					className="text-primary underline underline-offset-4"
 				>
-					<img
-						src="/brands/github.svg"
-						alt=""
-						width={20}
-						height={20}
-						className="size-5 dark:invert"
-					/>
-					GitHub
-					<ArrowUpRight
-						className="size-3.5 text-muted-foreground"
-						aria-hidden="true"
-					/>
+					GitHub <span aria-hidden="true">↗</span>
 				</Link>
 				<Link
 					to={new URL(`https://www.npmjs.com/package/${library.name}`).href}
-					className="inline-flex items-center gap-2 rounded-lg border px-4 py-2.5 text-sm hover:bg-secondary"
+					className="text-primary underline underline-offset-4"
 				>
-					<img
-						src="/brands/npm.svg"
-						alt=""
-						width={20}
-						height={20}
-						className="size-5 dark:invert"
-					/>
-					npm
-					<ArrowUpRight
-						className="size-3.5 text-muted-foreground"
-						aria-hidden="true"
-					/>
+					npm <span aria-hidden="true">↗</span>
 				</Link>
-			</div>
+			</p>
 			<div className="mt-8 border-t pt-6">
 				<h3 className="text-base font-medium">How it fits together</h3>
 				<p className="mt-3 text-sm leading-7 text-muted-foreground">

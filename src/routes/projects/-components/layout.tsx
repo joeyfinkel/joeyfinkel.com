@@ -1,5 +1,4 @@
 import type { ComponentPropsWithRef } from 'react';
-import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
 function ProjectLayout({ className, ...props }: ComponentPropsWithRef<'div'>) {
@@ -46,15 +45,13 @@ function ProjectCategory({ className, ...props }: ComponentPropsWithRef<'p'>) {
 	);
 }
 
-function ProjectSource({
-	className,
-	...props
-}: ComponentPropsWithRef<typeof Button>) {
+function ProjectSource({ className, ...props }: ComponentPropsWithRef<'p'>) {
 	return (
-		<Button
-			asChild
-			variant="outline"
-			className={cn('mt-6 rounded-full bg-transparent shadow-none', className)}
+		<p
+			className={cn(
+				'mt-6 text-sm [&_a]:underline [&_a]:underline-offset-4',
+				className,
+			)}
 			{...props}
 		/>
 	);

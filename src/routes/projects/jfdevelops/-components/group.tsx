@@ -1,5 +1,4 @@
 import { Link } from '@tanstack/react-router';
-import { ArrowUpRight } from 'lucide-react';
 import { CodeExample } from '@/components/code-example';
 import type { LibraryGroupData } from '@/projects/schema';
 import { GroupDescription } from './description';
@@ -22,24 +21,20 @@ export function LibraryGroup({ group }: { group: LibraryGroupData }) {
 			<p className="mt-4 max-w-2xl text-sm leading-7 text-muted-foreground">
 				<GroupDescription group={group} />
 			</p>
-			<ul
-				aria-label={`${group.title} packages`}
-				className="mt-6 grid gap-3 sm:grid-cols-2"
-			>
+			<ul aria-label={`${group.title} packages`} className="mt-6">
 				{group.libraries.map((library) => (
-					<li key={library.name} className="min-w-0 rounded-xl border p-5">
+					<li
+						key={library.name}
+						className="min-w-0 border-t py-4 first:border-t-0 first:pt-0"
+					>
 						<Link
 							to="/projects/jfdevelops/$library"
 							params={{ library: library.name.replace('@jfdevelops/', '') }}
-							className="flex items-start gap-2 font-mono text-xs leading-6 text-primary underline underline-offset-4"
+							className="text-sm font-medium break-all underline-offset-4 hover:underline"
 						>
-							<span className="min-w-0 break-all">{library.name}</span>
-							<ArrowUpRight
-								className="mt-1.5 size-3 shrink-0"
-								aria-hidden="true"
-							/>
+							{library.name}
 						</Link>
-						<p className="mt-2 text-xs leading-6 text-muted-foreground">
+						<p className="mt-1 text-[13px] leading-6 text-muted-foreground">
 							{library.description}
 						</p>
 					</li>
